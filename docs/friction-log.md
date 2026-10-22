@@ -1,0 +1,164 @@
+# Friction log
+
+Submissions with friction logs can earn up to a 10% judging bonus. Each entry covers the task, the steps, expected vs. actual result, severity, the workaround, and a suggestion.
+
+The first entries were observed while scaffolding the project on 2026-10-20 (no device yet). **Add your own entries while you build and test on the Fire TV.** On-device problems are the most valuable feedback, so write them down the moment they happen, with exact error text.
+
+---
+
+### F1 · The multi-TV sample resolves React Native TV to a release candidate
+- **Task:** Start from `react-native-multi-tv-app-sample` with Expo SDK 54.
+- **Steps:** `yarn install` in the sample, then inspect `apps/expo-multi-tv/node_modules/react-native/package.json`.
+- **Expected:** The stable `react-native-tvos` matching Expo SDK 54 (RN 0.81.5, `0.81-stable`).
+- **Actual:** `"react-native": "npm:react-native-tvos@~0.81.0-0"` resolves to `0.81.0-0rc5`.
+- **Severity:** Medium. Builds work, but the starter ships an RC and drifts from what Expo SDK 54 tests against.
+- **Workaround:** Kept the lockfile's version for the hackathon.
+- **Suggestion:** Pin `npm:react-native-tvos@0.81-stable` (or the exact stable patch) in the sample and document the Expo SDK ↔ tvOS mapping in its README.
+
+### F2 · Sample `package.json` mixes Expo SDK 52 and SDK 54 package versions
+- **Task:** Add Expo Router to the sample's Expo app.
+- **Steps:** Compare the dependencies with `expo/bundledNativeModules.json` for SDK 54.
+- **Expected:** SDK-54-aligned versions (what `npx expo install --fix` would produce).
+- **Actual:** `expo ~54` sits next to `expo-font ~13`, `expo-constants ~17`, `expo-splash-screen ~0.29` and `@expo/metro-runtime ~4` (SDK 52 versions). `expo-router@6` needs `@expo/metro-runtime ^6.1.2` and `expo-constants ^18`.
+- **Severity:** Medium. Adding the most common Expo library forces a manual dependency audit.
+- **Workaround:** Re-aligned the Expo packages we kept to SDK 54 and removed unused ones (video, drawer, reanimated).
+- **Suggestion:** Run `expo install --check` in the sample's CI.
+
+### F3 · Strict TypeScript fails on the sample's remote-control layer
+- **Task:** Typecheck shared TV code with `strict: true`.
+- **Steps:** `tsc --noEmit` over `packages/shared-ui/src`.
+- **Expected:** A clean typecheck. The sample advertises "Full TypeScript support".
+- **Actual:** `RemoteControlManagerInterface.addKeydownListener` declares `() => void`, but every implementation returns the listener. The `configureRemoteControl` key mapping misses `PlayPause`, `FastForward` and `Rewind` (TS2739). `react-native-pixel-perfect` has no types.
+- **Severity:** Low. Easy fixes, but it surprises new developers in the first hour.
+- **Workaround:** Fixed the interface, completed the mapping, and added a `.d.ts` for pixel-perfect.
+- **Suggestion:** Add `yarn typecheck` to the sample's CI, plus a small upstream PR (we can send ours).
+
+### F4 · Code shared between Fire OS and Vega OS must target an older JS toolchain
+- **Task:** Share game code between the Expo (RN 0.81, Metro 0.83) and Vega (RN 0.72, Metro 0.76) apps.
+- **Steps:** Bundle the Vega app with `react-native bundle --platform kepler`.
+- **Expected:** The same libraries work on both.
+- **Actual:** Vega's Metro does not support package `exports`, and its `sourceExts` do not include `.cjs`. ESM-only libraries such as Jotai v3, and libraries with `.cjs` entry points such as zod v4, need extra config or will not resolve.
+- **Severity:** Medium. You only find out when you bundle for Vega.
+- **Workaround:** Pinned Jotai 2.20 (ships CJS files at the package root) and replaced zod with zero-dependency validators.
+- **Suggestion:** A short "Writing code shared with Vega OS" doc page listing the JS/Metro constraints, or enable `unstable_enablePackageExports` in the Vega Metro preset.
+
+### F5 · Reading the device IP on Vega OS
+- **Task:** Discover the teacher's phone on a hotspot (the TV needs its own IP to find the gateway and subnet).
+- **Expected:** A documented equivalent of `expo-network`'s `getIpAddressAsync()` for Vega.
+- **Actual:** We could not find a documented API in the sample or the hackathon resources.
+- **Severity:** Low/Medium. Discovery falls back to well-known hotspot gateways.
+- **Workaround:** `networkInfo.kepler.ts` returns `null`; well-known gateways plus a manual `preferredHosts` setting.
+- **Suggestion:** Add a network-info example to the Vega samples. *(Verify against the Vega docs before submitting. If the API exists, describe how hard it was to find instead.)*
+
+### F6 · Local-network apps on Fire OS need cleartext and keep-awake settings
+- **Task:** Connect the Fire TV to a WebSocket server on the phone's hotspot (`ws://`).
+- **Expected:** Fire TV docs mention what local-network / second-screen apps need.
+- **Actual:** Android release builds block cleartext traffic by default (`ws://` included). Long classes with no remote input also trigger the screensaver.
+- **Severity:** Medium. Debug builds work and release builds silently do not: a classic demo-day surprise.
+- **Workaround:** `expo-build-properties → android.usesCleartextTraffic: true` and `expo-keep-awake`.
+- **Suggestion:** A "second-screen / companion device" guide for Fire TV covering cleartext, keep-awake and discovery.
+
+### F7 · `expo prebuild` crashes on the sample's TV config plugin, then Gradle fails with "Unresolved reference R / BuildConfig"
+- **Task:** First native build of the Fire OS / Android TV app (`EXPO_TV=1 expo run:android`) on a real Android TV.
+- **Steps:** Fresh `yarn install`, then `expo run:android`.
+- **Expected:** Prebuild applies the TV plugin (Leanback launcher, banner) and Gradle compiles.
+- **Actual:** `@react-native-tvos/config-tv@0.0.10` (pinned by the sample) calls `glob.sync` without declaring `glob`. With glob v13 hoisted, prebuild throws `withAndroidDangerousBaseMod: Cannot read properties of undefined (reading 'sync')`. Expo then reuses the half-generated `android/` on the next run: Gradle `namespace "com.projectplay"` vs Kotlin `package com.projectplay.tv` → `Unresolved reference 'R'` / `'BuildConfig'`, an error far away from the real cause.
+- **Severity:** High. It blocks the first device build, and the message is misleading.
+- **Workaround:** Upgraded to `@react-native-tvos/config-tv@^0.1.7` (declares `glob`). Our `scripts/devices.sh tv` regenerates `android/` with `expo prebuild --clean` when the TV manifest is incomplete.
+- **Suggestion:** Bump config-tv in the sample. Ideally Expo should not reuse a native folder from a prebuild that failed.
+
+
+### F8 · `./gradlew clean` breaks the next build, and the app then crashes at launch
+- **Task:** Rebuild the teacher app (Expo SDK 56, RN 0.85, new architecture) on a Samsung Galaxy A26 over wireless adb.
+- **Steps:** `cd teacher/android && ./gradlew clean`, then `npx expo run:android`.
+- **Expected:** A clean rebuild.
+- **Actual:** `clean` fails in React Native's CMake (`add_subdirectory given source …/react-native-worklets/android/build/generated/source/codegen/jni/ which is not an existing directory`) after deleting the libraries' outputs, but not the app's. The next build succeeds, yet its `R.jar` lacks the R classes of dozens of libraries (React Android, AppCompat, AndroidX Startup, Lifecycle…). The APK installs, then dies before any JavaScript runs: `NoClassDefFoundError: Failed resolution of: Landroidx/startup/R$string` in `InitializationProvider`. Expo CLI meanwhile reports an unrelated `No development build (…) is installed` when `a` opens the first adb device (the TV).
+- **Severity:** High. A routine "clean" produces a silently broken APK, and the crash points at AndroidX rather than the build.
+- **Root cause (found later):** `expo prebuild` generates a Gradle 9.3.1 wrapper, but the Android Gradle Plugin it ships (8.12.0) only supports Gradle up to 8.14. On Gradle 9 the `R.jar` silently drops those libraries' R classes on *every* build, including from-scratch ones, so `--clean` alone does not fix it. The TV app, on Gradle 8.14.3, is fine.
+- **Fix:** `scripts/devices.sh teacher` now pins `teacher/android/gradle/wrapper/gradle-wrapper.properties` to Gradle 8.14.3 before building (the file is generated and gitignored, so the pin is reapplied after every prebuild). It also falls back to the Homebrew Android SDK when `ANDROID_HOME` is unset.
+- **Workaround (older):** `scripts/devices.sh teacher --clean` deletes the app module's Gradle outputs (keeping the native `.cxx` cache), uninstalls and rebuilds. The script also watches the device and prints the crash log the moment the app crashes.
+- **Suggestion:** Make React Native's `externalNativeBuildClean` tolerate missing codegen folders, and have AGP verify that R.jar covers every runtime dependency with resources.
+
+### F9 · Node 26 no longer ships Corepack, so the TV workspace's Yarn 4 cannot start
+- **Task:** Run the whole-repo check (`npm run check`) on a Mac with Node 26 (Homebrew and nvm).
+- **Steps:** `npm run check` from the repo root. The shared and teacher steps pass, then `cd tv && corepack yarn check` runs.
+- **Expected:** The TV workspace (forked from the multi-TV sample, `"packageManager": "yarn@4.5.0"`) checks like the others.
+- **Actual:** `sh: corepack: command not found`. Node stopped bundling Corepack from v25, and the sample has no vendored Yarn release (`.yarn/releases`, `yarnPath`) to fall back on. Plain `yarn` is no option either: a global Yarn 1 breaks the workspace.
+- **Severity:** Medium. Every TV command in the README fails on a current Node, with nothing pointing at the Node version.
+- **Workaround:** Use Node 24 LTS, or install Corepack separately (`npm install -g corepack`). A machine where Corepack once ran still has Yarn in its cache: `node ~/.cache/node/corepack/v1/yarn/4.5.0/yarn.js check` (from `tv/`) works without it.
+- **Suggestion:** Pin a Node version in the sample (`.nvmrc` / `engines`) or commit the Yarn release with `yarnPath`, so it works without Corepack.
+
+### F10 · The sample's `FocusablePressable` cannot be centred
+- **Task:** Centre a single remote-control button under the lobby content on the projected wall (onn 4K Google TV box, 1920×1080).
+- **Steps:** Put the sample's `FocusablePressable` in a `SpatialNavigationView` inside a column with `alignItems: 'center'`.
+- **Expected:** The button centred on screen, label on one line.
+- **Actual:** The button sat 38 px left of centre (visible box x 785–1058, its focus wrapper 785–1136, measured with `uiautomator dump`), with "Practice with the remote" wrapped onto two lines. The sample's style has `alignSelf: 'flex-start'` and `maxWidth: '90%'`. The focus wrapper shrinks to fit the button, so the percentage resolves against the button's own width: the button shrinks to 90 % of itself and is pinned to the wrapper's left edge. Users reported it as misaligned, since the wall's centre line is also where the phone splits the two teams.
+- **Severity:** Low. It is cosmetic, but on a projection every off-centre pixel is magnified.
+- **Workaround:** Removed both properties from the component; the screen now decides where the button goes.
+- **Suggestion:** Drop `alignSelf` and percentage `maxWidth` from the sample's button, so containers control alignment.
+
+### F11 · Reloading JS while VisionCamera and fast-tflite run kills the app natively
+- **Task:** Iterate on the perception code with Metro reload, with the teacher app on its camera screen (Galaxy A26, dev build).
+- **Steps:** Open the camera view, then reload JS (Metro `r`, or the `/message` reload command).
+- **Expected:** The JS restarts; the camera and model come back with the new code.
+- **Actual:** `Fatal signal 11 (SIGSEGV)` in thread `lo.camera.frame`. The frame worklet keeps running during the reload and calls `runSync` on a TFLite model the reload destroyed; NitroTflite's error path then creates a `JSError` on the torn-down runtime (`createStringFromUtf8` in `libhermesvm.so`). After a reload from the home screen, the native TCP server of the previous JS instance could also keep port 8787: "Server error: undefined".
+- **Severity:** Medium. It costs a relaunch each time, and the crash looks like a model bug.
+- **Workaround:** Reload only from a screen without the camera; when the port stays bound, force-stop and relaunch the app. Both are in AGENTS.md.
+- **Suggestion:** VisionCamera could stop frame delivery before the JS runtime is invalidated, and Nitro modules could refuse calls from a dead runtime instead of crashing.
+
+### F12 · A new VisionCamera frame callback can arrive seconds late on a busy camera thread
+- **Task:** Switch the frame worklet from pose tracking to calibration (greyscale frames) when automatic calibration starts.
+- **Steps:** The `captureLuma` prop changes, so `useFrameOutput` installs the new `onFrame` (via `scheduleOnRuntime` on the camera thread) while the hot phone processes frames back to back (200–340 ms each).
+- **Expected:** The next frame runs the new callback.
+- **Actual:** Pose frames kept arriving for the whole ~6 s calibration window and not a single greyscale frame did: "The camera is not sending pictures to the calibration", twice in a row.
+- **Severity:** High. Recalibration fails exactly when the phone is busiest, and nothing points at the callback swap.
+- **Workaround:** The mode flag lives in a `createSynchronizable` that the worklet reads on every frame; a mode change no longer needs a new callback.
+- **Suggestion:** Document that `onFrame` updates are asynchronous, or give `useFrameOutput` a documented way to pass per-frame parameters (a shared value) to the worklet.
+
+### F13 · The GPU resizer cannot crop, so per-lane crops cost ~35 ms of JavaScript each
+- **Task:** Feed two 192×192 regions of each camera frame (one per team) to MoveNet.
+- **Steps:** `react-native-vision-camera-resizer` resizes the whole frame (960×720 RGB); the worklet then resampled each region pixel by pixel into the model input.
+- **Expected:** Cropping is cheap next to the model.
+- **Actual:** Measured on the Galaxy A26: resize 8 ms, crops 62–74 ms, model 86–95 ms per frame, so 6 fps on a cool phone and 3 fps once it throttled. `Resizer.resize(frame)` has no region-of-interest option.
+- **Severity:** High for multi-region models: the crop costs nearly as much as inference and heats the phone.
+- **Workaround:** Ask the resizer for the exact output size at which each lane is 192 pixels wide, then cut a lane with 192 `Uint8Array.set` row copies (~1 ms). Same thermal state: 210–270 ms per frame before, 98–144 ms after.
+- **Suggestion:** Add an optional crop rectangle to `resize()`; ML pipelines that crop around people (MoveNet's own recommended usage) need it.
+
+### F14 · fast-tflite: NNAPI, the GPU delegate and extra CPU threads are all slower than one CPU thread for MoveNet INT8
+- **Task:** Speed up MoveNet SinglePose Lightning INT8 on the Galaxy A26 (Exynos 1280: 2× Cortex-A78 + 6× Cortex-A55).
+- **Steps:**
+  - Delegates: same app and scene, `useTensorflowModel(model, delegates)` with `[]`, `['nnapi']` and `['android-gpu']`; per-frame time for two inferences from the worklet.
+  - Threads: fast-tflite creates the interpreter with default options (one thread) and has no JS option for it, so a temporary native patch called `TfLiteInterpreterOptionsSetNumThreads(options, N)` before `TfLiteInterpreterCreate`, with N read from a debug system property (one build for every N). Alternating 40 s runs with N = 1, 2 and 4 on "Check camera view", all at thermal status 3. The first `[perf]` line of each run is dropped, because it is a moving average still carrying the previous run.
+- **Expected:** A hardware delegate, or more threads, is faster than one CPU thread. On a desktop the same model takes 6.0 ms with 1 thread, 4.1 ms with 2 and 3.6 ms with 4.
+- **Actual:**
+  - Delegates: CPU 86–95 ms, NNAPI 120–150 ms, GPU (OpenCL, "Created 1 GPU delegate kernels") 126–144 ms.
+  - Threads, median per frame at thermal status 3: 1 thread 216 ms (4.4 fps, 18 samples), 2 threads 247 ms (3.9 fps, 21 samples), 4 threads 403 ms (2.4 fps, 6 samples).
+  - Ranges: 107–291 ms, 140–324 ms and 384–424 ms. Status 3 spans several degrees, so only many alternating runs separate 1 from 2 threads; 4 is clearly worse.
+  - Why: the phone has only two fast cores, and the scheduler moves the inference threads onto the slow A55s (5 of 12 per-thread samples during a 2-thread run), so every layer waits for the slowest thread. At status 3 the A78s are also capped at 1.82 GHz (2.4 GHz when cool).
+- **Severity:** Medium. Every obvious speed-up makes it slower on this phone, and finding that out for threads takes a native patch.
+- **Workaround:** One CPU thread, no delegate: the library default, so the patch was dropped. Cut everything around the model instead (F13).
+- **Suggestion:** Expose `numThreads` in `loadTensorflowModel` (phones with four big cores may still gain), document that extra threads can be slower on phones with two big cores, and document which delegates help quantised models on Android.
+
+### F15 · VisionCamera's device filter cannot pick "the main back camera" on Android
+- **Task:** Make sure the class is filmed with the Galaxy A26's main camera (4080×3060, f/1.8), not its ultra-wide (3264×2448, f/2.2, barrel distortion that bends the calibration homography) or the logical camera that switches lenses as it zooms. `adb shell dumpsys media.camera` lists four cameras: back main, front, back ultra-wide, back logical.
+- **Steps:** The documented way: `useCameraDevice('back', { physicalDevices: ['wide-angle'] })` (react-native-vision-camera 5.2.3).
+- **Expected:** The back camera whose lens is the main wide-angle one.
+- **Actual:** On Android the filter cannot match anything. `getCameraDevice` scores each device by the `type` of its `physicalDevices`, but those are `HybridPhysicalCameraDevice`s backed by CameraX's `PhysicalCameraInfoAdapter`, whose `deviceType` is always `UNKNOWN` (`CameraInfo+deviceType.kt`: "PhysicalCameraInfoAdapter throws when accessing `intrinsicZoomRatio`"). Every device scores the same or worse, and the hook returns the first back camera in CameraX's list, whichever lens that is. Without a filter, `getDefaultCamera('back')` is also "the first one". Nothing fails or warns, so which lens films the class depends on the phone.
+- **Severity:** Medium. It only matters in low light or with the projection near the frame edges, which is exactly a classroom from behind the children, and it is silent.
+- **Workaround:** Rank the devices ourselves (`teacher/src/features/perception/domain/cameraChoice.ts`): a physical `type === 'wide-angle'` camera first (Android derives it from `intrinsicZoomRatio == 1`), then the most pixels from `getSupportedResolutions('photo')`, then the lowest `lensAperture`; logical cameras (`isVirtualDevice`) only as a fallback. The choice is logged as `[camera]`.
+- **Suggestion:** Score the device's own `type` when it has no usable physical devices, expose `intrinsicZoomRatio`/field of view, and document that `physicalDevices` types are `unknown` on Android.
+
+---
+
+### Template for device-time entries
+
+```
+### F# · <short title>
+- Task:
+- Steps:
+- Expected:
+- Actual:            (exact error text / screenshot)
+- Severity:          Critical / High / Medium / Low
+- Workaround:
+- Suggestion:
+```

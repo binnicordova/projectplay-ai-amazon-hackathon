@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "ProjectPlay Teacher",
+    "slug": "projectplay-teacher",
+    "version": "1.0.0",
+    "scheme": "projectplay-teacher",
+    "orientation": "landscape",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B1026",
+    "ios": {
+      "bundleIdentifier": "com.projectplay.teacher",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "ProjectPlay uses the camera on this phone to see how children move in front of the projected board. Video is processed on the phone and never stored or sent anywhere.",
+        "NSLocalNetworkUsageDescription": "ProjectPlay talks to the Fire TV on your hotspot to control the classroom game."
+      }
+    },
+    "android": {
+      "package": "com.projectplay.teacher",
+      "permissions": ["android.permission.CAMERA", "android.permission.INTERNET", "android.permission.ACCESS_NETWORK_STATE"],
+      "adaptiveIcon": {
+        "backgroundColor": "#0B1026",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 26,
+            "buildArchs": ["arm64-v8a"],
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true
+          }
+        }
+      ],
+      ["react-native-fast-tflite", { "enableCoreMLDelegate": false }]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

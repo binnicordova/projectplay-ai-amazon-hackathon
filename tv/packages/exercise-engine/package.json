@@ -1,0 +1,22 @@
+{
+  "name": "@projectplay/exercise-engine",
+  "version": "1.0.0",
+  "description": "Offline, deterministic early-grade arithmetic exercises with misconception-based distractors and adaptive difficulty. Zero dependencies.",
+  "license": "MIT",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "src/index.ts",
+  "files": [
+    "src",
+    "!src/**/*.test.ts"
+  ],
+  "keywords": [
+    "education",
+    "math",
+    "exercises",
+    "offline",
+    "react-native",
+    "fire-tv"
+  ]
+}

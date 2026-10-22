@@ -1,0 +1,21 @@
+{
+  "name": "@projectplay/tv-shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ProjectPlay TV: game screens, session rules, dwell interaction and the phone link, shared by the Fire OS (Expo) and Vega OS apps.",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "src/index.ts",
+  "dependencies": {
+    "@projectplay/exercise-engine": "workspace:*"
+  },
+  "peerDependencies": {
+    "@projectplay/contracts": "*",
+    "jotai": "*",
+    "mitt": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-pixel-perfect": "*",
+    "react-tv-space-navigation": "*"
+  }
+}

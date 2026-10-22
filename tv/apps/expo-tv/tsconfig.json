@@ -1,0 +1,13 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "*": ["./node_modules/@types/*", "./node_modules/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "../../packages/*/src/**/*.ts", "../../packages/*/src/**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
+  "exclude": ["../../packages/*/src/**/*.kepler.ts", "../../packages/*/src/**/*.ios.ts", "../../packages/*/src/**/*.test.ts"]
+}

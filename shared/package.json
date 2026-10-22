@@ -1,0 +1,18 @@
+{
+  "name": "@projectplay/shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Code that crosses the wire between the teacher phone and the TV. Pure TypeScript only.",
+  "workspaces": [
+    "contracts"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

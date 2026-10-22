@@ -1,0 +1,28 @@
+node_modules/
+.expo/
+dist/
+web-build/
+.vite/
+*.log
+*.tsbuildinfo
+.DS_Store
+.env*.local
+
+# Generated native projects (Continuous Native Generation)
+teacher/android/
+teacher/ios/
+tv/apps/*/android/
+tv/apps/*/ios/
+
+# Vega build output
+tv/apps/vega/build/
+tv/apps/vega/dist/
+
+# Yarn 4
+tv/.yarn/*
+!tv/.yarn/patches
+!tv/.yarn/releases
+
+# Personal Claude Code settings and notes (the shared .claude/settings.json and skills are committed)
+.claude/settings.local.json
+CLAUDE.local.md

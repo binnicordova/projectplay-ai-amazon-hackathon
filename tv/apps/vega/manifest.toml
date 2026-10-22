@@ -1,0 +1,61 @@
+#
+# ProjectPlay for Fire TV (Vega OS).
+# Derived from the AmazonAppDev multi-TV sample manifest (MIT-0); media playback,
+# DRM and content-launcher entries were removed because this app plays no video.
+#
+schema-version = 1
+
+[package]
+title = "ProjectPlay"
+version = "0.1.0"
+id = "com.projectplay.tv"
+
+[os.version]
+min = "1.2"
+target = "1.2"
+
+[components]
+[[components.interactive]]
+id = "com.projectplay.tv.main"
+runtime-module = "/com.amazon.kepler.keplerscript.runtime.loader_2@IKeplerScript_2_0"
+launch-type = "singleton"
+categories = ["com.amazon.category.main"]
+
+[processes]
+[[processes.group]]
+component-ids = ["com.projectplay.tv.main"]
+
+[wants]
+# On-screen keyboard and remote button events
+[[wants.service]]
+id = "com.amazon.inputmethod.service"
+
+[[wants.service]]
+id = "com.amazon.inputd.service"
+
+# Network information (finding the teacher's phone on the hotspot)
+[[wants.service]]
+id = "com.amazon.network.service"
+
+[[wants.privilege]]
+id = "com.amazon.devconf.privilege.accessibility"
+
+[needs]
+[[needs.privilege]]
+id = "com.amazon.network.privilege.net-info"
+
+[[needs.module]]
+id = "/com.amazon.vega.os@IVega_1_2"
+
+[offers]
+[[offers.interaction]]
+id = "com.projectplay.tv.main"
+
+[[offers.module]]
+id = "/com.projectplay.tv.main@IMod1"
+includes-messages = ["pkg://com.projectplay.tv.main"]
+
+[[message]]
+uri = "pkg://com.projectplay.tv.main"
+sender-privileges = ["*"]
+receiver-privileges = ["self"]

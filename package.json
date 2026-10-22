@@ -1,0 +1,25 @@
+{
+  "name": "projectplay",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Turn any classroom projector into a touch wall: Fire TV game + teacher phone with on-device pose detection.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "setup": "npm --prefix shared install && npm --prefix teacher install && cd tv && corepack yarn install",
+    "fetch-model": "npm --prefix teacher run fetch-model",
+    "doctor": "scripts/devices.sh doctor",
+    "test": "npm --prefix shared test && npm --prefix teacher test && cd tv && corepack yarn test",
+    "check": "npm --prefix shared run typecheck && npm --prefix shared test && npm --prefix teacher run check && cd tv && corepack yarn check",
+    "teacher": "npm --prefix teacher run android",
+    "tv": "cd tv && corepack yarn android",
+    "tv:vega": "cd tv && corepack yarn build:vega",
+    "test:e2e": "npm --prefix shared run test:e2e",
+    "devices": "scripts/devices.sh doctor",
+    "dev:tv": "scripts/devices.sh tv",
+    "dev:teacher": "scripts/devices.sh teacher",
+    "verify:devices": "scripts/devices.sh verify"
+  }
+}
