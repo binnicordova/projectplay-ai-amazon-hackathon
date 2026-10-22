@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Typecheck, lint and tests (shared, teacher, TV)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      # Node 22 still ships Corepack, which the TV workspace (Yarn 4) needs. See friction log F9.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            shared/package-lock.json
+            teacher/package-lock.json
+
+      - name: Enable Corepack (Yarn 4 for tv/)
+        run: corepack enable
+
+      - name: Install shared contracts
+        run: npm ci --prefix shared
+
+      - name: Install teacher app
+        run: npm ci --prefix teacher
+
+      - name: Install TV workspace
+        working-directory: tv
+        run: yarn install --immutable
+
+      - name: Typecheck, lint and unit tests
+        run: npm run check
+
+      - name: End-to-end link and calibration test (real WebSocket)
+        run: npm run test:e2e

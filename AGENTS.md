@@ -39,6 +39,7 @@ scripts/devices.sh tv                # build, install, run the TV app (Metro :80
 scripts/devices.sh teacher           # build, install, run the phone app (Metro :8082)
 scripts/devices.sh verify            # both apps running, linked, calibrated, no JS errors
 scripts/devices.sh crash             # last crash (Java or native) of either app
+scripts/devices.sh release           # standalone release APKs of both apps → dist/release/
 scripts/devices.sh <app> --clean     # rebuild from scratch: use this, never ./gradlew clean
 ```
 

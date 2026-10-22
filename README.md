@@ -1,5 +1,12 @@
 # ProjectPlay
 
+[![CI](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/actions/workflows/ci.yml/badge.svg)](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Fire TV](https://img.shields.io/badge/Fire%20TV-Fire%20OS%20%7C%20Vega%20OS-ff9900.svg)
+![Offline](https://img.shields.io/badge/internet-not%20needed-brightgreen.svg)
+
+<!-- Demo video: add the YouTube link here on submission day. -->
+
 **Turn any classroom projector into a touch wall.** A Fire TV plugged into the projector runs the game; the teacher's phone, on a tripod, watches the children with on-device pose detection and turns a pointing hand into a touch. There's no school Wi-Fi, no internet, no server and no extra hardware involved, and no images ever leave the phone.
 
 Built for the [Build, Ship, Shape: Amazon Developer Hackathon](https://amazonappdev2026.devpost.com/) · **Fire TV track** (computer vision, multi-modal UX, family entertainment).
@@ -15,6 +22,18 @@ Built for the [Build, Ship, Shape: Amazon Developer Hackathon](https://amazonapp
 ```
 
 The phone only reports **where each raised hand points** (`ptr`, `lost`). The TV owns the screen layout, so it decides **what that means** (hit-testing, dwell selection, game rules). See [`shared/contracts/src/protocol.ts`](shared/contracts/src/protocol.ts).
+
+## Try it in 2 minutes
+
+You need a Fire TV (or any Android TV) with [ADB debugging on](https://developer.amazon.com/docs/fire-tv/connecting-adb-to-device.html). An Android phone is optional.
+
+1. Download `projectplay-tv.apk` (and `projectplay-teacher.apk`) from the [latest release](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/releases/latest).
+2. `adb connect <fire-tv-ip>:5555 && adb install projectplay-tv.apk`
+3. Open **ProjectPlay** on the TV and choose **Practice with the remote**. Move onto an answer with the D-pad and hold it, or press OK.
+
+With a phone: `adb install projectplay-teacher.apk`, turn on the phone's hotspot, connect the Fire TV to it, open both apps, point the phone at the screen from 2–4 m away and tap **Start class**. The TV flashes four squares, the phone calibrates, and you answer by pointing at a tile with your arm raised.
+
+To build the APKs yourself: `npm run setup && npm run release:apks` (they land in `dist/release/`).
 
 ## How children play
 
@@ -95,7 +114,9 @@ cd teacher && npm run android             # development build; Expo Go cannot ru
 
 No phone at hand? On the TV, choose **Practice with the remote**. The D-pad moves a cursor and OK selects, which is handy on the Fire TV / Vega simulators. No tripod? Use **phone as touchpad** in the teacher app.
 
-**Working with coding agents:** `AGENTS.md` (repo-wide) plus `teacher/`, `tv/` and `shared/` `AGENTS.md` files hold the project rules; Claude Code reads them natively. `.claude/settings.json` pre-approves the test commands, and `.claude/skills/` adds `/device-check` and `/friction-entry`. Device workflow: `scripts/devices.sh doctor | tv | teacher | verify | crash`.
+**Release APKs:** `scripts/devices.sh release` builds both apps with the JavaScript bundled in (no Metro needed) into `dist/release/`, ready to attach to a GitHub release.
+
+**Working with coding agents:** `AGENTS.md` (repo-wide) plus `teacher/`, `tv/` and `shared/` `AGENTS.md` files hold the project rules; Claude Code reads them natively. `.claude/settings.json` pre-approves the test commands, and `.claude/skills/` adds `/device-check` and `/friction-entry`. Device workflow: `scripts/devices.sh doctor | tv | teacher | verify | crash | release`.
 
 **Developer shortcut:** `EXPO_PUBLIC_TEACHER_HOST=192.168.1.20 corepack yarn web` runs the TV app in a browser that connects straight to a phone on your Wi-Fi.
 
@@ -103,7 +124,7 @@ No phone at hand? On the TV, choose **Practice with the remote**. The D-pad move
 
 | Check | Result |
 |---|---|
-| Unit tests: protocol (48), teacher (106), TV + exercise engine (63) | ✅ 217 passing (`npm test`) |
+| Unit tests: protocol (48), teacher (106), TV + exercise engine (70) | ✅ 224 passing (`npm test`) |
 | Strict typecheck against the real installed type definitions (VisionCamera 5.2, fast-tflite 3, worklets 0.8, tcp-socket 6.4, Expo Router 6/56) | ✅ teacher and Fire OS TV app |
 | Layer-boundary lint (teacher) | ✅ including a self-test that a violation fails |
 | JS bundles: teacher (Hermes, Android), Fire OS TV (`EXPO_TV=1`), Vega OS (Metro 0.76, `--platform kepler`) | ✅ all three build; Vega picks the `.kepler.ts` files |
@@ -136,10 +157,23 @@ No phone at hand? On the TV, choose **Practice with the remote**. The D-pad move
 - Camera zoom ("auto-framing"): worth it only when the phone stands so far back that a lane needs less than 30% of the frame height (`MIN_LANE_SIDE`, ~216 of the 720 rows). It would need a second calibration at the zoomed field of view.
 - Phantoms: in an empty, dark room the body gate can still accept a "child" made of furniture (seen on the A26 in a corner below the projection). It can only answer if its "hand" lands on a tile, but it does earn its lane more frames.
 
+## Open source
+
+- **[projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine)** (MIT): the question engine, published on its own with docs, examples and CI. Wrong answers come from real misconceptions, `diagnose()` names the mistake behind a wrong pick, and it runs anywhere from Node to Vega OS with zero dependencies. `tv/packages/exercise-engine` keeps a copy of its source.
+- **Upstream fixes** for Amazon's [multi-TV sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample), from what we hit while building on it (see the [friction log](docs/friction-log.md)).
+
+## Built during the hackathon
+
+Everything here was written during the submission window, except the starting point of `tv/`: Amazon's [react-native-multi-tv-app-sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample) (MIT-0).
+
+- **Kept from the sample:** the monorepo layout, remote-control managers, spatial navigation, theme and `FocusablePressable`.
+- **Changed in the sample:** Expo packages aligned to SDK 54, strict-TypeScript fixes, the TV config plugin upgraded (it crashed prebuild), button centring, and the media-player features removed.
+- **New:** the teacher app, all perception and calibration code, the wire protocol, the game, the exercise engine, the Vega wiring, the tests and the device tooling.
+
 ## Licenses
 
-- ProjectPlay code: MIT ([`LICENSE`](LICENSE)). `tv/packages/exercise-engine` is designed to be published on its own (Open Source mini challenge).
+- ProjectPlay code: MIT ([`LICENSE`](LICENSE)). The exercise engine is also published on its own: [projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine) (MIT).
 - `tv/` is derived from [AmazonAppDev/react-native-multi-tv-app-sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample), MIT-0 ([`tv/LICENSE-sample-MIT-0`](tv/LICENSE-sample-MIT-0)).
 - MoveNet model © Google, Apache-2.0 (see [`teacher/assets/models/README.md`](teacher/assets/models/README.md)).
 
-See also: [`docs/submission-kit.md`](docs/submission-kit.md) (Devpost checklist, video shot list, product-feedback outline) · [`docs/friction-log.md`](docs/friction-log.md).
+See also: [`docs/friction-log.md`](docs/friction-log.md) (15 SDK and tooling frictions, with workarounds) · [`docs/devpost.md`](docs/devpost.md) (submission text and product feedback) · [`docs/video-script.md`](docs/video-script.md) · [`docs/submission-kit.md`](docs/submission-kit.md).

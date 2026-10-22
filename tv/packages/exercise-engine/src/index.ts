@@ -91,25 +91,66 @@ export function formatEquation(eq: Equation, unknown: 'left' | 'result' | null, 
   return `${slot('left', eq.left)} ${eq.operator} ${eq.right} = ${slot('result', eq.result)}`;
 }
 
-/** Wrong answers children actually give, most telling first. */
-export function misconceptions(eq: Equation, unknown: 'left' | 'result'): number[] {
+/** Why a child might give a particular wrong answer. */
+export type Misconception =
+  /** Added instead of subtracting, or the other way round. */
+  | 'wrongOperation'
+  /** Copied a number that is already in the question. */
+  | 'copiedNumber'
+  /** Counted one too many or one too few. */
+  | 'offByOne'
+  /** Lost or gained a ten (place value). */
+  | 'tensError'
+  /** Swapped the digits, e.g. 51 for 15. */
+  | 'reversedDigits';
+
+export interface Slip {
+  readonly value: number;
+  readonly misconception: Misconception;
+}
+
+/** Wrong answers children actually give, most telling first, each with the reason behind it. */
+export function slips(eq: Equation, unknown: 'left' | 'result'): Slip[] {
   const answer = answerOf(eq, unknown);
-  const candidates: number[] = [];
+  const out: Slip[] = [];
+  const push = (value: number, misconception: Misconception) => out.push({ value, misconception });
   if (unknown === 'left') {
     // ? + b = c → children add instead (c + b), copy the total (c) or copy the addend (b).
-    candidates.push(eq.result + eq.right, eq.result, eq.right);
+    push(eq.result + eq.right, 'wrongOperation');
+    push(eq.result, 'copiedNumber');
+    push(eq.right, 'copiedNumber');
   } else if (eq.operator === '+') {
-    candidates.push(Math.abs(eq.left - eq.right));
+    push(Math.abs(eq.left - eq.right), 'wrongOperation');
   } else {
-    candidates.push(eq.left + eq.right);
+    push(eq.left + eq.right, 'wrongOperation');
   }
-  candidates.push(answer + 1, answer - 1);
+  push(answer + 1, 'offByOne');
+  push(answer - 1, 'offByOne');
   if (answer >= 10) {
-    candidates.push(answer + 10, answer - 10);
+    push(answer + 10, 'tensError');
+    push(answer - 10, 'tensError');
     const reversed = Number(String(answer).split('').reverse().join(''));
-    if (reversed !== answer) candidates.push(reversed);
+    if (reversed !== answer) push(reversed, 'reversedDigits');
   }
-  return candidates;
+  return out;
+}
+
+/** Wrong answers children actually give, most telling first. */
+export function misconceptions(eq: Equation, unknown: 'left' | 'result'): number[] {
+  return slips(eq, unknown).map((slip) => slip.value);
+}
+
+export type Diagnosis = 'correct' | Misconception | 'other';
+
+/**
+ * Explains a child's answer: `'correct'`, the most likely misconception behind a
+ * wrong answer, or `'other'` when no known slip produces it. Lets a teacher see
+ * *why* a class got a question wrong, not only that it did.
+ */
+export function diagnose(question: Pick<Question, 'equation' | 'unknown' | 'answer'>, chosen: number): Diagnosis {
+  if (chosen === question.answer) return 'correct';
+  const slip = slips(question.equation, question.unknown).find((s) => s.value === chosen);
+  return slip ? slip.misconception : 'other';
 }
 
 function buildOptions(random: Random, eq: Equation, unknown: 'left' | 'result', count: number): number[] {
@@ -148,6 +189,19 @@ export function generateQuestion({ skill, level, seed, round, maxAnswer = Infini
     options,
     statement: { text: formatEquation(equation, unknown, shown), value: shown, isTrue },
   };
+}
+
+export interface LessonRequest extends Omit<QuestionRequest, 'round'> {
+  /** How many questions to generate. */
+  readonly rounds: number;
+}
+
+/** A fixed-level worksheet: `rounds` questions for rounds 0, 1, 2, … Same request, same lesson. */
+export function generateLesson({ rounds, ...request }: LessonRequest): Question[] {
+  const count = Math.max(0, Math.floor(rounds));
+  const lesson: Question[] = [];
+  for (let round = 0; round < count; round++) lesson.push(generateQuestion({ ...request, round }));
+  return lesson;
 }
 
 /**

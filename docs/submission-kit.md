@@ -16,17 +16,21 @@ Deadline: **Fri Oct 23, 2026, 12:00 PDT** (14:00 Lima). Aim to submit by 11:00 L
 
 ## Video shot list (≈ 2:45)
 
+The full script, with voiceover and a recording checklist, is in [`video-script.md`](video-script.md).
+
 | Time | Shot |
 |---|---|
 | 0:00–0:20 | Wide shot: Fire TV stick in the projector, two children reach for tiles on the wall, the tile fills and turns green. No talking needed. |
 | 0:20–0:40 | The problem: interactive boards cost thousands; most public classrooms have a projector and a teacher with a phone. |
-| 0:40–1:05 | Setup in about 10 seconds: hotspot on, TV finds the phone, 4 taps to calibrate. **Show mobile data switched off.** |
+| 0:40–1:05 | Setup in about 10 seconds: hotspot on, TV finds the phone, the TV flashes four squares and the phone calibrates itself. **Show mobile data switched off.** |
 | 1:05–1:40 | Point and hold: number tiles, then TRUE / FALSE. One child changes their mind before the countdown ends and the new tile turns their colour. A few seconds of **One player**: a single child walks along the wall to the answer. |
 | 1:40–2:05 | How it works: phone screen with the skeleton overlay next to the wall. Camera frames never leave the phone; only ~60-byte events do. |
 | 2:05–2:25 | Architecture slide (diagram from the README) and the same screens on Fire OS and Vega OS. |
 | 2:25–2:45 | Impact: classrooms with no internet, a few dollars' worth of hardware, privacy for children. Same app at home for active family learning. |
 
 ## Product feedback outline (one block per tool)
+
+The drafted feedback, ready to paste, is in [`devpost.md`](devpost.md#product-feedback-required-one-block-per-tool).
 
 For each tool: what you used it for · what worked well · what needs work · onboarding (zero to hello world) · would you build with it again, and why.
 
@@ -37,6 +41,8 @@ For each tool: what you used it for · what worked well · what needs work · on
 5. Third-party libraries (not Amazon, but useful context): VisionCamera v5, react-native-fast-tflite, react-native-tcp-socket, Expo Router, Jotai.
 
 ## Description skeleton (Devpost)
+
+The full Devpost text is in [`devpost.md`](devpost.md). This short version is kept for the YouTube description.
 
 **What it does.** ProjectPlay turns any classroom projector into a touch wall. A Fire TV runs the game; the teacher's phone watches the children with on-device pose detection. Children answer by pointing: they reach for a tile on the wall and hold still, and they may change their minds until the countdown ends.
 

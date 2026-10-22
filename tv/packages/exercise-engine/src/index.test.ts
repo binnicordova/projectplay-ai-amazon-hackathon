@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SKILLS, formatEquation, generateQuestion, misconceptions, nextLevel, type Level, type Question } from './index';
+import { SKILLS, diagnose, formatEquation, generateLesson, generateQuestion, misconceptions, nextLevel, slips, type Level, type Question } from './index';
 
 const LEVELS: Level[] = [1, 2, 3, 4, 5];
 
@@ -84,5 +84,69 @@ describe('nextLevel staircase', () => {
     expect(nextLevel(5, 2, 2)).toBe(5);
     expect(nextLevel(1, 0, 2)).toBe(1);
     expect(nextLevel(3, 0, 0)).toBe(3);
+  });
+});
+
+describe('diagnose', () => {
+  const sum = { left: 7, operator: '+' as const, right: 8, result: 15 };
+  const missing = { left: 7, operator: '+' as const, right: 9, result: 16 };
+  const difference = { left: 12, operator: '−' as const, right: 5, result: 7 };
+
+  it('names the misconception behind a wrong answer', () => {
+    const q = { equation: sum, unknown: 'result' as const, answer: 15 };
+    expect(diagnose(q, 15)).toBe('correct');
+    expect(diagnose(q, 1)).toBe('wrongOperation');
+    expect(diagnose(q, 16)).toBe('offByOne');
+    expect(diagnose(q, 14)).toBe('offByOne');
+    expect(diagnose(q, 25)).toBe('tensError');
+    expect(diagnose(q, 5)).toBe('tensError');
+    expect(diagnose(q, 51)).toBe('reversedDigits');
+    expect(diagnose(q, 33)).toBe('other');
+  });
+
+  it('spots "added instead" and "copied a number" in missing-addend questions', () => {
+    const q = { equation: missing, unknown: 'left' as const, answer: 7 };
+    expect(diagnose(q, 25)).toBe('wrongOperation');
+    expect(diagnose(q, 16)).toBe('copiedNumber');
+    expect(diagnose(q, 9)).toBe('copiedNumber');
+  });
+
+  it('spots adding instead of subtracting', () => {
+    expect(diagnose({ equation: difference, unknown: 'result', answer: 7 }, 17)).toBe('wrongOperation');
+  });
+
+  it('explains every generated distractor that came from a known slip', () => {
+    for (let seed = 0; seed < 200; seed++) {
+      for (const skill of SKILLS) {
+        const q = generateQuestion({ skill, level: 3, seed, round: 0 });
+        const known = new Set(misconceptions(q.equation, q.unknown));
+        for (const option of q.options) {
+          const d = diagnose(q, option);
+          if (option === q.answer) expect(d).toBe('correct');
+          else if (known.has(option)) expect(d).not.toBe('other');
+          else expect(d).toBe('other');
+        }
+      }
+    }
+  });
+
+  it('pairs each slip value with its reason', () => {
+    expect(slips(sum, 'result')[0]).toEqual({ value: 1, misconception: 'wrongOperation' });
+    expect(slips(sum, 'result').map((s) => s.value)).toEqual(misconceptions(sum, 'result'));
+  });
+});
+
+describe('generateLesson', () => {
+  it('returns the same questions as generating each round', () => {
+    const lesson = generateLesson({ skill: 'addition', level: 2, seed: 7, rounds: 5 });
+    expect(lesson).toHaveLength(5);
+    lesson.forEach((q, round) => expect(q).toEqual(generateQuestion({ skill: 'addition', level: 2, seed: 7, round })));
+  });
+
+  it('passes maxAnswer through and handles zero rounds', () => {
+    for (const q of generateLesson({ skill: 'subtraction', level: 5, seed: 1, rounds: 20, maxAnswer: 10 })) {
+      expect(q.answer).toBeLessThanOrEqual(10);
+    }
+    expect(generateLesson({ skill: 'addition', level: 1, seed: 1, rounds: 0 })).toEqual([]);
   });
 });

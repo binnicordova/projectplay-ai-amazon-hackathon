@@ -6,6 +6,7 @@
 #   scripts/devices.sh teacher    # terminal 2: build + install + run the teacher app (Metro on :8082)
 #   scripts/devices.sh verify     # terminal 3: check both apps run, are linked, and calibrated themselves
 #   scripts/devices.sh crash      # print the last crash of either app (Java or native), straight from the device
+#   scripts/devices.sh release    # build standalone release APKs of both apps into dist/release/ (no Metro needed)
 #
 # Add --reinstall to tv/teacher to uninstall the app first (clears stale app data and native libraries).
 # Add --clean to also throw away the app's Gradle outputs and rebuild them from scratch. Use it instead of
@@ -241,5 +242,45 @@ case "$cmd" in
       if [ -n "$log" ]; then echo "$log"; else printf '  no crash in the device crash log; recent start-up warnings:\n'; startup_log "$serial" "$package"; fi
     done
     ;;
-  *) die "Usage: scripts/devices.sh doctor|tv|teacher|verify|crash  (tv/teacher accept --reinstall, --clean)" ;;
+  release)
+    # Standalone APKs with the JavaScript bundled in, for judges and testers: `adb install` and open, no Metro.
+    # Expo signs release builds with the project's debug key, so they install over the dev builds too.
+    ensure_deps
+    ensure_sdk
+    OUT="$ROOT/dist/release"
+    mkdir -p "$OUT"
+
+    (cd "$ROOT/tv" && yarn_cmd install >/dev/null) || die "yarn install failed in tv/"
+    cd "$ROOT/tv/apps/expo-tv"
+    if ! grep -q LEANBACK_LAUNCHER android/app/src/main/AndroidManifest.xml 2>/dev/null; then
+      say "Generating the TV native project (expo prebuild --clean)"
+      EXPO_TV=1 npx expo prebuild --platform android --clean --no-install
+    fi
+    pin_gradle "$ROOT/tv/apps/expo-tv"
+    # Many Fire TV sticks run a 32-bit userland: ship both ARM ABIs. No teacher address is baked in:
+    # the TV finds the phone on the hotspot by itself.
+    say "Building the TV release APK (armeabi-v7a + arm64-v8a)"
+    (cd android && EXPO_TV=1 EXPO_PUBLIC_TEACHER_HOST="" ./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a,arm64-v8a) \
+      || die "TV release build failed"
+    cp android/app/build/outputs/apk/release/app-release.apk "$OUT/projectplay-tv.apk"
+
+    [ -f "$ROOT/teacher/assets/models/movenet-singlepose-lightning-int8.tflite" ] || (say "Fetching the pose model"; npm --prefix "$ROOT/teacher" run fetch-model)
+    cd "$ROOT/teacher"
+    [ -f android/gradlew ] || { say "Generating the teacher native project (expo prebuild)"; npx expo prebuild --platform android --no-install; }
+    pin_gradle "$ROOT/teacher"
+    say "Building the teacher release APK (arm64-v8a)"
+    (cd android && ./gradlew assembleRelease) || die "Teacher release build failed"
+    cp android/app/build/outputs/apk/release/app-release.apk "$OUT/projectplay-teacher.apk"
+
+    say "Release APKs"
+    ls -lh "$OUT"/*.apk
+    cat <<EOF2
+  Before publishing, install both and play one round (release builds shrink code, so test them):
+    adb -s <tv serial>    install -r "$OUT/projectplay-tv.apk"
+    adb -s <phone serial> install -r "$OUT/projectplay-teacher.apk"
+  Then attach them to a GitHub release:
+    gh release create v1.0.0 "$OUT"/*.apk --title "ProjectPlay v1.0.0" --notes "Hackathon build: install the TV APK on a Fire TV and the teacher APK on an Android phone."
+EOF2
+    ;;
+  *) die "Usage: scripts/devices.sh doctor|tv|teacher|verify|crash|release  (tv/teacher accept --reinstall, --clean)" ;;
 esac

@@ -4,6 +4,11 @@
   "private": true,
   "description": "Turn any classroom projector into a touch wall: Fire TV game + teacher phone with on-device pose detection.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binnicordova/projectplay-ai-amazon-hackathon.git"
+  },
+  "homepage": "https://github.com/binnicordova/projectplay-ai-amazon-hackathon#readme",
   "engines": {
     "node": ">=20.19"
   },
@@ -20,6 +25,7 @@
     "devices": "scripts/devices.sh doctor",
     "dev:tv": "scripts/devices.sh tv",
     "dev:teacher": "scripts/devices.sh teacher",
-    "verify:devices": "scripts/devices.sh verify"
+    "verify:devices": "scripts/devices.sh verify",
+    "release:apks": "scripts/devices.sh release"
   }
 }
