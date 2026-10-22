@@ -21,13 +21,13 @@ Turn any classroom projector into a touch wall. A Fire TV runs the game, the tea
 
 - Code: https://github.com/binnicordova/projectplay-ai-amazon-hackathon (MIT)
 - Demo video: **[YouTube link]**
-- Open source: https://github.com/binnicordova/projectplay-exercise-engine · upstream pull request: **[PR link]**
+- Open source: https://github.com/binnicordova/projectplay-exercise-engine · upstream pull requests: https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141 and https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142
 
 ## Open Source mini challenge fields
 
 - **GitHub username:** binnicordova
 - **Repo URL:** https://github.com/binnicordova/projectplay-exercise-engine
-- **Contribution URL:** **[the PR to AmazonAppDev/react-native-multi-tv-app-sample, or your fork's branch]**
+- **Contribution URLs:** https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141 (TV config plugin that crashed prebuild) and https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142 (Node and Corepack prerequisites), from the fork https://github.com/binnicordova/react-native-multi-tv-app-sample
 - **What we did:**
   - We published ProjectPlay's question engine as its own MIT library.
   - We sent fixes back to Amazon's multi-TV sample for problems we hit while building on it: a config plugin that crashed `expo prebuild`, strict-TypeScript errors, and a button that couldn't be centred.
@@ -193,7 +193,7 @@ Everything in this repository was written during the submission window except th
   - It pins a react-native-tvos release candidate (F1) and mixes Expo SDK 52 and 54 packages (F2).
   - It fails strict TypeScript (F3), and its TV config plugin crashes `expo prebuild` with a misleading Gradle error (F7).
   - It doesn't work on Node 25+ without Corepack (F9), and its button can't be centred (F10).
-  - We sent fixes upstream: **[PR link]**.
+  - We sent fixes upstream: [#141](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141) bumps the config plugin, [#142](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142) corrects the Node/Corepack prerequisites.
 - **Onboarding:** about half a day to a green build on a real Android TV, mostly spent on F2 and F7.
 - **Would we use it again?** Yes. It is the right starting point; CI with `typecheck` and `expo install --check` would catch most of what we hit.
 

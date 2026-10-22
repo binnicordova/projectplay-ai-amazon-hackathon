@@ -160,7 +160,7 @@ No phone at hand? On the TV, choose **Practice with the remote**. The D-pad move
 ## Open source
 
 - **[projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine)** (MIT): the question engine, published on its own with docs, examples and CI. Wrong answers come from real misconceptions, `diagnose()` names the mistake behind a wrong pick, and it runs anywhere from Node to Vega OS with zero dependencies. `tv/packages/exercise-engine` keeps a copy of its source.
-- **Upstream fixes** for Amazon's [multi-TV sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample), from what we hit while building on it (see the [friction log](docs/friction-log.md)).
+- **Upstream fixes** for Amazon's [multi-TV sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample), from what we hit while building on it (see the [friction log](docs/friction-log.md)): [#141](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141) bumps the TV config plugin that crashed `expo prebuild` (F7), and [#142](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142) documents the Node and Corepack versions the sample needs (F9).
 
 ## Built during the hackathon
 

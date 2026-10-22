@@ -4,15 +4,17 @@ Deadline: **Fri Oct 23, 2026, 12:00 PDT** (14:00 Lima). Aim to submit by 11:00 L
 
 ## Checklist
 
-- [ ] **Track:** Fire TV. **Mini challenge:** Open Source (publish `tv/packages/exercise-engine` as its own public MIT repo, with tests). Only add AWS Builder if you actually used an AWS service or Kiro Crew.
-- [ ] **Repository**, one of:
-  - public, with `LICENSE` detected by GitHub (visible in the About section), **or**
-  - private, shared with `testing@devpost.com` **and** `knmeiss`, `giolaq`, `anishamalde`, `mosesroth`, `emersonsklar`. Add them on submission day: invitations expire after 7 days.
-- [ ] README has setup and run instructions (it does), and the MoveNet model is committed or downloadable (`npm run fetch-model`).
-- [ ] **Demo video under 3 minutes**, public on YouTube or Vimeo, in English, with no copyrighted music. It must show the app **running on a real Fire TV device or the Fire TV/Vega simulator**.
-- [ ] **Product feedback** for every tool used (outline below).
-- [ ] **Friction log** ([`friction-log.md`](friction-log.md)), with on-device entries added.
-- [ ] Optional **feature requests** with priority (Critical / Important / Nice-to-have).
+Status as of Thu Oct 22. ✅ done · ⬜ still to do.
+
+- ✅ **Mini challenge material:** [projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine) (MIT, CI) plus upstream PRs [#141](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141) and [#142](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142).
+- ⬜ **On Devpost, select:** track **Fire TV**, mini challenge **Open Source**. Only add AWS Builder if you actually used an AWS service or Kiro Crew.
+- ✅ **Repository:** [binnicordova/projectplay-ai-amazon-hackathon](https://github.com/binnicordova/projectplay-ai-amazon-hackathon) is public, GitHub detects MIT in the About section, and CI is green.
+- ✅ README has setup and run instructions, a "Try it in 2 minutes" section, and the MoveNet model committed.
+- ⬜ **Release APKs:** run `npm run release:apks`, install both, play one round, then `gh release create v1.0.0 dist/release/*.apk` (the README's "Try it" links to it).
+- ⬜ **Demo video under 3 minutes**, public on YouTube or Vimeo, in English, with no copyrighted music. It must show the app **running on a real Fire TV device or the Fire TV/Vega simulator**. Script: [`video-script.md`](video-script.md).
+- ⬜ **Devpost text and product feedback:** drafted in [`devpost.md`](devpost.md). Fill in every **[bracket]** (video link, Fire TV device notes, onboarding times), then paste.
+- ⬜ **Friction log** ([`friction-log.md`](friction-log.md)): 15 entries; add what you hit on the real Fire TV.
+- ✅ Optional **feature requests** with priority: the table at the end of `devpost.md`.
 
 ## Video shot list (≈ 2:45)
 

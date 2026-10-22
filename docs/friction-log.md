@@ -65,7 +65,7 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Actual:** `@react-native-tvos/config-tv@0.0.10` (pinned by the sample) calls `glob.sync` without declaring `glob`. With glob v13 hoisted, prebuild throws `withAndroidDangerousBaseMod: Cannot read properties of undefined (reading 'sync')`. Expo then reuses the half-generated `android/` on the next run: Gradle `namespace "com.projectplay"` vs Kotlin `package com.projectplay.tv` → `Unresolved reference 'R'` / `'BuildConfig'`, an error far away from the real cause.
 - **Severity:** High. It blocks the first device build, and the message is misleading.
 - **Workaround:** Upgraded to `@react-native-tvos/config-tv@^0.1.7` (declares `glob`). Our `scripts/devices.sh tv` regenerates `android/` with `expo prebuild --clean` when the TV manifest is incomplete.
-- **Suggestion:** Bump config-tv in the sample. Ideally Expo should not reuse a native folder from a prebuild that failed.
+- **Suggestion:** Bump config-tv in the sample (we sent it upstream: [AmazonAppDev/react-native-multi-tv-app-sample#141](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141)). Ideally Expo should not reuse a native folder from a prebuild that failed.
 
 
 ### F8 · `./gradlew clean` breaks the next build, and the app then crashes at launch
@@ -86,7 +86,7 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Actual:** `sh: corepack: command not found`. Node stopped bundling Corepack from v25, and the sample has no vendored Yarn release (`.yarn/releases`, `yarnPath`) to fall back on. Plain `yarn` is no option either: a global Yarn 1 breaks the workspace.
 - **Severity:** Medium. Every TV command in the README fails on a current Node, with nothing pointing at the Node version.
 - **Workaround:** Use Node 24 LTS, or install Corepack separately (`npm install -g corepack`). A machine where Corepack once ran still has Yarn in its cache: `node ~/.cache/node/corepack/v1/yarn/4.5.0/yarn.js check` (from `tv/`) works without it.
-- **Suggestion:** Pin a Node version in the sample (`.nvmrc` / `engines`) or commit the Yarn release with `yarnPath`, so it works without Corepack.
+- **Suggestion:** Pin a Node version in the sample (`.nvmrc` / `engines`) or commit the Yarn release with `yarnPath`, so it works without Corepack. We sent the `.nvmrc` and corrected prerequisites upstream: [#142](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142).
 
 ### F10 · The sample's `FocusablePressable` cannot be centred
 - **Task:** Centre a single remote-control button under the lobby content on the projected wall (onn 4K Google TV box, 1920×1080).
