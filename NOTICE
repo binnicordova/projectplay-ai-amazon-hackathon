@@ -1,0 +1,7 @@
+ProjectPlay
+Copyright (c) 2026 Binni Cordova and ProjectPlay contributors
+Licensed under the MIT License (see LICENSE).
+
+Third-party components keep their own licenses:
+- tv/ is derived from AmazonAppDev/react-native-multi-tv-app-sample (MIT-0), see tv/LICENSE-sample-MIT-0.
+- teacher/assets/models/movenet-singlepose-lightning-int8.tflite is © Google, Apache-2.0.
