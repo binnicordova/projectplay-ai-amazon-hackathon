@@ -6,7 +6,7 @@
 - Under 3 minutes, in English, public on YouTube or Vimeo, with no copyrighted music.
 - It **must show the app running on a real Fire TV device or on the Fire TV / Vega simulator.**
 
-**Pace:** the voiceover is about 322 words, roughly 140 words per minute with pauses. Read it once with a timer before recording. If it runs long, cut the lines marked *(optional)* first.
+**Pace:** the voiceover is about 337 words, roughly 140 words per minute with pauses. Read it once with a timer before recording. If it runs long, cut the lines marked *(optional)* first.
 
 ---
 
@@ -23,7 +23,7 @@
 | Picture | Voiceover |
 |---|---|
 | The cost chart from the README (`docs/images/cost-comparison.svg`), bars appearing one by one, ProjectPlay's tiny orange bar last. | Interactive whiteboards and panels cost from about sixteen hundred to more than six thousand dollars per classroom. ProjectPlay costs about seventy-five: a Fire TV Stick and a phone tripod. One SMART Board pays for fifty-six classrooms. |
-| The impact map (`docs/images/impact-map.svg`): zoom from South America to the shaded Andean regions, then the "6 in 10" number. | And in Peru, about six in ten public primary schools have no internet. So ProjectPlay never needs it. |
+| The impact map (`docs/images/impact-map.svg`): zoom from South America to the shaded Andean regions, then the "6 in 10" number. Cut to the Americas map (`docs/images/americas-global-impact.svg`) and the "≈ 3 million schools" number. | And in Peru, about six in ten public primary schools have no internet. Across Latin America it's the same story, and worldwide about three million schools are offline. So ProjectPlay never needs the internet. |
 
 ## 0:45–1:05 · Setup (the Fire TV moment)
 
@@ -58,7 +58,7 @@
 
 | Picture | Voiceover |
 |---|---|
-| Back to the children cheering at a green tile. Then the map again with "108,239 schools" and the logo, `github.com/binnicordova/projectplay-ai-amazon-hackathon`, "Open source · No internet needed · Private". | Peru alone has more than a hundred thousand kindergartens and schools. Every one with a projector can have a wall that answers back, for about two dollars fifty per child, with no internet. ProjectPlay: open source, and ready for the next class. |
+| Back to the children cheering at a green tile. Then the map again with "108,239 schools" and the logo, `github.com/binnicordova/projectplay-ai-amazon-hackathon`, "Open source · No internet needed · Private". | From the Andes to the three million schools around the world without internet, every classroom with a projector can have a wall that answers back, for about two dollars fifty per child. ProjectPlay: open source, and ready for the next class. |
 
 ---
 

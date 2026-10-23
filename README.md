@@ -41,6 +41,25 @@ The price of one SMART Board equips **56 classrooms** with ProjectPlay. Prices c
 - **Kindergarten, primary and secondary.** Peru has **108,239 basic-education services: 54,087 kindergarten (inicial), 38,942 primary and 15,210 secondary** ([Minedu ESCALE, July 2020, via UNESCO IIEP-SITEAL](https://siteal.iiep.unesco.org/pais/peru)). ProjectPlay has lessons for each: pictures, big tiles and a read-aloud line for 4–6-year-olds; letters, syllables, numbers and English for 6–12; fractions and equations with traps for teenagers. Any of these classrooms with a projector or a TV can play.
 - **Cheap to run, nothing to maintain.** No subscription, no backend, no accounts for children; camera images never leave the phone.
 
+### Beyond Peru: the Americas and the world
+
+![Map of the Americas shaded by the share of primary schools without internet, a ranked list from Nicaragua 96.5% to Uruguay and the United States 0%, and two global numbers: about 3 million schools not connected and 6 in 10 primary schools offline](docs/images/americas-global-impact.svg)
+
+The same gap repeats across Latin America, where the share of **primary schools without internet** is (UNESCO Institute for Statistics, latest year per country, via [Our World in Data](https://ourworldindata.org/grapher/primary-schools-with-access-to-internet)):
+
+| Country | Without internet | | Country | Without internet |
+|---|---|---|---|---|
+| Nicaragua | **96.5%** (2022) | | Venezuela | 53.0% (2024) |
+| Paraguay | **75.8%** (2019) | | Colombia | 52.8% (2022) |
+| Honduras | **75.3%** (2019) | | Panama | 51.1% (2024) |
+| Guatemala | **70.3%** (2019) | | Ecuador | 40.6% (2024) |
+| Brazil | **61.7%** (2024) | | Argentina | 35.2% (2023) |
+| Peru | **53.3%** (2024) | | Dominican Republic | 35.2% (2024) |
+
+Worldwide, **only about 40% of primary schools are connected** ([UNESCO, 2023](https://learningenglish.voanews.com/a/7314643/p1.html)), and **nearly half of the world's ~6 million schools, about 3 million, have no internet** ([Giga, UNICEF–ITU, 2024](https://swissinfo.ch/eng/international-geneva/the-un-plans-to-connect-every-school-to-the-internet-by-2030/83325727)).
+
+**Who could benefit.** Any of those schools with a projector or a TV, from kindergarten to secondary, can run a class without the internet, and the teacher's phone is the only other device. The lessons are in Spanish today, which covers most of Latin America; the lesson format and the AI chat are not tied to one language, so English and Portuguese lessons are the next step. Each school that already has a projector needs about $75 per classroom.
+
 ### Built on Amazon Fire TV
 
 - **The Fire TV Stick is the classroom computer.** Plugged into the projector's HDMI port, it runs the whole game: the lesson player, levels, points and the touch wall. It finds the teacher's phone by itself and keeps the screen awake.
