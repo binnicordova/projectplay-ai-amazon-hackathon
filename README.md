@@ -25,6 +25,18 @@
 
 Built for the [Build, Ship, Shape: Amazon Developer Hackathon](https://amazonappdev2026.devpost.com/) · **Fire TV track** (computer vision, multi-modal UX, family entertainment).
 
+## ProjectPlay at a glance
+
+| | |
+|---|---|
+| **100% offline in class** | No school Wi-Fi, no mobile data, no server, no account. The phone opens its own hotspot and the Fire TV joins it. Built for the schools UNESCO counts as unconnected: only ~40% of primary schools worldwide are online, and about 6 in 10 public primary schools in Peru are not. |
+| **Nothing extra to download** | One install per device and you're done: the teacher APK is 52.5 MB and the Fire TV APK 55.3 MB, with the pose model (3 MB), all 11 starter lessons (121 exercises, ~104 KB) and every picture inside. No content packs, no updates needed to teach. The only optional online feature is creating a new lesson with AI: 10–20 KB per lesson. |
+| **≈ $75 per classroom** | A Fire TV Stick plus a phone tripod, on the projector or TV the school already has, and the teacher's own Android phone. Interactive boards cost $1,608–$6,491 per classroom: one SMART Board pays for 56 ProjectPlay classrooms (about $2.50 per child in a class of 30). |
+| **Works on any projector** | Fire TV in the projector's HDMI port; the projection becomes a touch wall for a whole class, two teams at once or one child alone. |
+| **Setup in 4 steps, about a minute** | 1. Turn on the phone's hotspot. 2. Connect the Fire TV to it and open both apps: the TV finds the phone by itself. 3. Put the phone on a tripod facing the wall: the TV flashes four squares and the phone calibrates automatically. 4. Pick a lesson and tap **Jugar en la TV**. |
+| **Learning that feels like a game** | Children answer by pointing. Levels rise as the class gets answers right, fast answers and streaks score more, mistakes never cost points, teams compete and solo players chase three stars and a record. Lessons from kindergarten (ages 4–6) to secondary (fractions, equations). |
+| **Private by design** | Camera images never leave the phone; only ~60-byte pointer events reach the TV. No child accounts. |
+
 ## In a real room: field test
 
 Children playing on a projected brick wall, with a Fire TV driving the projector and the teacher's phone on a tripod behind them. Photos from our field test; faces are not shown.
