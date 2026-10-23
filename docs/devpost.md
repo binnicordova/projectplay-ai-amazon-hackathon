@@ -223,6 +223,7 @@ The TV always plays with the teacher's phone: the lessons live on the phone. Abo
 - **Jotai:** one store per app, small, and it works on all three toolchains (v2).
 - **DeepSeek API (`deepseek-flash`, JSON mode):** OpenAI-compatible, cheap enough for a teacher's budget, and quick to wire with plain `fetch`. JSON mode guarantees JSON, not *our* JSON: there is no schema, so we validate every answer and send one correction back (F17).
 - **react-native-svg + Twemoji:** light, sharp pictures on Fire OS; on Vega the SVG renderer is a separate port, so we fall back to emoji (F16).
+- **Google Gemini:** drew the app icon and the Fire TV banner (`docs/brand/icon-source.png`). One prompt gave a usable, child-friendly image; we still had to cut the launcher, adaptive, themed and banner sizes ourselves (`scripts/brand-icons.sh`). Would use again for artwork.
 - **Claude Code (AI coding agent):** used throughout. It built the apps with us, debugged on the devices over ADB, and kept the friction log. We share its project instructions in `AGENTS.md`.
 
 ## Feature requests (optional)
