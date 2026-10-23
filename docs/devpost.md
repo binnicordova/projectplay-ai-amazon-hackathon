@@ -20,7 +20,7 @@ A Fire TV Stick and the teacher's phone turn any classroom projector into a touc
 ## Links
 
 - Code: https://github.com/binnicordova/projectplay-ai-amazon-hackathon (MIT)
-- Demo video: **[YouTube link]**
+- Demo video: https://youtu.be/qqOpJ-z_jQY
 - Open source: https://github.com/binnicordova/projectplay-exercise-engine · upstream pull requests: https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141 and https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142
 
 ## Open Source mini challenge fields
@@ -161,7 +161,7 @@ Everything in this repository was written during the submission window except th
 ## Testing instructions (for judges)
 
 The TV always plays with the teacher's phone: the lessons live on the phone. About 5 minutes.
-1. Install `projectplay-teacher.apk` on an Android phone (Android 8+, camera) and `projectplay-tv.apk` on the Fire TV (`adb install`). Both APKs are on the GitHub release page **[release link]**.
+1. Install `projectplay-teacher.apk` on an Android phone (Android 8+, camera) and `projectplay-tv.apk` on the Fire TV (`adb install`). Both APKs are on the GitHub release page: https://github.com/binnicordova/projectplay-ai-amazon-hackathon/releases/tag/v1.0.0
 2. Turn on the phone's hotspot and connect the Fire TV to it. Open both apps. The TV finds the phone by itself.
 3. On the phone, open **Biblioteca**, pick a lesson (try *Sílabas de la granja* or *Fracciones con números grandes*) and tap **Usar en clase**.
 4. Point the phone at the TV or projector screen from 2–4 m away and tap **Jugar en la TV**. The TV flashes four squares and the phone calibrates.

@@ -82,7 +82,7 @@
 - [ ] Final length under **2:55**.
 
 **Publish**
-- **Visibility:** Public (not Unlisted). Copy the link into Devpost.
+- **Visibility:** Public (not Unlisted or Private), with **Allow embedding** on (Devpost embeds the player). Link: https://youtu.be/qqOpJ-z_jQY
 - **Title:** `ProjectPlay: turn any classroom projector into a touch wall (Fire TV + phone, offline)`
 - **Description:**
 

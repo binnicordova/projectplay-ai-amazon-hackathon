@@ -9,7 +9,7 @@
 ![No internet needed in class](https://img.shields.io/badge/internet-not%20needed%20in%20class-brightgreen.svg)
 ![About $75 per classroom](https://img.shields.io/badge/cost-%E2%89%88%20%2475%20per%20classroom-orange.svg)
 
-<!-- Demo video: add the YouTube link here on submission day. -->
+**▶ Demo video (3 min): [youtu.be/qqOpJ-z_jQY](https://youtu.be/qqOpJ-z_jQY)** · **Download: [ProjectPlay v1.0.0 APKs](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/releases/tag/v1.0.0)** (TV + teacher)
 
 **Turn any classroom projector into a touch wall.** A Fire TV plugged into the projector runs the game; the teacher's phone, on a tripod, watches the children with on-device pose detection and turns a pointing hand into a touch. Classes need no school Wi-Fi, no internet, no server and no extra hardware, and no images ever leave the phone.
 
