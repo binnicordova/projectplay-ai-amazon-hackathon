@@ -161,7 +161,7 @@ The TV always plays with the teacher's phone: the lessons live on the phone. Abo
 2. Turn on the phone's hotspot and connect the Fire TV to it. Open both apps. The TV finds the phone by itself.
 3. On the phone, open **Biblioteca**, pick a lesson (try *Sílabas de la granja* or *Fracciones con números grandes*) and tap **Usar en clase**.
 4. Point the phone at the TV or projector screen from 2–4 m away and tap **Jugar en la TV**. The TV flashes four squares and the phone calibrates.
-5. Stand in front of the screen and point at a tile with your arm raised until it fills. No room to stand? The Fire TV remote moves a cursor during the class (OK selects, ⏩ skips), and the phone's **touchpad** works too.
+5. Stand in front of the screen and point at a tile with your arm raised until it fills. No room to stand? The Fire TV remote moves a cursor during the class (OK selects, ⏩ skips).
 6. With internet on the phone, open **Crear con IA** and ask for a lesson in Spanish, e.g. "créame 6 ejercicios de la tabla del 7 para niños de 8 años".
 
 **Building from source:** see the README, or `npm run setup && npm run check`.

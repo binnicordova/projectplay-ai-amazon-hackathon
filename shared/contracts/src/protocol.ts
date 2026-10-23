@@ -33,7 +33,7 @@ export const DEFAULT_PORT = 8787;
 /** Pointer coordinates may drift slightly outside the projection while a hand moves in/out. */
 export const POINTER_MARGIN = 0.25;
 
-/** 0 = the child's left hand, 1 = the right hand (or a single pointer such as the touchpad). */
+/** 0 = the child's left hand, 1 = the right hand (or a lone pointer). */
 export type HandId = 0 | 1;
 
 // ---------------------------------------------------------------------------

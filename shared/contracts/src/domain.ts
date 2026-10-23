@@ -56,7 +56,7 @@ export function teamForX(x: number): TeamId {
 /**
  * The phone tracks one child per camera lane: player 1 is the left lane (team A),
  * player 2 the right lane (team B). Odd ids stay on A if more lanes are added later.
- * With one team, every player is on it, whichever lane (or touchpad half) they come from.
+ * With one team, every player is on it, whichever lane they come from.
  */
 export function teamForPlayer(player: PlayerId, teamCount: TeamCount = DEFAULT_TEAM_COUNT): TeamId {
   if (teamCount === 1) return 'A';

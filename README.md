@@ -96,14 +96,14 @@ projectplay/
 ├─ teacher/                   Phone app: Expo SDK 56 (RN 0.85), Expo Router, Jotai, dev build
 │  ├─ assets/lessons/         the starter collection (one JSON file per lesson)
 │  └─ src/
-│     ├─ app/                 routes: home · library · lesson/[id] · create · calibrate · class · touchpad
+│     ├─ app/                 routes: home · library · lesson/[id] · create · calibrate · class
 │     ├─ features/
 │     │  ├─ perception/       domain (pose math, homography) · application · infrastructure (camera) · ui
 │     │  ├─ link/             domain (RFC 6455 codec, SHA-1) · application (LinkService) · infrastructure (TCP)
 │     │  ├─ library/          domain (catalog, records) · application (use cases) · infrastructure (files) · ui (gallery)
 │     │  ├─ authoring/        domain (AI reply → lesson, prompt) · application (chat) · infrastructure (DeepSeek) · ui (chat)
 │     │  ├─ pictures/         Twemoji art and the Picture component
-│     │  └─ console/          start a lesson, live class controls, touchpad fallback
+│     │  └─ console/          start a lesson, live class controls
 │     ├─ composition/         the only place that wires adapters to use cases
 │     └─ ui-kit/
 └─ tv/                        Fork of AmazonAppDev/react-native-multi-tv-app-sample (Yarn 4 workspace)
@@ -148,7 +148,7 @@ cd teacher && npm run android             # development build; Expo Go cannot ru
 2. Put the phone on a tripod behind the children, facing the projected image. Calibration is automatic: when the class starts, the TV flashes four white squares for about 2 seconds and the phone finds the projection. (Tapping the 4 corners by hand on **Check camera view** still works as a fallback.)
 3. Pick a lesson in **Biblioteca** (or create one in **Crear con IA**), tap **Empezar clase**, choose who plays and how many cards, and press **Jugar en la TV**.
 
-The TV needs the phone: lessons come from it. On the Fire TV / Vega simulators, the remote's D-pad moves a cursor during a class and OK selects. No tripod? Use **touchpad** in the teacher app.
+The TV needs the phone: lessons come from it. On the Fire TV / Vega simulators, the remote's D-pad moves a cursor during a class and OK selects.
 
 **Release APKs:** `scripts/devices.sh release` builds both apps with the JavaScript bundled in (no Metro needed) into `dist/release/`, ready to attach to a GitHub release.
 
