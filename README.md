@@ -25,6 +25,19 @@
 
 Built for the [Build, Ship, Shape: Amazon Developer Hackathon](https://amazonappdev2026.devpost.com/) · **Fire TV track** (computer vision, multi-modal UX, family entertainment).
 
+## In a real room: field test
+
+Children playing on a projected brick wall, with a Fire TV driving the projector and the teacher's phone on a tripod behind them. Photos from our field test; faces are not shown.
+
+| | |
+|---|---|
+| ![Two children reach for answer tiles on a projected wall: team A on the left half, team B on the right](docs/photos/ai-amazon-hackathon-demo-photo1.jpeg) | ![A child points at a number tile on the projected wall while the teacher's phone on a tripod shows the camera view](docs/photos/ai-amazon-hackathon-demo-photo2.jpeg) |
+| **Two teams, one wall.** Each child answers on their own half by pointing and holding. | **The phone sees what the wall sees.** The tripod phone tracks the child and turns the raised hand into a cursor. |
+| ![The teacher phone on a tripod in front of the projected game, plugged in, showing the class screen](docs/photos/ai-amazon-hackathon-setup-env.jpeg) | ![The teacher app's calibration screen: the projection was found automatically and its four corners are marked](docs/photos/ai-amazon-hackathon-demo-calibration.jpeg) |
+| **The whole setup:** a projector, a Fire TV and a phone on a tripod. No school Wi-Fi, no internet. | **Automatic calibration:** the TV flashes four squares and the phone finds the projection by itself. |
+| ![The teacher's class screen: camera view of the wall with Team A and Team B, and each team's answers and times](docs/photos/ai-amazon-hackathon-demo-game-true-false.jpeg) | <video src="https://github.com/binnicordova/projectplay-ai-amazon-hackathon/raw/main/docs/photos/ai-amazon-hackathon-demo-480-school.mp4" controls muted width="100%"></video> |
+| **The teacher's view during a class:** live camera, scores and every answer with its time. | **Clip from the class** ([open the 13 s video](docs/photos/ai-amazon-hackathon-demo-480-school.mp4)). |
+
 ## Why it matters
 
 ### An interactive wall for about $75, not $1,600–$6,500
