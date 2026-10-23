@@ -4,7 +4,14 @@
  */
 import type { TeacherMessage } from '@projectplay/contracts';
 import { createStore } from 'jotai';
+import { makeAskForLesson, makeLessonChat, type LessonChat } from '../features/authoring/application/lessonChat';
+import { aiSettingsFromEnv, chatModelFor } from '../features/authoring/infrastructure/providers';
 import { selectedTeamsAtom, teamCountFor } from '../features/console/application/console';
+import { makeLibrary, type Library } from '../features/library/application/library';
+import { fileLessonStore } from '../features/library/infrastructure/fileLessonStore';
+import { STARTER_LESSON_FILES } from '../features/library/infrastructure/starterLessons.generated';
+import { iconArtAtom } from '../features/pictures/application/pictures';
+import { TWEMOJI_ART } from '../features/pictures/infrastructure/twemojiArt.generated';
 import { createLinkService, tvConnectedAtom, tvSnapshotAtom, type LinkService } from '../features/link/application/linkService';
 import { TcpWebSocketServer } from '../features/link/infrastructure/tcpWebSocketServer';
 import { AutoCalibrator, autoCalibrationAtom, type LumaFrame } from '../features/perception/application/autoCalibration';
@@ -35,12 +42,34 @@ export interface AppServices {
   readonly cancelAutoCalibration: () => void;
   /** Greyscale camera frames, only while auto-calibrating. */
   readonly feedLumaFrame: (frame: LumaFrame) => void;
+  /** Starter lessons and the teacher's own, records included. */
+  readonly library: Library;
+  /** Creating lessons by chatting with the AI (needs internet). */
+  readonly chat: LessonChat;
 }
+
+const newLessonId = () => `ai-${Date.now().toString(36)}-${Math.floor(Math.random() * 36 ** 4).toString(36)}`;
 
 export function createAppServices(appVersion: string): AppServices {
   const store = createStore();
   const link = createLinkService(new TcpWebSocketServer(), store, { appVersion });
   const pipeline = new PerceptionPipeline((message) => link.send(message));
+
+  // Lessons: bundled pictures, the starter collection plus saved lessons, and the AI chat.
+  store.set(iconArtAtom, TWEMOJI_ART);
+  const library = makeLibrary({ store, files: fileLessonStore, starterFiles: STARTER_LESSON_FILES });
+  void library.load().then(() => console.log(`[library] ${STARTER_LESSON_FILES.length} starter lessons loaded`));
+  const chat = makeLessonChat(
+    store,
+    makeAskForLesson({ model: chatModelFor(aiSettingsFromEnv()), now: () => new Date().toISOString(), newId: newLessonId, random: Math.random }),
+  );
+  // The TV stores nothing: the best score of each lesson is kept here when a class ends.
+  store.sub(tvSnapshotAtom, () => {
+    const snapshot = store.get(tvSnapshotAtom);
+    if (snapshot?.phase !== 'summary' || !snapshot.lessonId) return;
+    const teams = snapshot.teams ?? 2;
+    void library.recordScore(snapshot.lessonId, teams, teams === 1 ? snapshot.scores.A : Math.max(snapshot.scores.A, snapshot.scores.B));
+  });
 
   const applyCalibration = () => pipeline.setCalibration(store.get(homographyAtom), store.get(calibrationAtom));
   applyCalibration();
@@ -129,5 +158,7 @@ export function createAppServices(appVersion: string): AppServices {
     autoCalibrate: () => calibrator.start(),
     cancelAutoCalibration: () => calibrator.cancel(),
     feedLumaFrame: (frame) => calibrator.onLumaFrame(frame),
+    library,
+    chat,
   };
 }

@@ -4,7 +4,7 @@
  * Two teams each own one half of the wall, matching the camera lanes on the phone;
  * one player gets the whole wall (the phone then looks at it with a single lane).
  */
-import type { TeamId } from '@projectplay/contracts';
+import { visualText, type TeamId, type Visual } from '@projectplay/contracts';
 import type { NormalizedRect, Target } from './dwell';
 
 export const TEAM_AREA: Readonly<Record<TeamId, NormalizedRect>> = {
@@ -29,38 +29,51 @@ function grid(area: NormalizedRect, columns: number, rows: number): NormalizedRe
   return cells;
 }
 
-export const optionTargetId = (team: TeamId, value: number) => `${team}:option:${value}`;
+export const optionTargetId = (team: TeamId, index: number) => `${team}:option:${index}`;
 export const truthTargetId = (team: TeamId, value: boolean) => `${team}:truth:${value}`;
 
 export interface BoardTarget extends Target {
   readonly team: TeamId;
+  /** The option's index (choice cards) or true/false. */
   readonly value: number | boolean;
+  /** What the tile shows. */
+  readonly visual: Visual;
+  /** The tile in words (for logs and tests). */
   readonly label: string;
 }
 
 /**
- * Four answer tiles per team, 2 × 2 on its half. One player gets them in a single row across
- * the whole wall instead: each tile is as tall as the board, so a child of any height reaches
- * every answer, and choosing one means walking to it.
+ * Two to four answer tiles per team on its half: side by side up to three (tall tiles that small
+ * arms reach), 2 × 2 for four. One player gets them in a single row across the whole wall:
+ * each tile is as tall as the board, so a child of any height reaches every answer, and
+ * choosing one means walking to it.
  */
-export function choiceTargets(options: readonly number[], teams: readonly TeamId[]): BoardTarget[] {
+export function choiceTargets(options: readonly Visual[], teams: readonly TeamId[]): BoardTarget[] {
   return teams.flatMap((team) => {
     const area = areaOf(team, teams);
-    const cells = teams.length === 1 ? grid(area, options.length, 1) : grid(area, 2, Math.ceil(options.length / 2));
-    return cells
-      .slice(0, options.length)
-      .map((rect, i) => ({ id: optionTargetId(team, options[i]!), rect, team, value: options[i]!, label: String(options[i]) }));
+    const cells = teams.length === 1 || options.length <= 3 ? grid(area, options.length, 1) : grid(area, 2, Math.ceil(options.length / 2));
+    return cells.slice(0, options.length).map((rect, i) => ({
+      id: optionTargetId(team, i),
+      rect,
+      team,
+      value: i,
+      visual: options[i]!,
+      label: visualText(options[i]!),
+    }));
   });
 }
 
-/** TRUE / FALSE tiles per team, below the statement. */
+export const TRUE_LABEL = 'VERDADERO';
+export const FALSE_LABEL = 'FALSO';
+
+/** VERDADERO / FALSO tiles per team, below the statement. */
 export function truthTargets(teams: readonly TeamId[]): BoardTarget[] {
   return teams.flatMap((team) => {
     const area = areaOf(team, teams);
     const [yes, no] = grid({ ...area, y: area.y + 0.2, height: area.height - 0.2 }, 2, 1);
     return [
-      { id: truthTargetId(team, true), rect: yes!, team, value: true, label: 'TRUE' },
-      { id: truthTargetId(team, false), rect: no!, team, value: false, label: 'FALSE' },
+      { id: truthTargetId(team, true), rect: yes!, team, value: true, visual: { kind: 'text', text: TRUE_LABEL }, label: TRUE_LABEL },
+      { id: truthTargetId(team, false), rect: no!, team, value: false, visual: { kind: 'text', text: FALSE_LABEL }, label: FALSE_LABEL },
     ];
   });
 }

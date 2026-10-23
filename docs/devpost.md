@@ -10,7 +10,7 @@ ProjectPlay
 
 ## Tagline (max ~200 characters)
 
-Turn any classroom projector into a touch wall. A Fire TV runs the game, the teacher's phone watches the children, and kids answer by pointing at the wall. No internet, no new hardware.
+Turn any classroom projector into a touch wall. A Fire TV plays the lesson, the teacher's phone watches the children, kids answer by pointing. Lessons for ages 4–15, made by chatting with AI.
 
 ## Track and mini challenge
 
@@ -58,17 +58,19 @@ The answer was a Fire TV stick in the projector and the teacher's own phone on a
 
 ProjectPlay turns the projected image into a touch wall for a whole class.
 
-- **The Fire TV runs the game** on the projector: arithmetic questions with four number tiles per team, or TRUE / FALSE.
+- **The Fire TV plays the lesson** on the projector: pictures, words, numbers or groups to count, with two to four tiles per team, or VERDADERO / FALSO.
 - **The teacher's phone stands on a tripod behind the children.** It tracks their bodies with an on-device pose model and turns a raised, pointing hand into a cursor on the wall.
 - **Children answer by pointing.** A child reaches for a tile and holds it for about half a second. The tile fills up and turns their team's colour.
   - They can change their mind until the countdown ends.
   - Team A plays on the left half of the wall, team B on the right.
   - In **one-player** mode a single child uses the whole wall.
 - **Setup takes seconds.** The phone opens a hotspot and the TV finds it by itself. Then the TV flashes four white squares for about two seconds, and the phone finds the projection on the wall automatically. Nobody taps corners and nobody types an IP address.
-- **The teacher runs the class from the phone:** pick a skill, start, go to the next question, and see each round's result.
-- **The questions are built offline by an adaptive engine.** It produces addition, subtraction and missing-addend questions, with wrong answers built from real misconceptions (counting slips, using the wrong operation, copying a number from the question). Difficulty adapts to the class.
-- **There is no backend, no internet and no account.** Camera frames never leave the phone; only tiny pointer events (~60 bytes each) travel to the TV over the local hotspot.
-- **No phone? Practice with the remote:** the Fire TV remote becomes a cursor, so the game also works on the Fire TV and Vega simulators.
+- **A library of lessons on the teacher's phone.** It ships with 11 lessons (121 cards) written from a real teacher's requests: numbers 1–9 for 6-year-olds, letters for 5-year-olds, letters a–m with animals, the sounds of syllables with farm animals, the syllables MA, PA, RO, a lesson for girls who struggle to say the strong R in *perro*, fractions with big numbers and equations with traps for teenagers, English words from pictures, complete the sentence, and more-or-less.
+- **New lessons by chatting with the AI.** With internet, the teacher types what the class needs in their own words ("créame 6 ejercicios de la tabla del 7 para niños de 8 años") and can ask for changes ("más fácil", "para 5 años"). DeepSeek picks the exercise; the phone's engine computes every answer, and the teacher sees the cards, right answers in green, before saving. Creating costs 10–20 KB of data; classes never need the internet.
+- **Made for each age.** Inicial (4–6) gets pictures, two or three big tiles, longer timers, and a line on the phone for the teacher to read aloud ("Repitan conmigo: pe-RRO"). Primaria and secundaria get more tiles and more time for harder maths.
+- **Levels, points and streaks keep kids playing.** Each lesson has easy, medium and hard cards. The class starts easy and climbs a level after two strong rounds ("¡Subimos al nivel 2!"). Right answers score more on harder cards and when answered fast, a fire streak grows on the team's score, and wrong answers never cost points. Two teams compete for the win; one player earns one to three stars and chases the lesson's record, kept on the phone.
+- **The teacher runs the class from the phone:** pick a lesson, start, skip to the next card, and see each round's result and points.
+- **There is no backend and no account.** Camera frames never leave the phone; the lesson travels to the TV once, and then only tiny pointer events (~60 bytes each) cross the local hotspot. The TV keeps nothing: lesson and pictures live in memory for one class.
 
 ## How we built it
 
@@ -79,6 +81,9 @@ Three apps in one repository, all TypeScript:
   - VisionCamera v5 delivers 960×720 frames from the main back camera.
   - A GPU resizer scales each frame so every camera *lane* (one per team) is exactly 192 pixels.
   - MoveNet SinglePose Lightning (TFLite, INT8, 3 MB) runs through react-native-fast-tflite, all inside a camera-thread worklet.
+- **Lessons:** each lesson is a small JSON file (3–14 KB) with a strict, never-throwing checker shared by both apps. Pictures are Twemoji code points; the phone sends the TV only the SVGs a lesson shows.
+- **Exercise engine (on the phone):** a rule-based Spanish syllable splitter (tested on 52 words, so *manzana* never starts with "MA"), a 125-word picture lexicon, and generators for numbers, comparing, letters, syllable sounds, a hard sound, sentences, English, arithmetic, fractions and equations. Wrong options are real mistakes: a look-alike letter, a near count, adding tops and bottoms of fractions, a minus sign not distributed. Same request and seed, same cards.
+- **AI chat, domain-driven and functional:** the AI answers in JSON mode with an exercise request (or cards for topics the engine doesn't cover); the domain decodes and clamps it, the engine builds the cards, and an invalid answer goes back to the model once with the reason. The provider is a strategy (a `ChatModel` function per provider), so DeepSeek can be swapped without touching the domain. Lint rules forbid classes and `throw` in these features' domain and application code.
 - **Speed:** one lane runs per frame. Lanes with a child take turns, and empty lanes are checked every fourth frame. A pose waits for one inference, not two.
 - **From hand to cursor:**
   - The hand is estimated as wrist + 30% of the forearm, falling back to a lifted elbow when the wrist is lost against the bright wall.
@@ -92,14 +97,15 @@ Three apps in one repository, all TypeScript:
 **Fire TV app.** Built on Amazon's `react-native-multi-tv-app-sample`.
 - **Fire OS:** Expo SDK 54 + react-native-tvos with Expo Router.
 - **Vega OS:** the Vega SDK (React Native 0.72), sharing the same screens.
-- **Shared TV package:** the game session reducer, dwell selection (progress fills while a hand holds a tile and drains slowly when it slips), discovery of the phone, the calibration pattern layer, and the remote-control cursor.
+- **Shared TV package:** the lesson player (a pure reducer with adaptive levels, points and streaks), dwell selection (progress fills while a hand holds a tile and drains slowly when it slips), discovery of the phone, the calibration pattern layer, and the remote-control cursor.
+- **Pictures:** react-native-svg draws the Twemoji SVGs on Fire OS; Vega shows the same pictures as system emoji.
 - **Fast updates:** cursors and tile fills update through `Animated` values, never React state, so 15 updates per second per hand cost nothing.
 
-**Shared contracts.** A zero-dependency wire protocol. Its decoders never throw, so a bad packet can never crash a class. It compiles under all three toolchains.
+**Shared contracts.** A zero-dependency wire protocol and lesson format. Their decoders never throw, so a bad packet or a bad lesson file can never crash a class. It compiles under all three toolchains.
 
 **Quality.**
-- 224 unit tests, including synthetic camera images of the calibration pattern.
-- An end-to-end test that runs the real phone server against the real TV client over a WebSocket, calibration included.
+- 396 unit tests, including synthetic camera images of the calibration pattern, every exercise generator × age group × 25 seeds through the lesson checker, and the AI adapter against recorded responses.
+- An end-to-end test that runs the real phone server against the real TV client over a WebSocket: calibration, then a starter lesson streamed to the TV, played and scored back to the phone.
 - Strict TypeScript, and lint rules that enforce the domain → application → infrastructure layering.
 - A device script (`scripts/devices.sh doctor | tv | teacher | verify | crash`) that checks both devices, the link and the calibration in one command.
 
@@ -111,7 +117,9 @@ Three apps in one repository, all TypeScript:
   - We moved the cropping into the GPU resizer, ran one lane per frame, and kept MoveNet on a single CPU thread. NNAPI, the GPU delegate and extra threads were all slower on this phone (friction log F13, F14).
 - **A dark room with a bright wall.** Auto-exposure turns children into silhouettes against the projection. Lane crops around the projection, brightness control and the elbow fallback recovered most of the lost poses.
 - **Calibration that works without a technician.** Four taps on a phone was too fiddly in a noisy classroom. We designed the marker pattern, a differencing detector and a self-check. Then we debugged the camera stream from the phone itself, live, with a status line on screen.
-- **Build tooling.** An Expo prebuild that generated a Gradle 9 wrapper for an Android Gradle Plugin that only supports Gradle 8 shipped an APK silently missing its resource classes. The TV sample's config plugin crashed prebuild, and Corepack disappeared from Node 26. All of these are documented with workarounds in our friction log (15 entries).
+- **Answer keys a child can trust.** Asking an AI for "syllable exercises" gave plausible cards with wrong keys (a MAN-zana counted as MA, a silent h). So the AI only picks the exercise and the engine computes the answers, with rules for Spanish syllables, the strong R and fair distractors.
+- **Low-bandwidth schools.** An on-device model was 1 GB to download, unrealistic in the Andes. We moved generation online (10–20 KB per lesson) and kept every class offline.
+- **Build tooling.** An Expo prebuild that generated a Gradle 9 wrapper for an Android Gradle Plugin that only supports Gradle 8 shipped an APK silently missing its resource classes. The TV sample's config plugin crashed prebuild, and Corepack disappeared from Node 26. All of these are documented with workarounds in our friction log (17 entries).
 
 ## Accomplishments that we're proud of
 
@@ -120,17 +128,19 @@ Three apps in one repository, all TypeScript:
 - **Fully offline and private by design.** Camera frames never leave the phone, there is no server to run or pay for, and no child accounts.
 - **One codebase for Fire OS and Vega OS**, plus a phone app, with one tested contract between them.
 - **An exercise engine that can't give a wrong answer key**: correct by construction, deterministic per seed, able to name the misconception behind a wrong pick, and free to reuse (MIT).
+- **A teacher's own words become a lesson in seconds**, from a 5-year-old's syllables to a 15-year-old's equations, and the eleven requests of a real teacher became the starter collection.
 
 ## What we learned
 
 - Watch children before designing gestures. Their instinct (point at the thing) beats any clever interaction.
 - On mid-range phones, everything around the model costs as much as the model. Measure on the device, at the temperature it will actually run at.
-- "Offline first" is a feature for schools, not a limitation. It removed the backend, the costs, the accounts and the privacy questions in one decision.
+- "Offline first" is a feature for schools, not a limitation. It removed the backend, the costs, the accounts and the privacy questions in one decision. The AI fits that by creating online once and playing offline forever.
+- An LLM is a great interface for *what* to practise and a poor source of answer keys. Splitting the two made the AI both useful and safe in front of a class.
 - Amazon's multi-TV sample made a single TV codebase for Fire OS and Vega OS realistic. The friction log lists what would make it smoother.
 
 ## What's next
 
-- Classroom pilots with teachers, more skills (multiplication, number bonds, reading), and a third lane for small groups.
+- Classroom pilots with teachers, sharing lessons between teachers' phones over the hotspot, and a third lane for small groups.
 - Saved class reports on the teacher's phone. They stay on the phone.
 - Publishing on the Amazon Appstore for Fire TV.
 
@@ -140,22 +150,19 @@ Everything in this repository was written during the submission window except th
 
 - **What we started from:** Amazon's [`react-native-multi-tv-app-sample`](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample) (MIT-0). From it we kept the monorepo layout, the remote-control managers, spatial navigation, the theme and `FocusablePressable`.
 - **What we changed in the sample:** aligned its Expo packages to SDK 54, fixed its strict-TypeScript errors, upgraded the TV config plugin that crashed prebuild, fixed button centring, and removed the media-player features this app doesn't use.
-- **What is new:** everything else. The teacher app, all perception and calibration code, the wire protocol, the game (session, dwell, screens), the exercise engine, the Vega app wiring, the tests and the device tooling.
+- **What is new:** everything else. The teacher app, all perception and calibration code, the wire protocol and lesson format, the lesson player (session, levels, scoring, dwell, screens), the exercise engine and starter lessons, the AI chat, the Vega app wiring, the tests and the device tooling.
 
 ---
 
 ## Testing instructions (for judges)
 
-**Quickest: the TV app alone, no phone needed.**
-1. Install the TV app on a Fire OS device: `adb install projectplay-tv.apk`. The APK is on the GitHub release page **[release link]**.
-2. Open **ProjectPlay** and choose **Practice with the remote**.
-3. Move the cursor onto an answer with the D-pad and hold it there (or press OK).
-
-**Full experience: Fire TV + Android phone**, about 5 minutes.
-1. Install `projectplay-teacher.apk` on an Android phone (Android 8+, camera) and the TV app on the Fire TV.
+The TV always plays with the teacher's phone: the lessons live on the phone. About 5 minutes.
+1. Install `projectplay-teacher.apk` on an Android phone (Android 8+, camera) and `projectplay-tv.apk` on the Fire TV (`adb install`). Both APKs are on the GitHub release page **[release link]**.
 2. Turn on the phone's hotspot and connect the Fire TV to it. Open both apps. The TV finds the phone by itself.
-3. Point the phone at the TV or projector screen from 2–4 m away and tap **Start class**. The TV flashes four squares and the phone calibrates.
-4. Stand in front of the screen and point at a tile with your arm raised until it fills.
+3. On the phone, open **Biblioteca**, pick a lesson (try *Sílabas de la granja* or *Fracciones con números grandes*) and tap **Usar en clase**.
+4. Point the phone at the TV or projector screen from 2–4 m away and tap **Jugar en la TV**. The TV flashes four squares and the phone calibrates.
+5. Stand in front of the screen and point at a tile with your arm raised until it fills. No room to stand? The Fire TV remote moves a cursor during the class (OK selects, ⏩ skips), and the phone's **touchpad** works too.
+6. With internet on the phone, open **Crear con IA** and ask for a lesson in Spanish, e.g. "créame 6 ejercicios de la tabla del 7 para niños de 8 años".
 
 **Building from source:** see the README, or `npm run setup && npm run check`.
 
@@ -210,6 +217,8 @@ Everything in this repository was written during the submission window except th
   - Reloading JavaScript while the camera runs crashes natively (F11).
 - **react-native-tcp-socket:** made the phone-as-server design possible with a small amount of code.
 - **Jotai:** one store per app, small, and it works on all three toolchains (v2).
+- **DeepSeek API (`deepseek-flash`, JSON mode):** OpenAI-compatible, cheap enough for a teacher's budget, and quick to wire with plain `fetch`. JSON mode guarantees JSON, not *our* JSON: there is no schema, so we validate every answer and send one correction back (F17).
+- **react-native-svg + Twemoji:** light, sharp pictures on Fire OS; on Vega the SVG renderer is a separate port, so we fall back to emoji (F16).
 - **Claude Code (AI coding agent):** used throughout. It built the apps with us, debugged on the devices over ADB, and kept the friction log. We share its project instructions in `AGENTS.md`.
 
 ## Feature requests (optional)

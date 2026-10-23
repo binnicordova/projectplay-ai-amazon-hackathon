@@ -1,4 +1,4 @@
-import type { TeamId } from '@projectplay/contracts';
+import type { IconArt, TeamId } from '@projectplay/contracts';
 import { atom } from 'jotai';
 import { atomWithReducer } from 'jotai/utils';
 import { INITIAL_SESSION, reduceSession, snapshotOf } from '../domain/session';
@@ -7,6 +7,14 @@ import { INITIAL_SESSION, reduceSession, snapshotOf } from '../domain/session';
 export const sessionAtom = atomWithReducer(INITIAL_SESSION, reduceSession);
 
 export const snapshotAtom = atom((get) => snapshotOf(get(sessionAtom)));
+
+const NO_ART: IconArt = {};
+
+/** Pictures of the lesson being played (memory only: they go when the class ends). */
+export const artAtom = atom<IconArt>((get) => {
+  const session = get(sessionAtom);
+  return session.phase === 'lobby' ? NO_ART : session.config.art;
+});
 
 /** Teams with a child currently in front of the camera (lights up the team labels). */
 export const activeTeamsAtom = atom<readonly TeamId[]>([]);

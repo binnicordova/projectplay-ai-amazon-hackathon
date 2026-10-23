@@ -1,0 +1,259 @@
+{
+  "format": 1,
+  "id": "mas-o-menos",
+  "title": "¿Dónde hay más? ¿Dónde hay menos?",
+  "subject": "matematica",
+  "audience": {
+    "band": "inicial"
+  },
+  "source": "starter",
+  "request": "quiero ejercicios para decidir cual es mayor o menor, para que los niños cuenten y decidan.",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-1",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde hay más?",
+        "say": "Cuenten cada grupo. ¿Dónde hay más galletas?"
+      },
+      "explain": "3, 9: más es 9.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "1f36a",
+          "count": 3
+        },
+        {
+          "kind": "group",
+          "icon": "1f36a",
+          "count": 9
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-2",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde hay menos?",
+        "say": "Cuenten cada grupo. ¿Dónde hay menos pelotas?"
+      },
+      "explain": "2, 7: menos es 2.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "26bd",
+          "count": 2
+        },
+        {
+          "kind": "group",
+          "icon": "26bd",
+          "count": 7
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-3",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde hay más?",
+        "say": "Cuenten cada grupo. ¿Dónde hay más flores?"
+      },
+      "explain": "1, 5: más es 5.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "1f33c",
+          "count": 1
+        },
+        {
+          "kind": "group",
+          "icon": "1f33c",
+          "count": 5
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-4",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde hay menos?",
+        "say": "Cuenten cada grupo. ¿Dónde hay menos pollitos?"
+      },
+      "explain": "3, 8: menos es 3.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "1f424",
+          "count": 8
+        },
+        {
+          "kind": "group",
+          "icon": "1f424",
+          "count": 3
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-5",
+      "level": 2,
+      "prompt": {
+        "text": "¿Dónde hay más?",
+        "say": "Cuenten cada grupo. ¿Dónde hay más estrellas?"
+      },
+      "explain": "2, 4: más es 4.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "2b50",
+          "count": 4
+        },
+        {
+          "kind": "group",
+          "icon": "2b50",
+          "count": 2
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-6",
+      "level": 2,
+      "prompt": {
+        "text": "¿Dónde hay menos?",
+        "say": "Cuenten cada grupo. ¿Dónde hay menos fresas?"
+      },
+      "explain": "4, 5: menos es 4.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "1f353",
+          "count": 4
+        },
+        {
+          "kind": "group",
+          "icon": "1f353",
+          "count": 5
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-7",
+      "level": 2,
+      "prompt": {
+        "text": "¿Dónde hay más?",
+        "say": "Cuenten cada grupo. ¿Dónde hay más pollitos?"
+      },
+      "explain": "4, 5: más es 5.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "1f424",
+          "count": 5
+        },
+        {
+          "kind": "group",
+          "icon": "1f424",
+          "count": 4
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-8",
+      "level": 3,
+      "prompt": {
+        "text": "¿Dónde hay menos?",
+        "say": "Cuenten cada grupo. ¿Dónde hay menos huevos?"
+      },
+      "explain": "2, 3, 8: menos es 2.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "1f95a",
+          "count": 3
+        },
+        {
+          "kind": "group",
+          "icon": "1f95a",
+          "count": 2
+        },
+        {
+          "kind": "group",
+          "icon": "1f95a",
+          "count": 8
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-9",
+      "level": 3,
+      "prompt": {
+        "text": "¿Dónde hay más?",
+        "say": "Cuenten cada grupo. ¿Dónde hay más pelotas?"
+      },
+      "explain": "2, 3, 4: más es 4.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "26bd",
+          "count": 4
+        },
+        {
+          "kind": "group",
+          "icon": "26bd",
+          "count": 2
+        },
+        {
+          "kind": "group",
+          "icon": "26bd",
+          "count": 3
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "mas-o-menos-10",
+      "level": 3,
+      "prompt": {
+        "text": "¿Dónde hay menos?",
+        "say": "Cuenten cada grupo. ¿Dónde hay menos estrellas?"
+      },
+      "explain": "4, 5, 7: menos es 4.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "2b50",
+          "count": 5
+        },
+        {
+          "kind": "group",
+          "icon": "2b50",
+          "count": 4
+        },
+        {
+          "kind": "group",
+          "icon": "2b50",
+          "count": 7
+        }
+      ],
+      "answer": 1
+    }
+  ]
+}

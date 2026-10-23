@@ -15,19 +15,19 @@ import { CALIBRATION_PATTERNS, type CalibrationPattern } from './calibration';
 import {
   GAME_MODES,
   SESSION_PHASES,
-  SKILLS,
   TEAMS,
   isOneOf,
   type GameMode,
   type PlayerId,
   type Scores,
   type SessionPhase,
-  type SkillId,
   type TeamCount,
   type TeamId,
 } from './domain';
+import { LEVELS, decodeLesson, type IconId, type Lesson, type Level } from './lesson';
 
-export const PROTOCOL_VERSION = 1 as const;
+/** 2: classes play lesson files sent by the phone (1 generated arithmetic on the TV). */
+export const PROTOCOL_VERSION = 2 as const;
 /** TCP port the teacher phone listens on. */
 export const DEFAULT_PORT = 8787;
 /** Pointer coordinates may drift slightly outside the projection while a hand moves in/out. */
@@ -40,14 +40,21 @@ export type HandId = 0 | 1;
 // Messages: teacher phone -> TV
 // ---------------------------------------------------------------------------
 
+/** Art for the icons a lesson shows: SVG markup by icon id. The TV keeps it in memory only. */
+export type IconArt = Readonly<Record<IconId, string>>;
+
 export interface SessionConfig {
-  readonly skill: SkillId;
-  readonly mode: GameMode;
+  /** The whole lesson travels with the start command: the TV stores nothing. */
+  readonly lesson: Lesson;
+  readonly art: IconArt;
+  /** How many cards to play (the TV picks them by level as the class plays). */
   readonly rounds: number;
-  /** Seed for the exercise generator, so a lesson can be replayed exactly. */
+  /** Seed for picking and shuffling cards, so a class can be replayed exactly. */
   readonly seed: number;
-  /** One player on the whole wall, or two teams on its halves. Absent = 2 (phones from before one-player mode). */
+  /** One player on the whole wall, or two teams on its halves. Absent = 2. */
   readonly teams?: TeamCount;
+  /** Best score so far on this lesson, kept on the phone: the score to beat. */
+  readonly record?: number;
 }
 
 export type TeacherCommand =
@@ -78,11 +85,17 @@ export interface SessionSnapshot {
   readonly round: number;
   readonly rounds: number;
   readonly mode: GameMode | null;
-  /** Human-readable prompt currently on screen, e.g. "? + 9 = 16". */
+  /** Human-readable prompt currently on screen, e.g. "¿Con qué letra empieza? · rana". */
   readonly prompt: string | null;
+  /** Points per team. */
   readonly scores: Scores;
-  /** Teams in the running (or finished) session; absent in the lobby and from older TVs (= 2). */
+  /** Teams in the running (or finished) session; absent in the lobby. */
   readonly teams?: TeamCount;
+  /** The lesson being played and the class's current level in it. */
+  readonly lessonId?: string;
+  readonly level?: Level;
+  /** What the teacher should read aloud for the card on screen (pre-readers). */
+  readonly say?: string;
 }
 
 export type TvMessage =
@@ -95,6 +108,8 @@ export type TvMessage =
       /** Team that answered, or null when time ran out. */
       readonly team: TeamId | null;
       readonly ms: number;
+      /** Points the team earned this round. */
+      readonly points?: number;
     }
   /** Sent once a calibration pattern is actually on screen, so the phone knows when to film. */
   | { readonly t: 'calib'; readonly shown: CalibrationPattern | null }
@@ -174,20 +189,38 @@ const playerId = (obj: Json): PlayerId => int(obj, 'p', 0, 1000);
 /** The optional team count: left out when absent, so older messages decode exactly as before. */
 const optionalTeams = (obj: Json): { teams?: TeamCount } => (obj.teams === undefined ? {} : { teams: int(obj, 'teams', 1, 2) as TeamCount });
 
+const ICON_KEY = /^[0-9a-f]{2,6}(-[0-9a-f]{2,6}){0,6}$/;
+const MAX_ART_ICONS = 160;
+const MAX_SVG_CHARS = 24_000;
+
+function iconArt(value: unknown): IconArt {
+  if (!isRecord(value)) fail('"art" must be an object');
+  const entries = Object.entries(value);
+  if (entries.length > MAX_ART_ICONS) fail('"art" has too many icons');
+  for (const [icon, svg] of entries) {
+    if (!ICON_KEY.test(icon)) fail(`"art" has an invalid icon id "${icon}"`);
+    if (typeof svg !== 'string' || !svg.startsWith('<svg') || svg.length > MAX_SVG_CHARS) fail(`"art.${icon}" must be SVG markup`);
+  }
+  return value as IconArt;
+}
+
 function sessionConfig(value: unknown): SessionConfig {
   if (!isRecord(value)) fail('"config" must be an object');
+  const lesson = decodeLesson(value.lesson);
+  if (!lesson.ok) fail(`"lesson": ${lesson.error}`);
   return {
-    skill: oneOf(value, 'skill', SKILLS),
-    mode: oneOf(value, 'mode', GAME_MODES),
-    rounds: int(value, 'rounds', 1, 50),
+    lesson: lesson.value,
+    art: iconArt(value.art),
+    rounds: int(value, 'rounds', 1, 40),
     seed: int(value, 'seed', 0, 2 ** 32 - 1),
     ...optionalTeams(value),
+    ...(value.record === undefined ? {} : { record: int(value, 'record', 0, 1_000_000) }),
   };
 }
 
 function scores(value: unknown): Scores {
   if (!isRecord(value)) fail('"scores" must be an object');
-  return { A: int(value, 'A'), B: int(value, 'B') };
+  return { A: int(value, 'A', 0, 1_000_000), B: int(value, 'B', 0, 1_000_000) };
 }
 
 function parseEnvelope(text: string): Json {
@@ -241,20 +274,24 @@ function readTvMessage(o: Json): TvMessage {
       return {
         t: 'state',
         phase: oneOf(o, 'phase', SESSION_PHASES),
-        round: int(o, 'round', 0, 50),
-        rounds: int(o, 'rounds', 0, 50),
+        round: int(o, 'round', 0, 40),
+        rounds: int(o, 'rounds', 0, 40),
         mode: nullable(o, 'mode', (obj, k) => oneOf(obj, k, GAME_MODES)),
-        prompt: nullable(o, 'prompt', (obj, k) => str(obj, k)),
+        prompt: nullable(o, 'prompt', (obj, k) => str(obj, k, 300)),
         scores: scores(o.scores),
         ...optionalTeams(o),
+        ...(o.lessonId === undefined ? {} : { lessonId: str(o, 'lessonId', 60) }),
+        ...(o.level === undefined ? {} : { level: int(o, 'level', LEVELS[0], LEVELS[LEVELS.length - 1]) as Level }),
+        ...(o.say === undefined ? {} : { say: str(o, 'say', 200) }),
       };
     case 'result':
       return {
         t: 'result',
-        round: int(o, 'round', 1, 50),
+        round: int(o, 'round', 1, 40),
         correct: bool(o, 'correct'),
         team: nullable(o, 'team', (obj, k) => oneOf(obj, k, TEAMS)),
         ms: int(o, 'ms', 0, 3_600_000),
+        ...(o.points === undefined ? {} : { points: int(o, 'points', 0, 100_000) }),
       };
     case 'calib':
       return { t: 'calib', shown: nullable(o, 'shown', (obj, k) => oneOf(obj, k, CALIBRATION_PATTERNS)) };

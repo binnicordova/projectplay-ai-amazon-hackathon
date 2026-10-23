@@ -1,0 +1,657 @@
+{
+  "format": 1,
+  "id": "ingles-imagenes",
+  "title": "Inglés: ¿cómo se dice?",
+  "subject": "ingles",
+  "audience": {
+    "band": "primaria",
+    "age": 6
+  },
+  "source": "starter",
+  "request": "quiero 20 ejercicios de ingles de como se traduce la imagen al ingles para niños de 6 años",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-1",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f95b",
+          "label": "leche"
+        },
+        "say": "¿Cómo se dice leche en inglés?"
+      },
+      "explain": "leche = milk",
+      "options": [
+        {
+          "kind": "text",
+          "text": "milk"
+        },
+        {
+          "kind": "text",
+          "text": "rooster"
+        },
+        {
+          "kind": "text",
+          "text": "rabbit"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-2",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f95a",
+          "label": "huevo"
+        },
+        "say": "¿Cómo se dice huevo en inglés?"
+      },
+      "explain": "huevo = egg",
+      "options": [
+        {
+          "kind": "text",
+          "text": "chair"
+        },
+        {
+          "kind": "text",
+          "text": "kangaroo"
+        },
+        {
+          "kind": "text",
+          "text": "egg"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-3",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f333",
+          "label": "árbol"
+        },
+        "say": "¿Cómo se dice árbol en inglés?"
+      },
+      "explain": "árbol = tree",
+      "options": [
+        {
+          "kind": "text",
+          "text": "bull"
+        },
+        {
+          "kind": "text",
+          "text": "tree"
+        },
+        {
+          "kind": "text",
+          "text": "airplane"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-4",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f404",
+          "label": "vaca"
+        },
+        "say": "¿Cómo se dice vaca en inglés?"
+      },
+      "explain": "vaca = cow",
+      "options": [
+        {
+          "kind": "text",
+          "text": "leaf"
+        },
+        {
+          "kind": "text",
+          "text": "orange"
+        },
+        {
+          "kind": "text",
+          "text": "cow"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-5",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f339",
+          "label": "rosa"
+        },
+        "say": "¿Cómo se dice rosa en inglés?"
+      },
+      "explain": "rosa = rose",
+      "options": [
+        {
+          "kind": "text",
+          "text": "horse"
+        },
+        {
+          "kind": "text",
+          "text": "kangaroo"
+        },
+        {
+          "kind": "text",
+          "text": "rose"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-6",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "2615",
+          "label": "taza"
+        },
+        "say": "¿Cómo se dice taza en inglés?"
+      },
+      "explain": "taza = cup",
+      "options": [
+        {
+          "kind": "text",
+          "text": "cup"
+        },
+        {
+          "kind": "text",
+          "text": "tree"
+        },
+        {
+          "kind": "text",
+          "text": "kangaroo"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-7",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f511",
+          "label": "llave"
+        },
+        "say": "¿Cómo se dice llave en inglés?"
+      },
+      "explain": "llave = key",
+      "options": [
+        {
+          "kind": "text",
+          "text": "donkey"
+        },
+        {
+          "kind": "text",
+          "text": "key"
+        },
+        {
+          "kind": "text",
+          "text": "horse"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-8",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f5fc",
+          "label": "torre"
+        },
+        "say": "¿Cómo se dice torre en inglés?"
+      },
+      "explain": "torre = tower",
+      "options": [
+        {
+          "kind": "text",
+          "text": "hat"
+        },
+        {
+          "kind": "text",
+          "text": "tower"
+        },
+        {
+          "kind": "text",
+          "text": "soap"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-9",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f99c",
+          "label": "loro"
+        },
+        "say": "¿Cómo se dice loro en inglés?"
+      },
+      "explain": "loro = parrot",
+      "options": [
+        {
+          "kind": "text",
+          "text": "pig"
+        },
+        {
+          "kind": "text",
+          "text": "fox"
+        },
+        {
+          "kind": "text",
+          "text": "parrot"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-10",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f34c",
+          "label": "plátano"
+        },
+        "say": "¿Cómo se dice plátano en inglés?"
+      },
+      "explain": "plátano = banana",
+      "options": [
+        {
+          "kind": "text",
+          "text": "banana"
+        },
+        {
+          "kind": "text",
+          "text": "pear"
+        },
+        {
+          "kind": "text",
+          "text": "orange"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-11",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f352",
+          "label": "cereza"
+        },
+        "say": "¿Cómo se dice cereza en inglés?"
+      },
+      "explain": "cereza = cherry",
+      "options": [
+        {
+          "kind": "text",
+          "text": "cherry"
+        },
+        {
+          "kind": "text",
+          "text": "pear"
+        },
+        {
+          "kind": "text",
+          "text": "banana"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-12",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f41c",
+          "label": "hormiga"
+        },
+        "say": "¿Cómo se dice hormiga en inglés?"
+      },
+      "explain": "hormiga = ant",
+      "options": [
+        {
+          "kind": "text",
+          "text": "ant"
+        },
+        {
+          "kind": "text",
+          "text": "chick"
+        },
+        {
+          "kind": "text",
+          "text": "horse"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-13",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f995",
+          "label": "dinosaurio"
+        },
+        "say": "¿Cómo se dice dinosaurio en inglés?"
+      },
+      "explain": "dinosaurio = dinosaur",
+      "options": [
+        {
+          "kind": "text",
+          "text": "monkey"
+        },
+        {
+          "kind": "text",
+          "text": "frog"
+        },
+        {
+          "kind": "text",
+          "text": "dinosaur"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-14",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cómo se dice en inglés?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f418",
+          "label": "elefante"
+        },
+        "say": "¿Cómo se dice elefante en inglés?"
+      },
+      "explain": "elefante = elephant",
+      "options": [
+        {
+          "kind": "text",
+          "text": "fish"
+        },
+        {
+          "kind": "text",
+          "text": "elephant"
+        },
+        {
+          "kind": "text",
+          "text": "octopus"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-15",
+      "level": 3,
+      "prompt": {
+        "text": "¿Cuál es «apple»?",
+        "visual": {
+          "kind": "text",
+          "text": "apple"
+        },
+        "say": "Lean en voz alta: «apple». ¿Cuál es?"
+      },
+      "explain": "apple = manzana",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f34d",
+          "label": "piña"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f352",
+          "label": "cereza"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f34e",
+          "label": "manzana"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f347",
+          "label": "uvas"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-16",
+      "level": 3,
+      "prompt": {
+        "text": "¿Cuál es «dog»?",
+        "visual": {
+          "kind": "text",
+          "text": "dog"
+        },
+        "say": "Lean en voz alta: «dog». ¿Cuál es?"
+      },
+      "explain": "dog = perro",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f40b",
+          "label": "ballena"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f415",
+          "label": "perro"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f413",
+          "label": "gallo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f40c",
+          "label": "caracol"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-17",
+      "level": 3,
+      "prompt": {
+        "text": "¿Cuál es «drum»?",
+        "visual": {
+          "kind": "text",
+          "text": "drum"
+        },
+        "say": "Lean en voz alta: «drum». ¿Cuál es?"
+      },
+      "explain": "drum = tambor",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "23f0",
+          "label": "reloj"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f941",
+          "label": "tambor"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f455",
+          "label": "ropa"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f5fa",
+          "label": "mapa"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-18",
+      "level": 3,
+      "prompt": {
+        "text": "¿Cuál es «monkey»?",
+        "visual": {
+          "kind": "text",
+          "text": "monkey"
+        },
+        "say": "Lean en voz alta: «monkey». ¿Cuál es?"
+      },
+      "explain": "monkey = mono",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f411",
+          "label": "oveja"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f412",
+          "label": "mono"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f983",
+          "label": "pavo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f99b",
+          "label": "hipopótamo"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-19",
+      "level": 3,
+      "prompt": {
+        "text": "¿Cuál es «rabbit»?",
+        "visual": {
+          "kind": "text",
+          "text": "rabbit"
+        },
+        "say": "Lean en voz alta: «rabbit». ¿Cuál es?"
+      },
+      "explain": "rabbit = conejo",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f407",
+          "label": "conejo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f986",
+          "label": "pato"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f98b",
+          "label": "mariposa"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f98a",
+          "label": "zorro"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "ingles-imagenes-20",
+      "level": 3,
+      "prompt": {
+        "text": "¿Cuál es «lion»?",
+        "visual": {
+          "kind": "text",
+          "text": "lion"
+        },
+        "say": "Lean en voz alta: «lion». ¿Cuál es?"
+      },
+      "explain": "lion = león",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f401",
+          "label": "ratón"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f427",
+          "label": "pingüino"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f99b",
+          "label": "hipopótamo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f981",
+          "label": "león"
+        }
+      ],
+      "answer": 3
+    }
+  ]
+}

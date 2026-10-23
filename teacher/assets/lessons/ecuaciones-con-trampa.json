@@ -1,0 +1,175 @@
+{
+  "format": 1,
+  "id": "ecuaciones-con-trampa",
+  "title": "Ecuaciones con trampa",
+  "subject": "matematica",
+  "audience": {
+    "band": "secundaria",
+    "age": 15
+  },
+  "source": "starter",
+  "request": "generame 5 ejercisios de ecuaciones para adolescentes de 15 años con trampas que les hagan pensar en la posible respuesta",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "ecuaciones-con-trampa-1",
+      "level": 1,
+      "prompt": {
+        "text": "Resuelve",
+        "visual": {
+          "kind": "text",
+          "text": "4(x − 5) = 4"
+        }
+      },
+      "explain": "Reparte el 4 a los dos: 4x − 20 = 4. Olvidar multiplicar el 5 es la trampa.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "x = −16"
+        },
+        {
+          "kind": "text",
+          "text": "x = 6"
+        },
+        {
+          "kind": "text",
+          "text": "x = −4"
+        },
+        {
+          "kind": "text",
+          "text": "x = 9/4"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "ecuaciones-con-trampa-2",
+      "level": 1,
+      "prompt": {
+        "text": "Resuelve",
+        "visual": {
+          "kind": "text",
+          "text": "x/5 + 4 = 8"
+        }
+      },
+      "explain": "Resta 4: x/5 = 4. Luego multiplica por 5 (dividir es la trampa): x = 20.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "x = 20"
+        },
+        {
+          "kind": "text",
+          "text": "x = 4/5"
+        },
+        {
+          "kind": "text",
+          "text": "x = 36"
+        },
+        {
+          "kind": "text",
+          "text": "x = 60"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "ecuaciones-con-trampa-3",
+      "level": 2,
+      "prompt": {
+        "text": "Resuelve",
+        "visual": {
+          "kind": "text",
+          "text": "3x + 5 = 6x + 32"
+        }
+      },
+      "explain": "Pasa 6x restando: 3x − 6x = 32 − 5, o sea −3x = 27 y x = −9.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "x = 3"
+        },
+        {
+          "kind": "text",
+          "text": "x = −37/3"
+        },
+        {
+          "kind": "text",
+          "text": "x = −9"
+        },
+        {
+          "kind": "text",
+          "text": "x = 9"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "ecuaciones-con-trampa-4",
+      "level": 2,
+      "prompt": {
+        "text": "Resuelve",
+        "visual": {
+          "kind": "text",
+          "text": "24 − (x + 6) = 10"
+        }
+      },
+      "explain": "El menos cambia los dos signos: 24 − x − 6 = 10, así que x = 8.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "x = 8"
+        },
+        {
+          "kind": "text",
+          "text": "x = 14"
+        },
+        {
+          "kind": "text",
+          "text": "x = −8"
+        },
+        {
+          "kind": "text",
+          "text": "x = 20"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "ecuaciones-con-trampa-5",
+      "level": 3,
+      "prompt": {
+        "text": "Resuelve",
+        "visual": {
+          "kind": "text",
+          "text": "4(x + 2) = 4x + 13"
+        }
+      },
+      "explain": "Al repartir: 4x + 8 = 4x + 13. Como 8 ≠ 13, ningún x sirve.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "x = 5/4"
+        },
+        {
+          "kind": "text",
+          "text": "No tiene solución"
+        },
+        {
+          "kind": "text",
+          "text": "Cualquier número"
+        },
+        {
+          "kind": "text",
+          "text": "x = 0"
+        }
+      ],
+      "answer": 1
+    }
+  ]
+}

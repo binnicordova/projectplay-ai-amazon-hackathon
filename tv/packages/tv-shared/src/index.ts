@@ -1,5 +1,5 @@
 // Composition
-export { createTvServices, PRACTICE_CONFIG, type TvPlatform, type TvServices } from './composition/createTvServices';
+export { createTvServices, type TvPlatform, type TvServices } from './composition/createTvServices';
 export { ScreenFor, TvApp, TvServicesProvider, useCurrentScreen, useTvServices } from './composition/TvServicesProvider';
 
 // Game

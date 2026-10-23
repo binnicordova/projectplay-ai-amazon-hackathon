@@ -33,4 +33,16 @@ module.exports = defineConfig([
     files: ['src/features/*/ui/**/*.{ts,tsx}'],
     rules: restrict(['**/infrastructure/*', '**/composition/*']),
   },
+  {
+    // Lessons, AI chat and pictures are written functionally: data in, data out, errors as values.
+    files: ['src/features/{authoring,library,pictures,console}/{domain,application}/**/*.ts'],
+    ignores: ['**/*.test.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        { selector: 'ClassDeclaration', message: 'Functional core: use functions and plain data, not classes.' },
+        { selector: 'ThrowStatement', message: 'Functional core: return a Result instead of throwing.' },
+      ],
+    },
+  },
 ]);

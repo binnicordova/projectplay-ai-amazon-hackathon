@@ -1,0 +1,343 @@
+{
+  "format": 1,
+  "id": "letras-inicial",
+  "title": "Reconozco las letras",
+  "subject": "comunicacion",
+  "audience": {
+    "band": "inicial",
+    "age": 5
+  },
+  "source": "starter",
+  "request": "creame 12 ejercicios para reconocer las letras para niños de 5años inicial",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "letras-inicial-1",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde está la I?",
+        "visual": {
+          "kind": "text",
+          "text": "I"
+        },
+        "say": "Busquen la letra i."
+      },
+      "options": [
+        {
+          "kind": "text",
+          "text": "C"
+        },
+        {
+          "kind": "text",
+          "text": "I"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-2",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde está la E?",
+        "visual": {
+          "kind": "text",
+          "text": "E"
+        },
+        "say": "Busquen la letra e."
+      },
+      "options": [
+        {
+          "kind": "text",
+          "text": "E"
+        },
+        {
+          "kind": "text",
+          "text": "Q"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-3",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde está la A?",
+        "visual": {
+          "kind": "text",
+          "text": "A"
+        },
+        "say": "Busquen la letra a."
+      },
+      "options": [
+        {
+          "kind": "text",
+          "text": "H"
+        },
+        {
+          "kind": "text",
+          "text": "A"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-4",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde está la O?",
+        "visual": {
+          "kind": "text",
+          "text": "O"
+        },
+        "say": "Busquen la letra o."
+      },
+      "options": [
+        {
+          "kind": "text",
+          "text": "O"
+        },
+        {
+          "kind": "text",
+          "text": "T"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-5",
+      "level": 2,
+      "prompt": {
+        "text": "¿Dónde está la V?",
+        "visual": {
+          "kind": "text",
+          "text": "V"
+        },
+        "say": "Busquen la letra uve."
+      },
+      "options": [
+        {
+          "kind": "text",
+          "text": "U"
+        },
+        {
+          "kind": "text",
+          "text": "V"
+        },
+        {
+          "kind": "text",
+          "text": "W"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-6",
+      "level": 2,
+      "prompt": {
+        "text": "¿Dónde está la Q?",
+        "visual": {
+          "kind": "text",
+          "text": "Q"
+        },
+        "say": "Busquen la letra cu."
+      },
+      "options": [
+        {
+          "kind": "text",
+          "text": "D"
+        },
+        {
+          "kind": "text",
+          "text": "B"
+        },
+        {
+          "kind": "text",
+          "text": "Q"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-7",
+      "level": 2,
+      "prompt": {
+        "text": "¿Dónde está la S?",
+        "visual": {
+          "kind": "text",
+          "text": "S"
+        },
+        "say": "Busquen la letra ese."
+      },
+      "options": [
+        {
+          "kind": "text",
+          "text": "X"
+        },
+        {
+          "kind": "text",
+          "text": "Z"
+        },
+        {
+          "kind": "text",
+          "text": "S"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-8",
+      "level": 2,
+      "prompt": {
+        "text": "¿Dónde está la D?",
+        "visual": {
+          "kind": "text",
+          "text": "D"
+        },
+        "say": "Busquen la letra de."
+      },
+      "options": [
+        {
+          "kind": "text",
+          "text": "D"
+        },
+        {
+          "kind": "text",
+          "text": "O"
+        },
+        {
+          "kind": "text",
+          "text": "Q"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-9",
+      "level": 3,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f333",
+          "label": "árbol"
+        },
+        "say": "¿Con qué letra empieza árbol?"
+      },
+      "explain": "árbol empieza con A.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "I"
+        },
+        {
+          "kind": "text",
+          "text": "A"
+        },
+        {
+          "kind": "text",
+          "text": "O"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-10",
+      "level": 3,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f577",
+          "label": "araña"
+        },
+        "say": "¿Con qué letra empieza araña?"
+      },
+      "explain": "araña empieza con A.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "A"
+        },
+        {
+          "kind": "text",
+          "text": "I"
+        },
+        {
+          "kind": "text",
+          "text": "O"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-11",
+      "level": 3,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f98e",
+          "label": "iguana"
+        },
+        "say": "¿Con qué letra empieza iguana?"
+      },
+      "explain": "iguana empieza con I.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "E"
+        },
+        {
+          "kind": "text",
+          "text": "I"
+        },
+        {
+          "kind": "text",
+          "text": "A"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "letras-inicial-12",
+      "level": 3,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f3dd",
+          "label": "isla"
+        },
+        "say": "¿Con qué letra empieza isla?"
+      },
+      "explain": "isla empieza con I.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "U"
+        },
+        {
+          "kind": "text",
+          "text": "E"
+        },
+        {
+          "kind": "text",
+          "text": "I"
+        }
+      ],
+      "answer": 2
+    }
+  ]
+}

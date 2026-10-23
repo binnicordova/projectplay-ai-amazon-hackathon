@@ -8,8 +8,9 @@ A Yarn 4 workspace forked from AmazonAppDev/react-native-multi-tv-app-sample. On
 |---|---|---|
 | `apps/expo-tv` | Expo SDK 54 + react-native-tvos 0.81, **legacy architecture**, Expo Router | Fire OS / Android TV. Always run with `EXPO_TV=1` (the scripts do it) |
 | `apps/vega` | Vega SDK, **React Native 0.72**, no router | Fire TV on Vega OS. `TvApp` from tv-shared renders the screen for the current state |
-| `packages/tv-shared` | Everything both apps share | Features: `session` (reducer, rules, timer), `interaction` (dwell, layout, PointerHub), `link` (WebSocket client, discovery), `game` (screens), `calibration` (pattern layer) |
-| `packages/exercise-engine` | Pure TS, MIT, standalone | Offline arithmetic generator with misconception-based distractors and an adaptive staircase |
+| `packages/tv-shared` | Everything both apps share | Features: `session` (lesson player: reducer, levels, points, timer), `interaction` (dwell, layout, PointerHub), `link` (WebSocket client, discovery), `game` (screens), `calibration` (pattern layer) |
+
+The TV has **no lesson content and no exercise engine**: the phone's start command carries the lesson and its SVG art (protocol v2), and the TV keeps them in memory only (`sessionAtom`, `artAtom`). Without the phone the TV shows pairing or the lobby; there is no practice mode.
 
 ## Commands (from `tv/`)
 
@@ -30,9 +31,11 @@ Vega bundles: `cd apps/vega && npx react-native bundle --platform kepler --dev f
 - The screen layout is normalised projection space (0..1). Convert with `useRectStyle()` and size with `scaledPixels()` (1080p reference).
 - Cursors, dwell progress and the calibration pattern update through listeners and `Animated` values, not React state.
 - The calibration pattern layer sits above every screen in `TvServicesProvider`. It must stay pure black and white at the positions in `shared/contracts/src/calibration.ts`, and confirm with `calibrationShown` only after it has been drawn.
-- The TV remote has to work everywhere: D-pad focus via `react-tv-space-navigation`, and the remote is also a virtual pointer while playing. That is how judges test on the Fire TV simulator.
+- The TV remote has to work everywhere: D-pad focus via `react-tv-space-navigation`, and the remote is also a virtual pointer during a class (⏩ = next card). That is how judges test on the Fire TV simulator, with the phone connected.
+- Lesson play (`session/domain/`): `progression.ts` moves the level after a 2-round window (≥ 75 % up, ≤ 25 % down) and picks the next unplayed card nearest that level; `scoring.ts` gives 100/150/200 by level + speed bonus + streak bonus, and never takes points away; `session.ts` holds timers per age group (`QUESTION_TIME`). Keep these pure and seeded (`random.ts`) so tests are exact.
+- Pictures: `game/ui/Picture.tsx` draws the SVG with `react-native-svg` (`SvgXml`) on Fire OS; `Picture.kepler.tsx` shows the emoji on Vega, which has no stock `react-native-svg`. Don't import `react-native-svg` anywhere else in tv-shared.
 - Back must not leave a running game (see `apps/expo-tv/src/app/_layout.tsx`). Keep the screen awake.
-- A session has one or two teams (`SessionConfig.teams`, absent = 2). One player is team A on the whole wall. Anything on screen or in the rules iterates `playingTeams(config)`, never `TEAMS`, and the composition root keeps `PointerHub.setTeamCount` in step so every hand lands on a playing team. Practice with the remote is one player.
+- A session has one or two teams (`SessionConfig.teams`, absent = 2). One player is team A on the whole wall. Anything on screen or in the rules iterates `playingTeams(config)`, never `TEAMS`, and the composition root keeps `PointerHub.setTeamCount` in step so every hand lands on a playing team.
 
 ## Native config (Fire OS app)
 

@@ -20,6 +20,11 @@ npm run fetch-model      # bundling and lint need assets/models/movenet-singlepo
 - Add packages with `npx expo install <pkg>` (SDK-compatible versions), never plain `npm install <pkg>`.
 - `android/` and `ios/` are generated. Native settings go in `app.json` and config plugins. A new native module needs a rebuild (`../scripts/devices.sh teacher`), not just a reload.
 - Routes live in `src/app/` (Expo Router). Every file there is a screen, so keep components and helpers out of it.
+- If `npx expo install` can't reach `api.expo.dev` (sandboxed networks), take the version from `node_modules/expo/bundledNativeModules.json` and pin it with npm.
+
+## AI key
+
+`Crear con IA` reads `EXPO_PUBLIC_AI_PROVIDER`, `EXPO_PUBLIC_DEEPSEEK_API_KEY` and `EXPO_PUBLIC_DEEPSEEK_MODEL` from `teacher/.env` (copy `.env.example`). Expo inlines `EXPO_PUBLIC_*` at bundle time, so restart Metro after changing it, and remember the key ships inside the APK. `.env` is gitignored; never commit a key or print it in logs.
 
 ## Where things are
 
@@ -35,7 +40,11 @@ npm run fetch-model      # bundling and lint need assets/models/movenet-singlepo
   - While `lumaCaptureAtom` is true, the same worklet instead runs a second resizer (960×720) and sends 320×240 greyscale frames to `AutoCalibrator`.
   - `[perf]` log lines (every 10 s: frames per second, camera-thread ms per frame, pose updates per lane) and the class screen's "Slow tracking" status come from `FrameRateMeter` (`frameRate.ts`) and the composition root.
 - `src/features/link/`: RFC 6455 WebSocket server over raw TCP (hand-written codec in `domain/`), heartbeat, TV session mirror.
-- `src/features/console/`: teacher controls and the touchpad fallback.
+- `src/features/library/`: the lesson gallery. `domain/catalog.ts` (subjects, age groups, records), `application/library.ts` (atoms + `makeLibrary({store, files, starterFiles})`), `infrastructure/fileLessonStore.ts` (expo-file-system: `document/lessons/*.json`, `records.json`). Starter lessons are bundled from `infrastructure/starterLessons.generated.ts` (generated: run `npm --prefix ../shared run build:content`, don't edit).
+- `src/features/authoring/`: chat with the AI to create a lesson. `domain/draft.ts` decodes the AI's JSON and turns it into a lesson (engine for known kinds, checked cards otherwise); `domain/prompt.ts` is the system prompt; `application/lessonChat.ts` asks, validates and retries once with the reason; `infrastructure/deepseek.ts` + `providers.ts` are the strategy (`ChatModel` per `ProviderId`). Tests use a fake `fetch`; there is no live call in CI.
+- `src/features/pictures/`: Twemoji SVG art (`iconArtAtom`, generated `twemojiArt.generated.ts`) and the `Picture` component (emoji fallback).
+- `src/features/console/`: start a lesson on the TV (`startCommand` sends the lesson, its art and the record), live class controls, and the touchpad fallback.
+- **Functional core:** in `library`, `authoring`, `pictures` and `console`, ESLint forbids classes and `throw` in `domain/` and `application/`. Return `Result` values (`@projectplay/contracts`), build use cases as `makeX(deps)`, and keep ports as function types.
 - `domain/testing/`: synthetic poses and synthetic camera images of the calibration pattern. Use them in tests instead of mocks.
 
 ## Camera thread rules (VisionCamera v5 + worklets)

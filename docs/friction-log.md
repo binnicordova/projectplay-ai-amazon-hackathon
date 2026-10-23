@@ -148,6 +148,24 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Workaround:** Rank the devices ourselves (`teacher/src/features/perception/domain/cameraChoice.ts`): a physical `type === 'wide-angle'` camera first (Android derives it from `intrinsicZoomRatio == 1`), then the most pixels from `getSupportedResolutions('photo')`, then the lowest `lensAperture`; logical cameras (`isVirtualDevice`) only as a fallback. The choice is logged as `[camera]`.
 - **Suggestion:** Score the device's own `type` when it has no usable physical devices, expose `intrinsicZoomRatio`/field of view, and document that `physicalDevices` types are `unknown` on Android.
 
+### F16 · Vega's react-native-svg port doesn't say whether it can draw an SVG string (`SvgXml`)
+- **Task:** Show lesson pictures (Twemoji SVGs the phone sends as strings) on both TV runtimes from one shared component.
+- **Steps:** On Fire OS, `react-native-svg` 15.12.1 with `<SvgXml xml={svg} />`. For Vega we read the [react-native-svg page of the Vega API docs](https://developer.amazon.com/docs/vega-api/0.24/react-native-svg.html): the port is `@amazon-devices/react-native-svg` (`~2.0.x` for React Native 0.72, `~3.0.x` for 0.83), system-deployed and autolinked.
+- **Expected:** The page says which entry points work, so shared code can rely on them.
+- **Actual:** It lists unsupported elements (Polygon, Polyline, TextPath, Symbol, Pattern, Marker, ForeignObject) and APIs (markers, touch events, patterns), and lists Polyline both as supported and unsupported. It never mentions `SvgXml`, `SvgCss` or `SvgUri`, the parts that parse an SVG string or file. Our 140 icons only use `path`, `circle`, `ellipse` and `g`, all supported, but without a Vega Virtual Device at hand we could not check that `SvgXml` exists, and a missing export fails only at runtime on the device.
+- **Severity:** Low. Pictures still show, as emoji.
+- **Workaround:** `Picture.kepler.tsx` (resolved first by Vega's Metro) renders the emoji as text; Fire OS keeps `SvgXml`. The shared code imports `react-native-svg` only in `Picture.tsx`, so the Vega bundle doesn't contain it.
+- **Suggestion:** List the supported top-level exports (`SvgXml`, `SvgCss`, `SvgUri`, `SvgFromXml`) on the page, fix the Polyline contradiction, and say which Vega SDK version ships which port.
+
+### F17 · DeepSeek JSON mode guarantees JSON, not your JSON, and can return empty content
+- **Task:** Let a teacher create a lesson by chatting: the model must answer with `{ "reply", "lesson" }` in our format.
+- **Steps:** `POST https://api.deepseek.com/chat/completions` with `response_format: { "type": "json_object" }`, a Spanish system prompt containing the word "json", our format and examples, `max_tokens: 8000`, from plain `fetch` in React Native.
+- **Expected:** A way to pass a JSON schema, as other OpenAI-compatible APIs do (`json_schema`), so the reply has the right fields and types.
+- **Actual:** JSON mode only promises *valid JSON*. The [JSON mode guide](https://api-docs.deepseek.com/guides/json_mode/) asks for the word "json" in the prompt, an example of the output, and a large enough `max_tokens` to avoid truncation, and warns that the API "may occasionally return empty content". There is no schema parameter, so wrong field names, an answer index out of range or a truncated object are all possible and only show up in the app.
+- **Severity:** Medium. A teacher in front of a class can't debug a malformed answer.
+- **Workaround:** Treat the reply as untrusted input: `decodeAiReply` validates and clamps every field, then `decodeLesson` checks the rules. If it fails (or the content is empty), the reason goes back to the model once ("your answer was not valid because …"), then the teacher sees a plain error. For exercises the engine knows, the model only fills a small request and the engine builds the cards, so most of the answer can't be wrong. Tested with recorded responses; the development sandbox could not reach the API, so the first live call is on the phone.
+- **Suggestion:** Support `response_format: { type: "json_schema" }` (or a `strict` flag), and return a finish reason or error instead of empty content.
+
 ---
 
 ### Template for device-time entries

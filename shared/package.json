@@ -2,16 +2,21 @@
   "name": "@projectplay/shared",
   "version": "1.0.0",
   "private": true,
-  "description": "Code that crosses the wire between the teacher phone and the TV. Pure TypeScript only.",
+  "description": "Code shared by the teacher phone and the TV: the wire protocol and lesson format (contracts) and the exercise engine. Pure TypeScript only.",
   "workspaces": [
-    "contracts"
+    "contracts",
+    "exercise-engine"
   ],
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit",
-    "test:e2e": "vitest run --config vitest.e2e.config.ts"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p scripts",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "build:content": "tsx scripts/build-content.ts"
   },
   "devDependencies": {
+    "@twemoji/svg": "^15.0.0",
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
     "typescript": "~5.9.3",
     "vitest": "^3.2.4"
   }

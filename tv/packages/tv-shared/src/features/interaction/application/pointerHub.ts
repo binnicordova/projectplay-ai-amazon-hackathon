@@ -54,6 +54,10 @@ export class PointerHub {
     this.dwell = new DwellTracker(options);
   }
 
+  setDwellMs(dwellMs: number): void {
+    this.dwell.setDwellMs(dwellMs);
+  }
+
   setTargets(targets: readonly BoardTarget[]): void {
     this.targets = targets;
     this.dwell.setTargets(targets);

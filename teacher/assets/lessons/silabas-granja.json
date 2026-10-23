@@ -1,0 +1,459 @@
+{
+  "format": 1,
+  "id": "silabas-granja",
+  "title": "Cómo suenan las sílabas: la granja",
+  "subject": "comunicacion",
+  "audience": {
+    "band": "inicial"
+  },
+  "source": "starter",
+  "request": "creame 15 ejercicios para reconocer como suenan las silabas con animales de la granja",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "silabas-granja-1",
+      "level": 1,
+      "prompt": {
+        "text": "¿Qué animal empieza con RA?",
+        "visual": {
+          "kind": "text",
+          "text": "RA"
+        },
+        "say": "Escuchen: «ra». ¿Qué animal empieza con «ra»?"
+      },
+      "explain": "ra-tón empieza con RA.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f408",
+          "label": "gato"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f401",
+          "label": "ratón"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-2",
+      "level": 1,
+      "prompt": {
+        "text": "¿Qué animal empieza con VA?",
+        "visual": {
+          "kind": "text",
+          "text": "VA"
+        },
+        "say": "Escuchen: «va». ¿Qué animal empieza con «va»?"
+      },
+      "explain": "va-ca empieza con VA.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f986",
+          "label": "pato"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f404",
+          "label": "vaca"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-3",
+      "level": 1,
+      "prompt": {
+        "text": "¿Qué animal empieza con PO?",
+        "visual": {
+          "kind": "text",
+          "text": "PO"
+        },
+        "say": "Escuchen: «po». ¿Qué animal empieza con «po»?"
+      },
+      "explain": "po-lli-to empieza con PO.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f986",
+          "label": "pato"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f424",
+          "label": "pollito"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-4",
+      "level": 1,
+      "prompt": {
+        "text": "¿Qué animal empieza con CA?",
+        "visual": {
+          "kind": "text",
+          "text": "CA"
+        },
+        "say": "Escuchen: «ca». ¿Qué animal empieza con «ca»?"
+      },
+      "explain": "ca-ba-llo empieza con CA.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f40e",
+          "label": "caballo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f401",
+          "label": "ratón"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-5",
+      "level": 1,
+      "prompt": {
+        "text": "¿Qué animal empieza con GA?",
+        "visual": {
+          "kind": "text",
+          "text": "GA"
+        },
+        "say": "Escuchen: «ga». ¿Qué animal empieza con «ga»?"
+      },
+      "explain": "ga-lli-na empieza con GA.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f414",
+          "label": "gallina"
+        },
+        {
+          "kind": "icon",
+          "icon": "1facf",
+          "label": "burro"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-6",
+      "level": 2,
+      "prompt": {
+        "text": "¿Qué animal empieza con LLA?",
+        "visual": {
+          "kind": "text",
+          "text": "LLA"
+        },
+        "say": "Escuchen: «lla». ¿Qué animal empieza con «lla»?"
+      },
+      "explain": "lla-ma empieza con LLA.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1facf",
+          "label": "burro"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f407",
+          "label": "conejo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f999",
+          "label": "llama"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-7",
+      "level": 2,
+      "prompt": {
+        "text": "¿Qué animal empieza con O?",
+        "visual": {
+          "kind": "text",
+          "text": "O"
+        },
+        "say": "Escuchen: «o». ¿Qué animal empieza con «o»?"
+      },
+      "explain": "o-ve-ja empieza con O.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f411",
+          "label": "oveja"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f413",
+          "label": "gallo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f415",
+          "label": "perro"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-8",
+      "level": 2,
+      "prompt": {
+        "text": "¿Qué animal empieza con CO?",
+        "visual": {
+          "kind": "text",
+          "text": "CO"
+        },
+        "say": "Escuchen: «co». ¿Qué animal empieza con «co»?"
+      },
+      "explain": "co-ne-jo empieza con CO.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f401",
+          "label": "ratón"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f414",
+          "label": "gallina"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f407",
+          "label": "conejo"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-9",
+      "level": 2,
+      "prompt": {
+        "text": "¿Qué animal empieza con CER?",
+        "visual": {
+          "kind": "text",
+          "text": "CER"
+        },
+        "say": "Escuchen: «cer». ¿Qué animal empieza con «cer»?"
+      },
+      "explain": "cer-do empieza con CER.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f416",
+          "label": "cerdo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f413",
+          "label": "gallo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1facf",
+          "label": "burro"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-10",
+      "level": 2,
+      "prompt": {
+        "text": "¿Qué animal empieza con TO?",
+        "visual": {
+          "kind": "text",
+          "text": "TO"
+        },
+        "say": "Escuchen: «to». ¿Qué animal empieza con «to»?"
+      },
+      "explain": "to-ro empieza con TO.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f408",
+          "label": "gato"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f402",
+          "label": "toro"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f410",
+          "label": "cabra"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-11",
+      "level": 3,
+      "prompt": {
+        "text": "¿Con qué sílaba empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f415",
+          "label": "perro"
+        },
+        "say": "Digan despacio «pe-rro». ¿Empieza con «pe», «ra» o «pa»?"
+      },
+      "explain": "pe-rro: empieza con PE.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "PE"
+        },
+        {
+          "kind": "text",
+          "text": "RA"
+        },
+        {
+          "kind": "text",
+          "text": "PA"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-12",
+      "level": 3,
+      "prompt": {
+        "text": "¿Con qué sílaba empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f983",
+          "label": "pavo"
+        },
+        "say": "Digan despacio «pa-vo». ¿Empieza con «to», «lla» o «pa»?"
+      },
+      "explain": "pa-vo: empieza con PA.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "TO"
+        },
+        {
+          "kind": "text",
+          "text": "LLA"
+        },
+        {
+          "kind": "text",
+          "text": "PA"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-13",
+      "level": 3,
+      "prompt": {
+        "text": "¿Con qué sílaba empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1facf",
+          "label": "burro"
+        },
+        "say": "Digan despacio «bu-rro». ¿Empieza con «ra», «to» o «bu»?"
+      },
+      "explain": "bu-rro: empieza con BU.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "RA"
+        },
+        {
+          "kind": "text",
+          "text": "TO"
+        },
+        {
+          "kind": "text",
+          "text": "BU"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-14",
+      "level": 3,
+      "prompt": {
+        "text": "¿Con qué sílaba empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f402",
+          "label": "toro"
+        },
+        "say": "Digan despacio «to-ro». ¿Empieza con «ca», «co» o «to»?"
+      },
+      "explain": "to-ro: empieza con TO.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "CA"
+        },
+        {
+          "kind": "text",
+          "text": "CO"
+        },
+        {
+          "kind": "text",
+          "text": "TO"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-granja-15",
+      "level": 3,
+      "prompt": {
+        "text": "¿Con qué sílaba empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f404",
+          "label": "vaca"
+        },
+        "say": "Digan despacio «va-ca». ¿Empieza con «va», «po» o «to»?"
+      },
+      "explain": "va-ca: empieza con VA.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "VA"
+        },
+        {
+          "kind": "text",
+          "text": "PO"
+        },
+        {
+          "kind": "text",
+          "text": "TO"
+        }
+      ],
+      "answer": 0
+    }
+  ]
+}

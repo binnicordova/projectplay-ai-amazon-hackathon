@@ -4,13 +4,15 @@
  * so children see the selection coming and learn to keep their hand still.
  * The team's chosen tile turns solid in its colour; the others stay open to change to.
  */
+import type { IconArt } from '@projectplay/contracts';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Animated, Easing, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { scaledPixels } from '../../../hooks/useScale';
 import { colors, teamColor, teamSoftColor } from '../../../theme/colors';
 import type { PointerHub } from '../../interaction/application/pointerHub';
 import type { BoardTarget } from '../../interaction/domain/layout';
 import { useRectStyle } from './primitives';
+import { VisualView } from './VisualView';
 
 export type TileState = 'open' | 'chosen' | 'dimmed' | 'correct' | 'wrong';
 
@@ -18,9 +20,19 @@ export type TileState = 'open' | 'chosen' | 'dimmed' | 'correct' | 'wrong';
 const FILL_STEP_MS = 90;
 const BORDER = scaledPixels(6);
 
-export function BoardTile({ target, state, pointers }: { readonly target: BoardTarget; readonly state: TileState; readonly pointers: PointerHub }) {
+export function BoardTile({
+  target,
+  state,
+  pointers,
+  art,
+}: {
+  readonly target: BoardTarget;
+  readonly state: TileState;
+  readonly pointers: PointerHub;
+  readonly art: IconArt;
+}) {
   const rectStyle = useRectStyle();
-  const { height: screenHeight } = useWindowDimensions();
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
   const progress = useRef(new Animated.Value(0)).current;
   const [hover, setHover] = useState(false);
   // Read by the listener: only an open tile fills (the chosen one is already solid).
@@ -51,6 +63,8 @@ export function BoardTile({ target, state, pointers }: { readonly target: BoardT
   // The fill rises from the bottom: scale the full-height fill, then slide it down so its
   // bottom edge stays put (transformOrigin is not available on every TV platform).
   const innerHeight = target.rect.height * screenHeight - 2 * BORDER;
+  const innerWidth = target.rect.width * screenWidth - 2 * BORDER;
+  const onColor = state !== 'open' && state !== 'dimmed';
   return (
     <View
       style={[
@@ -73,9 +87,9 @@ export function BoardTile({ target, state, pointers }: { readonly target: BoardT
           },
         ]}
       />
-      <Text style={[styles.label, target.label.length > 3 && styles.labelSmall, state !== 'open' && state !== 'dimmed' && styles.labelOnColor]}>
-        {target.label}
-      </Text>
+      <View style={styles.content}>
+        <VisualView visual={target.visual} art={art} width={innerWidth * 0.9} height={innerHeight * 0.86} textStyle={onColor ? styles.labelOnColor : undefined} />
+      </View>
     </View>
   );
 }
@@ -91,7 +105,6 @@ const styles = StyleSheet.create({
   hovered: { transform: [{ scale: 1.04 }] },
   dimmed: { opacity: 0.25 },
   fill: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, opacity: 0.55 },
-  label: { color: colors.text, fontSize: scaledPixels(120), fontWeight: '900' },
-  labelSmall: { fontSize: scaledPixels(72) },
+  content: { alignItems: 'center', justifyContent: 'center' },
   labelOnColor: { color: colors.background },
 });

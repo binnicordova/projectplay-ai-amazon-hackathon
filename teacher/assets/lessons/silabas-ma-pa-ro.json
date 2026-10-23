@@ -1,0 +1,171 @@
+{
+  "format": 1,
+  "id": "silabas-ma-pa-ro",
+  "title": "Sílabas MA, PA, RO",
+  "subject": "comunicacion",
+  "audience": {
+    "band": "primaria"
+  },
+  "source": "starter",
+  "request": "creame 5 ejercicios sobre las silabas MA, PA, RO",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "silabas-ma-pa-ro-1",
+      "level": 1,
+      "prompt": {
+        "text": "¿Con qué sílaba empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f954",
+          "label": "papa"
+        },
+        "say": "¿Con qué sílaba empieza papa?"
+      },
+      "explain": "pa-pa: empieza con PA.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "PA"
+        },
+        {
+          "kind": "text",
+          "text": "MA"
+        },
+        {
+          "kind": "text",
+          "text": "RO"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-ma-pa-ro-2",
+      "level": 1,
+      "prompt": {
+        "text": "¿Con qué sílaba empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f5fa",
+          "label": "mapa"
+        },
+        "say": "¿Con qué sílaba empieza mapa?"
+      },
+      "explain": "ma-pa: empieza con MA.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "MA"
+        },
+        {
+          "kind": "text",
+          "text": "PA"
+        },
+        {
+          "kind": "text",
+          "text": "RO"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-ma-pa-ro-3",
+      "level": 2,
+      "prompt": {
+        "text": "¿Qué sílaba falta? SOMBRE__",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f3a9",
+          "label": "sombrero"
+        },
+        "say": "Es el sombrero. ¿Qué sílaba falta en SOMBRE…?"
+      },
+      "explain": "som-bre-ro",
+      "options": [
+        {
+          "kind": "text",
+          "text": "RO"
+        },
+        {
+          "kind": "text",
+          "text": "MA"
+        },
+        {
+          "kind": "text",
+          "text": "PA"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-ma-pa-ro-4",
+      "level": 2,
+      "prompt": {
+        "text": "¿Qué sílaba falta? TO__TE",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f345",
+          "label": "tomate"
+        },
+        "say": "Es el tomate. ¿Qué sílaba falta en TO…TE?"
+      },
+      "explain": "to-ma-te",
+      "options": [
+        {
+          "kind": "text",
+          "text": "RO"
+        },
+        {
+          "kind": "text",
+          "text": "PA"
+        },
+        {
+          "kind": "text",
+          "text": "MA"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "silabas-ma-pa-ro-5",
+      "level": 3,
+      "prompt": {
+        "text": "¿Qué dibujo empieza con MA?",
+        "visual": {
+          "kind": "text",
+          "text": "MA"
+        },
+        "say": "¿Qué dibujo empieza con «ma»?"
+      },
+      "explain": "ma-ri-po-sa empieza con MA.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f98b",
+          "label": "mariposa"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f514",
+          "label": "campana"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f981",
+          "label": "león"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f415",
+          "label": "perro"
+        }
+      ],
+      "answer": 0
+    }
+  ]
+}

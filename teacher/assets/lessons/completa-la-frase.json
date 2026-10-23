@@ -1,0 +1,450 @@
+{
+  "format": 1,
+  "id": "completa-la-frase",
+  "title": "Completa la frase",
+  "subject": "comunicacion",
+  "audience": {
+    "band": "primaria",
+    "age": 7
+  },
+  "source": "starter",
+  "request": "genera 15 ejercicios de completa la phrase para niños de 7 años",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-1",
+      "level": 1,
+      "prompt": {
+        "text": "El perro mueve la ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f415"
+        },
+        "say": "Lean juntos: «El perro mueve la ….» ¿Qué palabra falta?"
+      },
+      "explain": "El perro mueve la COLA.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "mesa"
+        },
+        {
+          "kind": "text",
+          "text": "nube"
+        },
+        {
+          "kind": "text",
+          "text": "cola"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-2",
+      "level": 1,
+      "prompt": {
+        "text": "Me lavo las manos con ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f9fc"
+        },
+        "say": "Lean juntos: «Me lavo las manos con ….» ¿Qué palabra falta?"
+      },
+      "explain": "Me lavo las manos con JABÓN.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "miel"
+        },
+        {
+          "kind": "text",
+          "text": "jabón"
+        },
+        {
+          "kind": "text",
+          "text": "arena"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-3",
+      "level": 1,
+      "prompt": {
+        "text": "La vaca nos da ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f404"
+        },
+        "say": "Lean juntos: «La vaca nos da ….» ¿Qué palabra falta?"
+      },
+      "explain": "La vaca nos da LECHE.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "miel"
+        },
+        {
+          "kind": "text",
+          "text": "pan"
+        },
+        {
+          "kind": "text",
+          "text": "leche"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-4",
+      "level": 1,
+      "prompt": {
+        "text": "La gallina pone ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f414"
+        },
+        "say": "Lean juntos: «La gallina pone ….» ¿Qué palabra falta?"
+      },
+      "explain": "La gallina pone HUEVOS.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "huevos"
+        },
+        {
+          "kind": "text",
+          "text": "zapatos"
+        },
+        {
+          "kind": "text",
+          "text": "piedras"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-5",
+      "level": 1,
+      "prompt": {
+        "text": "Las abejas hacen ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f41d"
+        },
+        "say": "Lean juntos: «Las abejas hacen ….» ¿Qué palabra falta?"
+      },
+      "explain": "Las abejas hacen MIEL.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "miel"
+        },
+        {
+          "kind": "text",
+          "text": "leche"
+        },
+        {
+          "kind": "text",
+          "text": "pan"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-6",
+      "level": 2,
+      "prompt": {
+        "text": "El pájaro usa sus ___ para volar.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f426"
+        },
+        "say": "Lean juntos: «El pájaro usa sus … para volar.» ¿Qué palabra falta?"
+      },
+      "explain": "El pájaro usa sus ALAS para volar.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "aletas"
+        },
+        {
+          "kind": "text",
+          "text": "ruedas"
+        },
+        {
+          "kind": "text",
+          "text": "alas"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-7",
+      "level": 2,
+      "prompt": {
+        "text": "Cuando llueve abro mi ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f327"
+        },
+        "say": "Lean juntos: «Cuando llueve abro mi ….» ¿Qué palabra falta?"
+      },
+      "explain": "Cuando llueve abro mi PARAGUAS.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "libro"
+        },
+        {
+          "kind": "text",
+          "text": "maleta"
+        },
+        {
+          "kind": "text",
+          "text": "paraguas"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-8",
+      "level": 2,
+      "prompt": {
+        "text": "Con los ojos podemos ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f441"
+        },
+        "say": "Lean juntos: «Con los ojos podemos ….» ¿Qué palabra falta?"
+      },
+      "explain": "Con los ojos podemos VER.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "oler"
+        },
+        {
+          "kind": "text",
+          "text": "ver"
+        },
+        {
+          "kind": "text",
+          "text": "oír"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-9",
+      "level": 2,
+      "prompt": {
+        "text": "El tren va por los ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f686"
+        },
+        "say": "Lean juntos: «El tren va por los ….» ¿Qué palabra falta?"
+      },
+      "explain": "El tren va por los RIELES.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "ríos"
+        },
+        {
+          "kind": "text",
+          "text": "rieles"
+        },
+        {
+          "kind": "text",
+          "text": "árboles"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-10",
+      "level": 2,
+      "prompt": {
+        "text": "Uso el ___ para escribir.",
+        "visual": {
+          "kind": "icon",
+          "icon": "270f"
+        },
+        "say": "Lean juntos: «Uso el … para escribir.» ¿Qué palabra falta?"
+      },
+      "explain": "Uso el LÁPIZ para escribir.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "lápiz"
+        },
+        {
+          "kind": "text",
+          "text": "plátano"
+        },
+        {
+          "kind": "text",
+          "text": "zapato"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-11",
+      "level": 3,
+      "prompt": {
+        "text": "La llama vive en los ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f999"
+        },
+        "say": "Lean juntos: «La llama vive en los ….» ¿Qué palabra falta?"
+      },
+      "explain": "La llama vive en los ANDES.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "mares"
+        },
+        {
+          "kind": "text",
+          "text": "techos"
+        },
+        {
+          "kind": "text",
+          "text": "Andes"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-12",
+      "level": 3,
+      "prompt": {
+        "text": "Las plantas necesitan agua y ___ para crecer.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f331"
+        },
+        "say": "Lean juntos: «Las plantas necesitan agua y … para crecer.» ¿Qué palabra falta?"
+      },
+      "explain": "Las plantas necesitan agua y SOL para crecer.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "hielo"
+        },
+        {
+          "kind": "text",
+          "text": "sol"
+        },
+        {
+          "kind": "text",
+          "text": "arena"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-13",
+      "level": 3,
+      "prompt": {
+        "text": "El girasol siempre mira hacia el ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f33b"
+        },
+        "say": "Lean juntos: «El girasol siempre mira hacia el ….» ¿Qué palabra falta?"
+      },
+      "explain": "El girasol siempre mira hacia el SOL.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "suelo"
+        },
+        {
+          "kind": "text",
+          "text": "sol"
+        },
+        {
+          "kind": "text",
+          "text": "río"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-14",
+      "level": 3,
+      "prompt": {
+        "text": "Si tengo frío, me pongo la ___.",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f9e5"
+        },
+        "say": "Lean juntos: «Si tengo frío, me pongo la ….» ¿Qué palabra falta?"
+      },
+      "explain": "Si tengo frío, me pongo la CASACA.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "casaca"
+        },
+        {
+          "kind": "text",
+          "text": "toalla"
+        },
+        {
+          "kind": "text",
+          "text": "cuchara"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "completa-la-frase-15",
+      "level": 3,
+      "prompt": {
+        "text": "En invierno hace ___ y en verano hace calor.",
+        "visual": {
+          "kind": "icon",
+          "icon": "2744"
+        },
+        "say": "Lean juntos: «En invierno hace … y en verano hace calor.» ¿Qué palabra falta?"
+      },
+      "explain": "En invierno hace FRÍO y en verano hace calor.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "frío"
+        },
+        {
+          "kind": "text",
+          "text": "ruido"
+        },
+        {
+          "kind": "text",
+          "text": "calor"
+        }
+      ],
+      "answer": 0
+    }
+  ]
+}

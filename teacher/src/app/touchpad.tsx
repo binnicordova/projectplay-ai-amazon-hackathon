@@ -16,10 +16,10 @@ export default function TouchpadScreen() {
     <View style={styles.screen}>
       <View style={styles.padColumn}>
         <Touchpad send={send} teams={teams} />
-        <Button label="Home" variant="secondary" onPress={() => router.back()} />
+        <Button label="Inicio" variant="secondary" onPress={() => router.back()} />
       </View>
       <View style={styles.consoleColumn}>
-        <ConsolePanel send={send} />
+        <ConsolePanel send={send} onChooseLesson={() => router.push('/library')} />
       </View>
     </View>
   );

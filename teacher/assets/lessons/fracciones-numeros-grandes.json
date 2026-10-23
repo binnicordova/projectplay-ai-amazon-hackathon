@@ -1,0 +1,367 @@
+{
+  "format": 1,
+  "id": "fracciones-numeros-grandes",
+  "title": "Fracciones con números grandes",
+  "subject": "matematica",
+  "audience": {
+    "band": "secundaria",
+    "age": 13
+  },
+  "source": "starter",
+  "request": "generame 12 ejercicios de fracciones para, los adolescentes de 13 años con numeros grandes",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-1",
+      "level": 1,
+      "prompt": {
+        "text": "Simplifica la fracción",
+        "visual": {
+          "kind": "text",
+          "text": "175/210"
+        }
+      },
+      "explain": "175 y 210 se dividen entre 35: 175/210 = 5/6.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "25/30"
+        },
+        {
+          "kind": "text",
+          "text": "35/42"
+        },
+        {
+          "kind": "text",
+          "text": "6/5"
+        },
+        {
+          "kind": "text",
+          "text": "5/6"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-2",
+      "level": 1,
+      "prompt": {
+        "text": "Simplifica la fracción",
+        "visual": {
+          "kind": "text",
+          "text": "95/171"
+        }
+      },
+      "explain": "95 y 171 se dividen entre 19: 95/171 = 5/9.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "5/9"
+        },
+        {
+          "kind": "text",
+          "text": "2/3"
+        },
+        {
+          "kind": "text",
+          "text": "1/2"
+        },
+        {
+          "kind": "text",
+          "text": "9/5"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-3",
+      "level": 1,
+      "prompt": {
+        "text": "Simplifica la fracción",
+        "visual": {
+          "kind": "text",
+          "text": "62/93"
+        }
+      },
+      "explain": "62 y 93 se dividen entre 31: 62/93 = 2/3.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "2/3"
+        },
+        {
+          "kind": "text",
+          "text": "3/2"
+        },
+        {
+          "kind": "text",
+          "text": "2/5"
+        },
+        {
+          "kind": "text",
+          "text": "1/2"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-4",
+      "level": 1,
+      "prompt": {
+        "text": "Simplifica la fracción",
+        "visual": {
+          "kind": "text",
+          "text": "96/180"
+        }
+      },
+      "explain": "96 y 180 se dividen entre 12: 96/180 = 8/15.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "16/30"
+        },
+        {
+          "kind": "text",
+          "text": "48/90"
+        },
+        {
+          "kind": "text",
+          "text": "24/45"
+        },
+        {
+          "kind": "text",
+          "text": "8/15"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-5",
+      "level": 2,
+      "prompt": {
+        "text": "¿Qué fracción es igual a 4/5?"
+      },
+      "explain": "108/135: arriba y abajo se multiplicaron por 27.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "135/108"
+        },
+        {
+          "kind": "text",
+          "text": "31/32"
+        },
+        {
+          "kind": "text",
+          "text": "108/140"
+        },
+        {
+          "kind": "text",
+          "text": "108/135"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-6",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cuál es la fracción mayor?"
+      },
+      "explain": "Simplificadas: 3/8, 11/12, 3/5, 3/4. La mayor es 11/12.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "99/132"
+        },
+        {
+          "kind": "text",
+          "text": "90/150"
+        },
+        {
+          "kind": "text",
+          "text": "352/384"
+        },
+        {
+          "kind": "text",
+          "text": "99/264"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-7",
+      "level": 2,
+      "prompt": {
+        "text": "¿Qué fracción es igual a 5/12?"
+      },
+      "explain": "65/156: arriba y abajo se multiplicaron por 13.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "78/156"
+        },
+        {
+          "kind": "text",
+          "text": "65/156"
+        },
+        {
+          "kind": "text",
+          "text": "18/25"
+        },
+        {
+          "kind": "text",
+          "text": "156/65"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-8",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cuál es la fracción mayor?"
+      },
+      "explain": "Simplificadas: 2/3, 5/6, 3/5, 11/12. La mayor es 11/12.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "80/96"
+        },
+        {
+          "kind": "text",
+          "text": "24/36"
+        },
+        {
+          "kind": "text",
+          "text": "66/110"
+        },
+        {
+          "kind": "text",
+          "text": "297/324"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-9",
+      "level": 3,
+      "prompt": {
+        "text": "1/14 + 5/21 = ?"
+      },
+      "explain": "Denominador común 42: 3/42 + 10/42 = 13/42. Sumar arriba y abajo (6/35) es la trampa.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "4/21"
+        },
+        {
+          "kind": "text",
+          "text": "13/42"
+        },
+        {
+          "kind": "text",
+          "text": "6/35"
+        },
+        {
+          "kind": "text",
+          "text": "11/42"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-10",
+      "level": 3,
+      "prompt": {
+        "text": "¿Cuánto es 7/10 de 940?"
+      },
+      "explain": "940 ÷ 10 = 94, y por 7 = 658.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "6580"
+        },
+        {
+          "kind": "text",
+          "text": "94"
+        },
+        {
+          "kind": "text",
+          "text": "658"
+        },
+        {
+          "kind": "text",
+          "text": "668"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-11",
+      "level": 3,
+      "prompt": {
+        "text": "1/12 + 7/18 = ?"
+      },
+      "explain": "Denominador común 36: 3/36 + 14/36 = 17/36. Sumar arriba y abajo (8/30) es la trampa.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "8/30"
+        },
+        {
+          "kind": "text",
+          "text": "17/36"
+        },
+        {
+          "kind": "text",
+          "text": "5/18"
+        },
+        {
+          "kind": "text",
+          "text": "5/12"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "fracciones-numeros-grandes-12",
+      "level": 3,
+      "prompt": {
+        "text": "¿Cuánto es 5/8 de 336?"
+      },
+      "explain": "336 ÷ 8 = 42, y por 5 = 210.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "1680"
+        },
+        {
+          "kind": "text",
+          "text": "210"
+        },
+        {
+          "kind": "text",
+          "text": "218"
+        },
+        {
+          "kind": "text",
+          "text": "42"
+        }
+      ],
+      "answer": 1
+    }
+  ]
+}

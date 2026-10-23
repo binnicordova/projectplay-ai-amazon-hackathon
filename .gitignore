@@ -7,6 +7,10 @@ web-build/
 *.tsbuildinfo
 .DS_Store
 .env*.local
+# API keys (teacher/.env holds EXPO_PUBLIC_DEEPSEEK_API_KEY): never commit them
+.env
+.env.*
+!.env.example
 
 # Generated native projects (Continuous Native Generation)
 teacher/android/

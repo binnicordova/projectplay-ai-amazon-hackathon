@@ -1,59 +1,83 @@
-import { DEFAULT_TEAM_COUNT, GAME_MODES, SKILLS, type GameMode, type SkillId, type TeacherMessage, type TeamCount } from '@projectplay/contracts';
+import { DEFAULT_TEAM_COUNT, type TeacherMessage, type TeamCount } from '@projectplay/contracts';
 import { useAtom, useAtomValue } from 'jotai';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Button, Card, SectionLabel, Segmented, StatusDot } from '../../../ui-kit/components';
-import { colors, space, type } from '../../../ui-kit/theme';
+import { colors, radius, space, type } from '../../../ui-kit/theme';
+import { recordsAtom, selectedLessonAtom } from '../../library/application/library';
+import { SUBJECT_INFO, audienceLabel, coverIcon, recordOf } from '../../library/domain/catalog';
 import { roundResultsAtom, tvConnectedAtom, tvSnapshotAtom } from '../../link/application/linkService';
+import { iconArtAtom } from '../../pictures/application/pictures';
+import { Picture } from '../../pictures/ui/Picture';
 import {
-  MODE_LABELS,
   ROUND_OPTIONS,
-  SKILL_LABELS,
   TEAM_LABELS,
   TEAM_OPTIONS,
   endCommand,
   nextCommand,
   resultLabel,
-  selectedModeAtom,
   selectedRoundsAtom,
-  selectedSkillAtom,
   selectedTeamsAtom,
-  sessionConfigAtom,
   startCommand,
 } from '../application/console';
 
-/** Session setup before a class, live controls during it. */
-export function ConsolePanel({ send }: { readonly send: (message: TeacherMessage) => void }) {
+type Send = (message: TeacherMessage) => void;
+
+/** Lesson setup before a class, live controls during it. */
+export function ConsolePanel({ send, onChooseLesson }: { readonly send: Send; readonly onChooseLesson: () => void }) {
   const snapshot = useAtomValue(tvSnapshotAtom);
   const live = snapshot !== null && snapshot.phase !== 'lobby';
-  return <ScrollView contentContainerStyle={styles.column}>{live ? <LiveSession send={send} /> : <SessionSetup send={send} />}</ScrollView>;
+  return (
+    <ScrollView contentContainerStyle={styles.column}>{live ? <LiveSession send={send} /> : <SessionSetup send={send} onChooseLesson={onChooseLesson} />}</ScrollView>
+  );
 }
 
-function SessionSetup({ send }: { readonly send: (message: TeacherMessage) => void }) {
-  const [skill, setSkill] = useAtom(selectedSkillAtom);
-  const [mode, setMode] = useAtom(selectedModeAtom);
+function SessionSetup({ send, onChooseLesson }: { readonly send: Send; readonly onChooseLesson: () => void }) {
+  const lesson = useAtomValue(selectedLessonAtom);
+  const library = useAtomValue(iconArtAtom);
+  const records = useAtomValue(recordsAtom);
   const [rounds, setRounds] = useAtom(selectedRoundsAtom);
   const [teams, setTeams] = useAtom(selectedTeamsAtom);
-  const config = useAtomValue(sessionConfigAtom);
   const connected = useAtomValue(tvConnectedAtom);
+  const record = lesson ? recordOf(records, lesson.id, teams) : undefined;
 
   return (
     <Card>
-      <SectionLabel>Who plays</SectionLabel>
+      <SectionLabel>Lección</SectionLabel>
+      {lesson ? (
+        <View style={styles.lesson}>
+          <View style={[styles.cover, { backgroundColor: SUBJECT_INFO[lesson.subject].color }]}>
+            <Picture icon={coverIcon(lesson)} size={44} />
+          </View>
+          <View style={styles.lessonText}>
+            <Text style={type.heading} numberOfLines={2}>
+              {lesson.title}
+            </Text>
+            <Text style={type.caption}>
+              {SUBJECT_INFO[lesson.subject].label} · {audienceLabel(lesson)} · {lesson.cards.length} ejercicios
+              {record ? ` · récord ${record}` : ''}
+            </Text>
+          </View>
+        </View>
+      ) : (
+        <Text style={type.caption}>Elige una lección de la biblioteca o crea una con IA.</Text>
+      )}
+      <Button label="Elegir otra lección" variant="secondary" onPress={onChooseLesson} />
+      <SectionLabel>Quién juega</SectionLabel>
       <Segmented<TeamCount> options={TEAM_OPTIONS} value={teams} onChange={setTeams} labelFor={(t) => TEAM_LABELS[t].title} />
       <Text style={type.caption}>{TEAM_LABELS[teams].howTo}</Text>
-      <SectionLabel>Skill</SectionLabel>
-      <Segmented<SkillId> options={SKILLS} value={skill} onChange={setSkill} labelFor={(s) => SKILL_LABELS[s]} />
-      <SectionLabel>How children answer</SectionLabel>
-      <Segmented<GameMode> options={GAME_MODES} value={mode} onChange={setMode} labelFor={(m) => MODE_LABELS[m].title} />
-      <Text style={type.caption}>{MODE_LABELS[mode].howTo}</Text>
-      <SectionLabel>Questions</SectionLabel>
+      <SectionLabel>Ejercicios</SectionLabel>
       <Segmented<number> options={ROUND_OPTIONS} value={rounds} onChange={setRounds} labelFor={(r) => `${r}`} />
-      <Button label={connected ? 'Start on the TV' : 'Connect the TV first'} disabled={!connected} onPress={() => send(startCommand(config))} />
+      <Text style={type.caption}>Empiezan fáciles; la TV sube de nivel cuando la clase acierta seguido.</Text>
+      <Button
+        label={!connected ? 'Conecta la TV primero' : lesson ? 'Jugar en la TV' : 'Elige una lección'}
+        disabled={!connected || !lesson}
+        onPress={() => lesson && send(startCommand({ lesson, library, rounds, teams, ...(record === undefined ? {} : { record }) }))}
+      />
     </Card>
   );
 }
 
-function LiveSession({ send }: { readonly send: (message: TeacherMessage) => void }) {
+function LiveSession({ send }: { readonly send: Send }) {
   const snapshot = useAtomValue(tvSnapshotAtom);
   const results = useAtomValue(roundResultsAtom);
   if (!snapshot) return null;
@@ -62,17 +86,21 @@ function LiveSession({ send }: { readonly send: (message: TeacherMessage) => voi
 
   return (
     <Card>
-      <SectionLabel>{finished ? 'Class summary' : `Question ${snapshot.round} of ${snapshot.rounds}`}</SectionLabel>
+      <SectionLabel>{finished ? 'Resumen de la clase' : `Pregunta ${snapshot.round} de ${snapshot.rounds}${snapshot.level ? ` · nivel ${snapshot.level}` : ''}`}</SectionLabel>
       {snapshot.prompt ? <Text style={type.title}>{snapshot.prompt}</Text> : null}
+      {snapshot.say && !finished ? (
+        <View style={styles.say}>
+          <Text style={type.label}>Diga en voz alta</Text>
+          <Text style={styles.sayText}>{snapshot.say}</Text>
+        </View>
+      ) : null}
       <View style={styles.scores}>
         {teams === 1 ? (
-          <Text style={[type.heading, { color: colors.teamA }]}>
-            One player · {snapshot.scores.A} right
-          </Text>
+          <Text style={[type.heading, { color: colors.teamA }]}>Un jugador · {snapshot.scores.A} puntos</Text>
         ) : (
           <>
-            <Text style={[type.heading, { color: colors.teamA }]}>Team A · {snapshot.scores.A}</Text>
-            <Text style={[type.heading, { color: colors.teamB }]}>Team B · {snapshot.scores.B}</Text>
+            <Text style={[type.heading, { color: colors.teamA }]}>Equipo A · {snapshot.scores.A}</Text>
+            <Text style={[type.heading, { color: colors.teamB }]}>Equipo B · {snapshot.scores.B}</Text>
           </>
         )}
       </View>
@@ -82,8 +110,8 @@ function LiveSession({ send }: { readonly send: (message: TeacherMessage) => voi
         ))}
       </View>
       <View style={styles.actions}>
-        {!finished ? <Button label="Next question" onPress={() => send(nextCommand)} /> : null}
-        <Button label={finished ? 'Back to lobby' : 'End class'} variant={finished ? 'primary' : 'danger'} onPress={() => send(endCommand)} />
+        {!finished ? <Button label="Siguiente" onPress={() => send(nextCommand)} /> : null}
+        <Button label={finished ? 'Volver al inicio' : 'Terminar clase'} variant={finished ? 'primary' : 'danger'} onPress={() => send(endCommand)} />
       </View>
     </Card>
   );
@@ -91,6 +119,11 @@ function LiveSession({ send }: { readonly send: (message: TeacherMessage) => voi
 
 const styles = StyleSheet.create({
   column: { gap: space.lg, padding: space.lg },
+  lesson: { flexDirection: 'row', gap: space.md, alignItems: 'center' },
+  cover: { width: 64, height: 64, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center' },
+  lessonText: { flex: 1, gap: space.xs },
+  say: { backgroundColor: colors.surfaceRaised, borderRadius: radius.md, padding: space.md, gap: space.xs, borderLeftWidth: 4, borderLeftColor: colors.primary },
+  sayText: { color: colors.text, fontSize: 20, fontWeight: '800' },
   scores: { flexDirection: 'row', gap: space.xl },
   results: { gap: space.xs },
   actions: { flexDirection: 'row', gap: space.md, flexWrap: 'wrap' },

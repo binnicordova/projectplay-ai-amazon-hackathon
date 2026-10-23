@@ -1,0 +1,23 @@
+{
+  "name": "@projectplay/exercise-engine",
+  "version": "2.0.0",
+  "description": "Builds lesson cards (numbers, letters, syllables, English words, sentences, fractions, equations, arithmetic) offline and deterministically, with misconception-based wrong answers. Zero runtime dependencies.",
+  "license": "MIT",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "src/index.ts",
+  "files": [
+    "src",
+    "!src/**/*.test.ts"
+  ],
+  "keywords": [
+    "education",
+    "math",
+    "reading",
+    "spanish",
+    "syllables",
+    "exercises",
+    "offline"
+  ]
+}

@@ -2,18 +2,12 @@
  * Composition root for the TV: wires the phone link, the pointer hub, the remote
  * control and the session reducer around one Jotai store.
  */
-import {
-  DEFAULT_TEAM_COUNT,
-  TEAMS,
-  type CalibrationPattern,
-  type PlayerId,
-  type SessionConfig,
-  type TeamId,
-} from '@projectplay/contracts';
+import { DEFAULT_TEAM_COUNT, TEAMS, type AgeBand, type CalibrationPattern, type PlayerId, type TeamId } from '@projectplay/contracts';
 import { createStore } from 'jotai';
 import { PATTERN_TIMEOUT_MS, calibrationPatternAtom } from '../features/calibration/application/calibrationPattern';
 import type { GameServices } from '../features/game/application/gameServices';
 import { PointerHub } from '../features/interaction/application/pointerHub';
+import { DEFAULT_DWELL } from '../features/interaction/domain/dwell';
 import { LinkClient, linkStatusAtom, type NetworkInfo, type Transport } from '../features/link/application/linkClient';
 import { activeTeamsAtom, clockAtom, sessionAtom } from '../features/session/application/sessionStore';
 import { roundResults, snapshotOf, teamCountOf, type SessionEvent } from '../features/session/domain/session';
@@ -45,8 +39,8 @@ const REMOTE_STEP = 0.06;
 const REMOTE_HAND = 0;
 /** The remote cursor stays on screen this long after the last key press. */
 const REMOTE_HOLD_MS = 10_000;
-/** One remote is one player: practice uses the whole wall instead of leaving team B's tiles dead. */
-export const PRACTICE_CONFIG: Omit<SessionConfig, 'seed'> = { skill: 'addition', mode: 'choice', rounds: 5, teams: 1 };
+/** Pre-readers' arms waver more: they hold a little longer before a tile counts as chosen. */
+const DWELL_MS: Readonly<Record<AgeBand, number>> = { inicial: 750, primaria: DEFAULT_DWELL.dwellMs, secundaria: DEFAULT_DWELL.dwellMs };
 
 export function createTvServices({ transport, network, platform, preferredHosts = [] }: TvPlatform): TvServices {
   const store = createStore();
@@ -59,10 +53,7 @@ export function createTvServices({ transport, network, platform, preferredHosts 
 
   const dispatch = (event: SessionEvent) => store.set(sessionAtom, event);
   const seen = (player: PlayerId) => lastSeen.set(pointers.teamOf(player), Date.now());
-  const mode = () => {
-    const session = store.get(sessionAtom);
-    return session.phase === 'question' ? session.config.mode : null;
-  };
+  const answering = () => store.get(sessionAtom).phase === 'question';
 
   const showPattern = (pattern: CalibrationPattern | null) => {
     // Hiding is requested on every link-status change: only act when something is shown.
@@ -88,7 +79,11 @@ export function createTvServices({ transport, network, platform, preferredHosts 
           showPattern(message.show);
           return;
         case 'ctl':
-          if (message.a === 'start') dispatch({ type: 'start', config: message.config, now: Date.now() });
+          if (message.a === 'start') {
+            pointers.setDwellMs(DWELL_MS[message.config.lesson.audience.band]);
+            console.log(`[lesson] ${message.config.lesson.id}: ${message.config.lesson.cards.length} cards, ${Object.keys(message.config.art).length} pictures (memory only)`);
+            dispatch({ type: 'start', config: message.config, now: Date.now() });
+          }
           else if (message.a === 'next') dispatch({ type: 'next', now: Date.now() });
           else dispatch({ type: 'end' });
           return;
@@ -101,11 +96,11 @@ export function createTvServices({ transport, network, platform, preferredHosts 
   // A hand held on a tile chooses it for its team (a later choice replaces it until time is up).
   disposers.push(pointers.onSelect((team, target) => dispatch({ type: 'answer', team, value: target.value, now: Date.now() })));
 
-  // TV remote: a virtual pointer for practice and for testing on a simulator.
+  // TV remote: a virtual pointer during a class (handy on the Fire TV / Vega simulators).
   let remotePoint = { x: 0.25, y: 0.62 };
   let remoteUsedAt = -Infinity;
   const onKey = (key: SupportedKeys) => {
-    if (mode() === null) return;
+    if (!answering()) return;
     const moves: Partial<Record<SupportedKeys, [number, number]>> = {
       [SupportedKeys.Left]: [-REMOTE_STEP, 0],
       [SupportedKeys.Right]: [REMOTE_STEP, 0],
@@ -121,7 +116,7 @@ export function createTvServices({ transport, network, platform, preferredHosts 
     } else if (key === SupportedKeys.Enter) {
       pointers.selectAt(REMOTE_PLAYER, remotePoint);
     } else if (key === SupportedKeys.FastForward) {
-      // Questions run their full time; in practice there is no teacher's phone to press Next.
+      // Same as the teacher's "Next" button: cards run their full time otherwise.
       dispatch({ type: 'next', now: Date.now() });
     }
   };
@@ -178,9 +173,6 @@ export function createTvServices({ transport, network, platform, preferredHosts 
       if (patternTimer) clearTimeout(patternTimer);
       disposers.splice(0).forEach((d) => d());
       link.stop();
-    },
-    startPractice() {
-      dispatch({ type: 'start', config: { ...PRACTICE_CONFIG, seed: Math.floor(Math.random() * 2 ** 31) }, now: Date.now() });
     },
     backToLobby() {
       const phase = store.get(sessionAtom).phase;

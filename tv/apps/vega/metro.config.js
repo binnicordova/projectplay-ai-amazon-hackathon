@@ -13,7 +13,6 @@ const path = require('path');
 const config = {
   watchFolders: [
     path.resolve(__dirname, '../../packages/tv-shared'),
-    path.resolve(__dirname, '../../packages/exercise-engine'),
     path.resolve(__dirname, '../../../shared/contracts'),
   ],
   resolver: {

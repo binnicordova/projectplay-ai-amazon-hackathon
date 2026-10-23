@@ -30,15 +30,15 @@ export default function ClassScreen() {
           ) : null}
         </TrackingCamera>
         <View style={styles.row}>
-          <Button label="Home" variant="secondary" onPress={() => router.back()} />
+          <Button label="Inicio" variant="secondary" onPress={() => router.back()} />
           <TrackingStatus />
           <View style={styles.spacer} />
-          {showPanel ? null : <Button label="Recalibrate" variant="secondary" onPress={autoCalibrate} />}
+          {showPanel ? null : <Button label="Recalibrar" variant="secondary" onPress={autoCalibrate} />}
           <BrightnessControl />
         </View>
       </View>
       <View style={styles.consoleColumn}>
-        <ConsolePanel send={send} />
+        <ConsolePanel send={send} onChooseLesson={() => router.push('/library')} />
       </View>
     </View>
   );

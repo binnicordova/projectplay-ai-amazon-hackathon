@@ -73,7 +73,12 @@ export class DwellTracker {
   private targets: readonly Target[] = [];
   private readonly pointers = new Map<number, PointerState>();
 
-  constructor(private readonly options: DwellOptions = DEFAULT_DWELL) {}
+  constructor(private options: DwellOptions = DEFAULT_DWELL) {}
+
+  /** Hold time per age group: younger children get a little longer (their arms waver more). */
+  setDwellMs(dwellMs: number): void {
+    this.options = { ...this.options, dwellMs };
+  }
 
   setTargets(targets: readonly Target[]): void {
     this.targets = targets;

@@ -1,0 +1,259 @@
+{
+  "format": 1,
+  "id": "numeros-1-al-9",
+  "title": "Números del 1 al 9",
+  "subject": "matematica",
+  "audience": {
+    "band": "primaria",
+    "age": 6
+  },
+  "source": "starter",
+  "request": "genera 8 ejercicios para reconocer los numeros del 1 al 9 para niños de 6 años",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "numeros-1-al-9-1",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cuántos hay?",
+        "visual": {
+          "kind": "group",
+          "icon": "1f986",
+          "count": 2
+        },
+        "say": "Cuenten con el dedo: ¿cuántos patos hay?"
+      },
+      "explain": "Hay 2.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "3"
+        },
+        {
+          "kind": "text",
+          "text": "2"
+        },
+        {
+          "kind": "text",
+          "text": "1"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "numeros-1-al-9-2",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cuántos hay?",
+        "visual": {
+          "kind": "group",
+          "icon": "1f4a7",
+          "count": 5
+        },
+        "say": "Cuenten con el dedo: ¿cuántas gotas hay?"
+      },
+      "explain": "Hay 5.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "5"
+        },
+        {
+          "kind": "text",
+          "text": "4"
+        },
+        {
+          "kind": "text",
+          "text": "6"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "numeros-1-al-9-3",
+      "level": 1,
+      "prompt": {
+        "text": "¿Cuántos hay?",
+        "visual": {
+          "kind": "group",
+          "icon": "2b50",
+          "count": 4
+        },
+        "say": "Cuenten con el dedo: ¿cuántas estrellas hay?"
+      },
+      "explain": "Hay 4.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "3"
+        },
+        {
+          "kind": "text",
+          "text": "4"
+        },
+        {
+          "kind": "text",
+          "text": "5"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "numeros-1-al-9-4",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cuántos hay?",
+        "visual": {
+          "kind": "group",
+          "icon": "1f353",
+          "count": 6
+        },
+        "say": "Cuenten con el dedo: ¿cuántas fresas hay?"
+      },
+      "explain": "Hay 6.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "7"
+        },
+        {
+          "kind": "text",
+          "text": "5"
+        },
+        {
+          "kind": "text",
+          "text": "6"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "numeros-1-al-9-5",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cuántos hay?",
+        "visual": {
+          "kind": "group",
+          "icon": "1f4a7",
+          "count": 8
+        },
+        "say": "Cuenten con el dedo: ¿cuántas gotas hay?"
+      },
+      "explain": "Hay 8.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "8"
+        },
+        {
+          "kind": "text",
+          "text": "7"
+        },
+        {
+          "kind": "text",
+          "text": "9"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "numeros-1-al-9-6",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cuántos hay?",
+        "visual": {
+          "kind": "group",
+          "icon": "1f36a",
+          "count": 6
+        },
+        "say": "Cuenten con el dedo: ¿cuántas galletas hay?"
+      },
+      "explain": "Hay 6.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "5"
+        },
+        {
+          "kind": "text",
+          "text": "6"
+        },
+        {
+          "kind": "text",
+          "text": "7"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "numeros-1-al-9-7",
+      "level": 3,
+      "prompt": {
+        "text": "¿Dónde hay 6?",
+        "visual": {
+          "kind": "text",
+          "text": "6"
+        },
+        "say": "Busquen el grupo que tiene 6 pelotas."
+      },
+      "explain": "Ese grupo tiene 6.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "26bd",
+          "count": 6
+        },
+        {
+          "kind": "group",
+          "icon": "26bd",
+          "count": 7
+        },
+        {
+          "kind": "group",
+          "icon": "26bd",
+          "count": 5
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "numeros-1-al-9-8",
+      "level": 3,
+      "prompt": {
+        "text": "¿Dónde hay 9?",
+        "visual": {
+          "kind": "text",
+          "text": "9"
+        },
+        "say": "Busquen el grupo que tiene 9 naranjas."
+      },
+      "explain": "Ese grupo tiene 9.",
+      "options": [
+        {
+          "kind": "group",
+          "icon": "1f34a",
+          "count": 10
+        },
+        {
+          "kind": "group",
+          "icon": "1f34a",
+          "count": 8
+        },
+        {
+          "kind": "group",
+          "icon": "1f34a",
+          "count": 9
+        }
+      ],
+      "answer": 2
+    }
+  ]
+}

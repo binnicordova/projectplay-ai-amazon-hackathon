@@ -11,5 +11,5 @@
     "skipLibCheck": true,
     "types": []
   },
-  "include": ["contracts/src"]
+  "include": ["contracts/src", "exercise-engine/src"]
 }

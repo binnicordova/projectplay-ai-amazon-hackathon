@@ -1,0 +1,432 @@
+{
+  "format": 1,
+  "id": "letras-a-m-animales",
+  "title": "Letras de la a a la m con animales",
+  "subject": "comunicacion",
+  "audience": {
+    "band": "primaria"
+  },
+  "source": "starter",
+  "request": "genera 13 ejercicios para reconocer las letras del 'a' a la 'm' usando animales",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-1",
+      "level": 1,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f9ad",
+          "label": "foca"
+        },
+        "say": "¿Con qué letra empieza foca?"
+      },
+      "explain": "foca empieza con f.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "i"
+        },
+        {
+          "kind": "text",
+          "text": "k"
+        },
+        {
+          "kind": "text",
+          "text": "f"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-2",
+      "level": 1,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f40c",
+          "label": "caracol"
+        },
+        "say": "¿Con qué letra empieza caracol?"
+      },
+      "explain": "caracol empieza con c.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "d"
+        },
+        {
+          "kind": "text",
+          "text": "c"
+        },
+        {
+          "kind": "text",
+          "text": "b"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-3",
+      "level": 1,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f981",
+          "label": "león"
+        },
+        "say": "¿Con qué letra empieza león?"
+      },
+      "explain": "león empieza con l.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "c"
+        },
+        {
+          "kind": "text",
+          "text": "l"
+        },
+        {
+          "kind": "text",
+          "text": "b"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-4",
+      "level": 1,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f428",
+          "label": "koala"
+        },
+        "say": "¿Con qué letra empieza koala?"
+      },
+      "explain": "koala empieza con k.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "k"
+        },
+        {
+          "kind": "text",
+          "text": "f"
+        },
+        {
+          "kind": "text",
+          "text": "m"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-5",
+      "level": 1,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f418",
+          "label": "elefante"
+        },
+        "say": "¿Con qué letra empieza elefante?"
+      },
+      "explain": "elefante empieza con e.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "e"
+        },
+        {
+          "kind": "text",
+          "text": "g"
+        },
+        {
+          "kind": "text",
+          "text": "h"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-6",
+      "level": 2,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f98e",
+          "label": "iguana"
+        },
+        "say": "¿Con qué letra empieza iguana?"
+      },
+      "explain": "iguana empieza con i.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "i"
+        },
+        {
+          "kind": "text",
+          "text": "t"
+        },
+        {
+          "kind": "text",
+          "text": "l"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-7",
+      "level": 2,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f40b",
+          "label": "ballena"
+        },
+        "say": "¿Con qué letra empieza ballena?"
+      },
+      "explain": "ballena empieza con b.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "b"
+        },
+        {
+          "kind": "text",
+          "text": "d"
+        },
+        {
+          "kind": "text",
+          "text": "p"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-8",
+      "level": 2,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f42c",
+          "label": "delfín"
+        },
+        "say": "¿Con qué letra empieza delfín?"
+      },
+      "explain": "delfín empieza con d.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "p"
+        },
+        {
+          "kind": "text",
+          "text": "d"
+        },
+        {
+          "kind": "text",
+          "text": "b"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-9",
+      "level": 2,
+      "prompt": {
+        "text": "¿Con qué letra empieza?",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f577",
+          "label": "araña"
+        },
+        "say": "¿Con qué letra empieza araña?"
+      },
+      "explain": "araña empieza con a.",
+      "options": [
+        {
+          "kind": "text",
+          "text": "a"
+        },
+        {
+          "kind": "text",
+          "text": "j"
+        },
+        {
+          "kind": "text",
+          "text": "k"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-10",
+      "level": 3,
+      "prompt": {
+        "text": "¿Qué animal empieza con g?",
+        "visual": {
+          "kind": "text",
+          "text": "g"
+        },
+        "say": "¿Cuál empieza con la letra ge: cocodrilo, gallina, canguro o cerdo?"
+      },
+      "explain": "gallina empieza con g.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f40a",
+          "label": "cocodrilo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f414",
+          "label": "gallina"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f998",
+          "label": "canguro"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f416",
+          "label": "cerdo"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-11",
+      "level": 3,
+      "prompt": {
+        "text": "¿Qué animal empieza con m?",
+        "visual": {
+          "kind": "text",
+          "text": "m"
+        },
+        "say": "¿Cuál empieza con la letra eme: caracol, foca, cabra o mariposa?"
+      },
+      "explain": "mariposa empieza con m.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f40c",
+          "label": "caracol"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f9ad",
+          "label": "foca"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f410",
+          "label": "cabra"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f98b",
+          "label": "mariposa"
+        }
+      ],
+      "answer": 3
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-12",
+      "level": 3,
+      "prompt": {
+        "text": "¿Qué animal empieza con j?",
+        "visual": {
+          "kind": "text",
+          "text": "j"
+        },
+        "say": "¿Cuál empieza con la letra jota: mariposa, ballena, jirafa o gusano?"
+      },
+      "explain": "jirafa empieza con j.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f98b",
+          "label": "mariposa"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f40b",
+          "label": "ballena"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f992",
+          "label": "jirafa"
+        },
+        {
+          "kind": "icon",
+          "icon": "1fab1",
+          "label": "gusano"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "letras-a-m-animales-13",
+      "level": 3,
+      "prompt": {
+        "text": "¿Qué animal empieza con h?",
+        "visual": {
+          "kind": "text",
+          "text": "h"
+        },
+        "say": "¿Cuál empieza con la letra hache: caracol, águila, araña o hipopótamo?"
+      },
+      "explain": "hipopótamo empieza con h.",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f40c",
+          "label": "caracol"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f985",
+          "label": "águila"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f577",
+          "label": "araña"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f99b",
+          "label": "hipopótamo"
+        }
+      ],
+      "answer": 3
+    }
+  ]
+}

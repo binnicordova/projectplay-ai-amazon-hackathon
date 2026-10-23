@@ -32,20 +32,14 @@ export interface NormalizedPoint {
   readonly y: number;
 }
 
-/** Curriculum skills the exercise engine can generate. */
-export type SkillId = 'addition' | 'subtraction' | 'missingAddend';
-export const SKILLS: readonly SkillId[] = ['addition', 'subtraction', 'missingAddend'];
-
 /**
- * Game templates. Children always answer the same way, by pointing at the wall and holding
- * their hand on a tile: in the classroom that is what they do by themselves, so it is the
- * only interaction (whole-body gestures and jump counting were removed after field tests).
+ * How a card is answered. Children always answer the same way, by pointing at the wall and
+ * holding their hand on a tile: in the classroom that is what they do by themselves, so it is
+ * the only interaction (whole-body gestures and jump counting were removed after field tests).
+ * - choice: two to four tiles per team (numbers, words or pictures).
+ * - trueFalse: a statement on top; VERDADERO and FALSO tiles per team.
  */
-export type GameMode =
-  /** Four number tiles per team. */
-  | 'choice'
-  /** A statement on top; TRUE and FALSE tiles per team. */
-  | 'trueFalse';
+export type GameMode = 'choice' | 'trueFalse';
 export const GAME_MODES: readonly GameMode[] = ['choice', 'trueFalse'];
 
 export type SessionPhase = 'lobby' | 'question' | 'feedback' | 'summary';

@@ -6,9 +6,15 @@
 import net from 'node:net';
 import { createStore } from 'jotai';
 import { describe, expect, it } from 'vitest';
-import type { CalibrationPattern, TeacherMessage } from '@projectplay/contracts';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { SAMPLE_ART, SAMPLE_LESSON } from '@projectplay/contracts/src/testing/sampleLesson';
+import { decodeLesson, type CalibrationPattern, type Lesson, type TeacherMessage } from '@projectplay/contracts';
+import { startCommand } from '../../teacher/src/features/console/application/console';
+import { TWEMOJI_ART } from '../../teacher/src/features/pictures/infrastructure/twemojiArt.generated';
+import { INITIAL_SESSION, reduceSession, roundResults, snapshotOf, type SessionState } from '../../tv/packages/tv-shared/src/features/session/domain/session';
 import { FrameDecoder, encodeCloseFrame, encodePongFrame, encodeTextFrame, processHandshake } from '../../teacher/src/features/link/domain/websocket';
-import { createLinkService, latencyMsAtom, tvClientsAtom, tvSnapshotAtom } from '../../teacher/src/features/link/application/linkService';
+import { createLinkService, latencyMsAtom, roundResultsAtom, tvClientsAtom, tvSnapshotAtom } from '../../teacher/src/features/link/application/linkService';
 import type { LinkServer, LinkServerEvents } from '../../teacher/src/features/link/application/ports';
 import { AutoCalibrator, autoCalibrationAtom } from '../../teacher/src/features/perception/application/autoCalibration';
 import { calibrationAtom } from '../../teacher/src/features/perception/application/calibration';
@@ -106,7 +112,7 @@ describe('phone ⇄ TV over a real WebSocket', () => {
     await until(() => tvStore.get(linkStatusAtom).state === 'connected');
     await until(() => phoneStore.get(tvClientsAtom)[0]?.platform === 'e2e-tv');
 
-    phone.send({ t: 'ctl', a: 'start', config: { skill: 'addition', mode: 'choice', rounds: 3, seed: 1, teams: 1 } });
+    phone.send({ t: 'ctl', a: 'start', config: { lesson: SAMPLE_LESSON, art: SAMPLE_ART, rounds: 3, seed: 1, teams: 1 } });
     for (let i = 0; i < 30; i++) phone.send({ t: 'ptr', p: 1, x: i / 30, y: 0.5, c: 0.9 });
     await until(() => received.filter((m) => m.t === 'ptr').length === 30);
     expect(received.find((m) => m.t === 'ctl')).toMatchObject({ a: 'start', config: { teams: 1 } });
@@ -119,6 +125,53 @@ describe('phone ⇄ TV over a real WebSocket', () => {
 
     tv.stop();
     await until(() => phoneStore.get(tvClientsAtom).length === 0);
+    phone.stop();
+  });
+
+  it('plays a starter lesson: the whole file and its pictures cross the wire, the TV runs it from memory', async () => {
+    const port = 18789;
+    const phoneStore = createStore();
+    const phone = createLinkService(new NodeWebSocketServer(), phoneStore, { port, heartbeatMs: 200 });
+    phone.start();
+    const tvStore = createStore();
+    const tv = new LinkClient(nodeWebSocketTransport, { ownIpAddress: async () => null }, tvStore, { port, platform: 'e2e-tv', preferredHosts: ['127.0.0.1'] });
+    let session: SessionState = INITIAL_SESSION;
+    tv.onMessage((m) => {
+      if (m.t !== 'ctl' || m.a !== 'start') return;
+      session = reduceSession(session, { type: 'start', config: m.config, now: 0 });
+      tv.send({ t: 'state', ...snapshotOf(session) });
+    });
+    tv.start();
+    await until(() => phoneStore.get(tvClientsAtom).length > 0);
+
+    const file = readFileSync(path.resolve(__dirname, '../../teacher/assets/lessons/silabas-granja.json'), 'utf8');
+    const lesson = decodeLesson(JSON.parse(file));
+    expect(lesson.ok).toBe(true);
+    const start = startCommand({ lesson: (lesson as { value: Lesson }).value, library: TWEMOJI_ART, rounds: 10, teams: 2, record: 900 });
+    phone.send(start);
+
+    await until(() => phoneStore.get(tvSnapshotAtom)?.lessonId === 'silabas-granja');
+    expect(session.phase).toBe('question');
+    if (session.phase !== 'question') return;
+    // Only the pictures the lesson shows (plus the game icons) travel, as SVG.
+    expect(Object.keys(session.config.art).length).toBeGreaterThan(5);
+    expect(Object.values(session.config.art).every((svg) => svg.startsWith('<svg'))).toBe(true);
+    expect(session.config.lesson).toEqual((lesson as { value: Lesson }).value);
+    expect(session.config.record).toBe(900);
+    expect(phoneStore.get(tvSnapshotAtom)).toMatchObject({ phase: 'question', round: 1, rounds: 10, level: 1, teams: 2 });
+    expect(phoneStore.get(tvSnapshotAtom)?.say).toBeTruthy();
+
+    // A round is played on the TV; the phone gets each team's result with its points.
+    const card = session.round.card;
+    const right = card.kind === 'choice' ? card.answer : 0;
+    session = reduceSession(session, { type: 'answer', team: 'A', value: right, now: 1500 });
+    session = reduceSession(session, { type: 'next', now: 2000 });
+    roundResults(session).forEach((r) => tv.send(r));
+    await until(() => phoneStore.get(roundResultsAtom).length === 1);
+    expect(phoneStore.get(roundResultsAtom)[0]).toMatchObject({ team: 'A', correct: true });
+    expect(phoneStore.get(roundResultsAtom)[0]?.points).toBeGreaterThan(100);
+
+    tv.stop();
     phone.stop();
   });
 

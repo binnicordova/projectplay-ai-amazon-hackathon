@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SKILLS, diagnose, formatEquation, generateLesson, generateQuestion, misconceptions, nextLevel, slips, type Level, type Question } from './index';
+import { SKILLS, diagnose, formatEquation, generateLesson, generateQuestion, misconceptions, nextLevel, slips, type Level, type Question } from './arithmetic';
 
 const LEVELS: Level[] = [1, 2, 3, 4, 5];
 

@@ -6,9 +6,6 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "react-native": "src/index.ts",
-  "dependencies": {
-    "@projectplay/exercise-engine": "workspace:*"
-  },
   "peerDependencies": {
     "@projectplay/contracts": "*",
     "jotai": "*",
@@ -16,6 +13,7 @@
     "react": "*",
     "react-native": "*",
     "react-native-pixel-perfect": "*",
+    "react-native-svg": "*",
     "react-tv-space-navigation": "*"
   }
 }

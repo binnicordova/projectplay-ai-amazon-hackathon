@@ -1,0 +1,193 @@
+{
+  "format": 1,
+  "id": "refuerzo-ro-perro",
+  "title": "Refuerzo la RO: pe-RRO",
+  "subject": "comunicacion",
+  "audience": {
+    "band": "inicial",
+    "age": 5
+  },
+  "source": "starter",
+  "request": "quiero 6 ejercicios para reforzar la silaba RO, para mis niñas de 5 años que les cuestra pronunciar palabras como PERRO",
+  "createdAt": "2026-10-22T00:00:00.000Z",
+  "cards": [
+    {
+      "kind": "choice",
+      "id": "refuerzo-ro-perro-1",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde está la rosa?",
+        "visual": {
+          "kind": "text",
+          "text": "RO-sa"
+        },
+        "say": "Repitan conmigo: «RO-sa». ¿Dónde está la rosa?"
+      },
+      "explain": "RO-sa: ¡muy bien dicho!",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f95a",
+          "label": "huevo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f339",
+          "label": "rosa"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "refuerzo-ro-perro-2",
+      "level": 1,
+      "prompt": {
+        "text": "¿Dónde está el carro?",
+        "visual": {
+          "kind": "text",
+          "text": "ca-RRO"
+        },
+        "say": "Repitan conmigo: «ca-RRO». ¿Dónde está el carro?"
+      },
+      "explain": "ca-RRO: ¡muy bien dicho!",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f96d",
+          "label": "mango"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f697",
+          "label": "carro"
+        }
+      ],
+      "answer": 1
+    },
+    {
+      "kind": "choice",
+      "id": "refuerzo-ro-perro-3",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cuál tiene RO?",
+        "visual": {
+          "kind": "text",
+          "text": "pe-RRO"
+        },
+        "say": "Digan cada nombre: medias, huevo, perro. ¿Cuál tiene «ro»?"
+      },
+      "explain": "pe-RRO: ¡muy bien dicho!",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f9e6",
+          "label": "medias"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f95a",
+          "label": "huevo"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f415",
+          "label": "perro"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "refuerzo-ro-perro-4",
+      "level": 2,
+      "prompt": {
+        "text": "¿Cuál tiene RO?",
+        "visual": {
+          "kind": "text",
+          "text": "zo-RRO"
+        },
+        "say": "Digan cada nombre: zorro, volcán, pavo. ¿Cuál tiene «ro»?"
+      },
+      "explain": "zo-RRO: ¡muy bien dicho!",
+      "options": [
+        {
+          "kind": "icon",
+          "icon": "1f98a",
+          "label": "zorro"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f30b",
+          "label": "volcán"
+        },
+        {
+          "kind": "icon",
+          "icon": "1f983",
+          "label": "pavo"
+        }
+      ],
+      "answer": 0
+    },
+    {
+      "kind": "choice",
+      "id": "refuerzo-ro-perro-5",
+      "level": 3,
+      "prompt": {
+        "text": "Completa: BU__",
+        "visual": {
+          "kind": "icon",
+          "icon": "1facf",
+          "label": "burro"
+        },
+        "say": "Repitan conmigo: «bu-RRO». ¿Qué falta: «pi», «ca» o «rro»?"
+      },
+      "explain": "bu-RRO",
+      "options": [
+        {
+          "kind": "text",
+          "text": "PI"
+        },
+        {
+          "kind": "text",
+          "text": "CA"
+        },
+        {
+          "kind": "text",
+          "text": "RRO"
+        }
+      ],
+      "answer": 2
+    },
+    {
+      "kind": "choice",
+      "id": "refuerzo-ro-perro-6",
+      "level": 3,
+      "prompt": {
+        "text": "Completa: __BOT",
+        "visual": {
+          "kind": "icon",
+          "icon": "1f916",
+          "label": "robot"
+        },
+        "say": "Repitan conmigo: «RO-bot». ¿Qué falta: «ro», «no» o «pi»?"
+      },
+      "explain": "RO-bot",
+      "options": [
+        {
+          "kind": "text",
+          "text": "RO"
+        },
+        {
+          "kind": "text",
+          "text": "NO"
+        },
+        {
+          "kind": "text",
+          "text": "PI"
+        }
+      ],
+      "answer": 0
+    }
+  ]
+}

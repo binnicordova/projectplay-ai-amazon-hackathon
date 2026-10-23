@@ -1,14 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { PointerHub } from '../application/pointerHub';
 import { DwellTracker, contains } from './dwell';
+import type { Visual } from '@projectplay/contracts';
 import { TEAM_AREA, WHOLE_WALL, choiceTargets, truthTargets } from './layout';
+
+const numbers = (...values: number[]): Visual[] => values.map((v) => ({ kind: 'text', text: String(v) }));
 
 const overlaps = (a: { x: number; y: number; width: number; height: number }, b: typeof a) =>
   a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
 
 describe('board layout', () => {
   it('places four non-overlapping tiles per team inside its half of the wall', () => {
-    const targets = choiceTargets([3, 7, 9, 12], ['A', 'B']);
+    const targets = choiceTargets(numbers(3, 7, 9, 12), ['A', 'B']);
     expect(targets).toHaveLength(8);
     for (const t of targets) {
       const area = TEAM_AREA[t.team];
@@ -21,11 +24,11 @@ describe('board layout', () => {
   });
 
   it('gives each team a TRUE and a FALSE tile', () => {
-    expect(truthTargets(['A', 'B']).map((t) => t.label)).toEqual(['TRUE', 'FALSE', 'TRUE', 'FALSE']);
+    expect(truthTargets(['A', 'B']).map((t) => t.label)).toEqual(['VERDADERO', 'FALSO', 'VERDADERO', 'FALSO']);
   });
 
   it('gives one player four full-height tiles in a row across the whole wall', () => {
-    const targets = choiceTargets([3, 7, 9, 12], ['A']);
+    const targets = choiceTargets(numbers(3, 7, 9, 12), ['A']);
     expect(targets.map((t) => t.team)).toEqual(['A', 'A', 'A', 'A']);
     expect(targets.map((t) => t.label)).toEqual(['3', '7', '9', '12']);
     for (const t of targets) {
@@ -36,20 +39,20 @@ describe('board layout', () => {
     expect(targets[3]!.rect.x + targets[3]!.rect.width).toBeCloseTo(TEAM_AREA.B.x + TEAM_AREA.B.width);
     for (let i = 1; i < targets.length; i++) expect(targets[i]!.rect.x).toBeGreaterThan(targets[i - 1]!.rect.x + targets[i - 1]!.rect.width);
     // Not smaller to hit than a team's 2 × 2 tile.
-    const teamTile = choiceTargets([3, 7, 9, 12], ['A', 'B'])[0]!.rect;
+    const teamTile = choiceTargets(numbers(3, 7, 9, 12), ['A', 'B'])[0]!.rect;
     expect(targets[0]!.rect.width).toBeGreaterThanOrEqual(teamTile.width);
   });
 
   it('gives one player TRUE on the left half of the wall and FALSE on the right', () => {
     const [yes, no] = truthTargets(['A']);
-    expect([yes!.label, no!.label]).toEqual(['TRUE', 'FALSE']);
+    expect([yes!.label, no!.label]).toEqual(['VERDADERO', 'FALSO']);
     expect(yes!.rect.x + yes!.rect.width).toBeLessThan(0.5);
     expect(no!.rect.x).toBeGreaterThan(0.5);
   });
 });
 
 describe('dwell selection', () => {
-  const targets = choiceTargets([1, 2, 3, 4], ['A', 'B']);
+  const targets = choiceTargets(numbers(1, 2, 3, 4), ['A', 'B']);
   const centre = (id: string) => {
     const r = targets.find((t) => t.id === id)!.rect;
     return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
@@ -142,7 +145,7 @@ describe('dwell selection', () => {
 });
 
 describe('pointer hub', () => {
-  const targets = choiceTargets([1, 2, 3, 4], ['A', 'B']);
+  const targets = choiceTargets(numbers(1, 2, 3, 4), ['A', 'B']);
   const tile = targets.find((t) => t.id === 'A:option:3')!;
   const centre = { x: tile.rect.x + tile.rect.width / 2, y: tile.rect.y + tile.rect.height / 2 };
 
@@ -191,14 +194,14 @@ describe('pointer hub', () => {
     let now = 0;
     const hub = new PointerHub(() => now);
     hub.setTeamCount(1);
-    const solo = choiceTargets([1, 2, 3, 4], ['A']);
+    const solo = choiceTargets(numbers(1, 2, 3, 4), ['A']);
     hub.setTargets(solo);
     const selected: [string, string][] = [];
     hub.onSelect((team, t) => selected.push([team, t.id]));
     const r = solo[3]!.rect;
     // Player 2 would be team B with two teams; alone on the wall it is the one player.
     for (now = 0; now <= 700; now += 66) hub.move(2, 0, { x: r.x + r.width / 2, y: r.y + r.height / 2 });
-    expect(selected).toEqual([['A', 'A:option:4']]);
+    expect(selected).toEqual([['A', 'A:option:3']]);
   });
 
   it('drops the hands it tracks when the team count changes, so cursors come back in their new colour', () => {
@@ -225,5 +228,16 @@ describe('pointer hub', () => {
     at(1200);
     hub.sweep();
     expect(cursors.at(-1)).toEqual([2, true]);
+  });
+});
+
+describe('tiles per card', () => {
+  it('puts two or three tiles side by side on a team half, full height', () => {
+    for (const n of [2, 3]) {
+      const targets = choiceTargets(numbers(...Array.from({ length: n }, (_, i) => i + 1)), ['A', 'B']);
+      expect(targets).toHaveLength(2 * n);
+      for (const t of targets) expect(t.rect.height).toBeCloseTo(TEAM_AREA[t.team].height);
+      expect(targets.filter((t) => t.team === 'A').map((t) => t.value)).toEqual(Array.from({ length: n }, (_, i) => i));
+    }
   });
 });

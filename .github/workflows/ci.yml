@@ -20,6 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The DeepSeek key lives in teacher/.env (ignored). Fail loudly if a key ever lands in git.
+      - name: No API keys in the repository
+        run: "! git grep -nE 'sk-[A-Za-z0-9]{32,}' -- . ':!**/package-lock.json' ':!**/yarn.lock'"
+
       # Node 22 still ships Corepack, which the TV workspace (Yarn 4) needs. See friction log F9.
       - uses: actions/setup-node@v4
         with:

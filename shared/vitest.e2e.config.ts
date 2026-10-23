@@ -10,7 +10,8 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: /^jotai(\/.*)?$/, replacement: `${path.resolve(__dirname, '../teacher/node_modules/jotai')}$1` },
-      { find: '@projectplay/contracts', replacement: path.resolve(__dirname, 'contracts/src/index.ts') },
+      { find: /^@projectplay\/contracts$/, replacement: path.resolve(__dirname, 'contracts/src/index.ts') },
+      { find: /^@projectplay\/contracts\/(.*)$/, replacement: `${path.resolve(__dirname, 'contracts')}/$1` },
     ],
   },
   test: { include: ['e2e/**/*.e2e.test.ts'], environment: 'node', testTimeout: 15_000 },
