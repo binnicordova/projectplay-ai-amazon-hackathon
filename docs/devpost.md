@@ -20,7 +20,7 @@ A Fire TV Stick and the teacher's phone turn any classroom projector into a touc
 ## Links
 
 - Code: https://github.com/binnicordova/projectplay-ai-amazon-hackathon (MIT)
-- Demo video: https://youtu.be/qqOpJ-z_jQY
+- Demo video: https://www.youtube.com/watch?v=wkKDgb5G7V0
 - Open source: https://github.com/binnicordova/projectplay-exercise-engine · upstream pull requests: https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141 and https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142
 
 ## Open Source mini challenge fields
