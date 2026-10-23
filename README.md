@@ -304,6 +304,12 @@ Everything here was written during the submission window, except the starting po
 - **Changed in the sample:** Expo packages aligned to SDK 54, strict-TypeScript fixes, the TV config plugin upgraded (it crashed prebuild), button centring, and the media-player features removed.
 - **New:** the teacher app, all perception and calibration code, the wire protocol and lesson format, the lesson player, the exercise engine and starter lessons, the AI chat, the Vega wiring, the tests and the device tooling.
 
+## Author
+
+**Binni Cordova**, Peru · [LinkedIn](https://www.linkedin.com/in/binnicordova/) · [Portfolio](https://binnicordova.com/) · [GitHub](https://github.com/binnicordova)
+
+Solo developer: product design, the teacher and Fire TV apps, the exercise engine and lessons, and the field test with children.
+
 ## Licenses
 
 - ProjectPlay code: MIT ([`LICENSE`](LICENSE)). The exercise engine is also published on its own: [projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine) (MIT).
