@@ -166,6 +166,15 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Workaround:** Treat the reply as untrusted input: `decodeAiReply` validates and clamps every field, then `decodeLesson` checks the rules. If it fails (or the content is empty), the reason goes back to the model once ("your answer was not valid because …"), then the teacher sees a plain error. For exercises the engine knows, the model only fills a small request and the engine builds the cards, so most of the answer can't be wrong. Tested with recorded responses; the development sandbox could not reach the API, so the first live call is on the phone.
 - **Suggestion:** Support `response_format: { type: "json_schema" }` (or a `strict` flag), and return a finish reason or error instead of empty content.
 
+### F18 · A native module installed after the last Gradle run is silently left out of the dev build
+- **Task:** Run the teacher app on the phone right after adding `react-native-svg` 15.15.4 (Expo SDK 56, RN 0.85.3, new architecture).
+- **Steps:** `npm --prefix teacher install react-native-svg`, then `npm run dev:teacher` (`npx expo run:android`). Gradle had last generated `teacher/android/build/generated/autolinking/autolinking.json` at 23:40; the package landed in `node_modules` at 23:43.
+- **Expected:** `expo run:android` sees the new native module and links it, or says the native project is stale.
+- **Actual:** The build succeeded, installed, and the app showed a red screen at launch: `com.facebook.react.uimanager.IllegalViewOperationException: Can't find ViewManager 'RNSVGPath' nor 'RCTRNSVGPath' in ViewManagerRegistry`. The phone shows only the stack trace (the message is cut off), and the full list of registered view managers is only in `adb logcat` under `DevLauncher`. Meanwhile `npx expo-modules-autolinking react-native-config --platform android` did list `react-native-svg`: only Gradle's cached autolinking output was stale.
+- **Severity:** Medium. It looks like a broken library rather than a stale build, and hot reload can't fix it.
+- **Workaround:** `scripts/devices.sh teacher --clean` (deletes the Gradle outputs, reinstalls). The first launch after that crashed once natively (`SIGSEGV` in `facebook::react::MountingCoordinator::pullTransaction`) while the dev launcher reopened the app with the Metro URL; launching again worked.
+- **Suggestion:** Make the autolinking Gradle task depend on `package.json`/lockfile and `node_modules` package manifests, or have `expo run:android` compare the resolved native module list with the last build and rebuild (or warn) when they differ. Show "native module missing from this build: rebuild" for this error in the dev client.
+
 ---
 
 ### Template for device-time entries
