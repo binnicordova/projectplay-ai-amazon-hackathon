@@ -22,22 +22,28 @@ import {
 
 type Send = (message: TeacherMessage) => void;
 
-/** Lesson setup before a class, live controls during it. */
+/**
+ * Lesson setup before a class, live controls during it. The settings scroll; the action
+ * that starts or moves the class stays pinned below them, so it is never off screen.
+ */
 export function ConsolePanel({ send, onChooseLesson }: { readonly send: Send; readonly onChooseLesson: () => void }) {
   const snapshot = useAtomValue(tvSnapshotAtom);
   const live = snapshot !== null && snapshot.phase !== 'lobby';
   return (
-    <ScrollView contentContainerStyle={styles.column}>{live ? <LiveSession send={send} /> : <SessionSetup send={send} onChooseLesson={onChooseLesson} />}</ScrollView>
+    <View style={styles.panel}>
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.column}>
+        {live ? <LiveSession /> : <SessionSetup onChooseLesson={onChooseLesson} />}
+      </ScrollView>
+      {live ? <LiveActions send={send} /> : <StartAction send={send} />}
+    </View>
   );
 }
 
-function SessionSetup({ send, onChooseLesson }: { readonly send: Send; readonly onChooseLesson: () => void }) {
+function SessionSetup({ onChooseLesson }: { readonly onChooseLesson: () => void }) {
   const lesson = useAtomValue(selectedLessonAtom);
-  const library = useAtomValue(iconArtAtom);
   const records = useAtomValue(recordsAtom);
   const [rounds, setRounds] = useAtom(selectedRoundsAtom);
   const [teams, setTeams] = useAtom(selectedTeamsAtom);
-  const connected = useAtomValue(tvConnectedAtom);
   const record = lesson ? recordOf(records, lesson.id, teams) : undefined;
 
   return (
@@ -68,16 +74,28 @@ function SessionSetup({ send, onChooseLesson }: { readonly send: Send; readonly 
       <SectionLabel>Ejercicios</SectionLabel>
       <Segmented<number> options={ROUND_OPTIONS} value={rounds} onChange={setRounds} labelFor={(r) => `${r}`} />
       <Text style={type.caption}>Empiezan fáciles; la TV sube de nivel cuando la clase acierta seguido.</Text>
-      <Button
-        label={!connected ? 'Conecta la TV primero' : lesson ? 'Jugar en la TV' : 'Elige una lección'}
-        disabled={!connected || !lesson}
-        onPress={() => lesson && send(startCommand({ lesson, library, rounds, teams, ...(record === undefined ? {} : { record }) }))}
-      />
     </Card>
   );
 }
 
-function LiveSession({ send }: { readonly send: Send }) {
+function StartAction({ send }: { readonly send: Send }) {
+  const lesson = useAtomValue(selectedLessonAtom);
+  const library = useAtomValue(iconArtAtom);
+  const records = useAtomValue(recordsAtom);
+  const rounds = useAtomValue(selectedRoundsAtom);
+  const teams = useAtomValue(selectedTeamsAtom);
+  const connected = useAtomValue(tvConnectedAtom);
+  const record = lesson ? recordOf(records, lesson.id, teams) : undefined;
+  return (
+    <Button
+      label={!connected ? 'Conecta la TV primero' : lesson ? 'Jugar en la TV' : 'Elige una lección'}
+      disabled={!connected || !lesson}
+      onPress={() => lesson && send(startCommand({ lesson, library, rounds, teams, ...(record === undefined ? {} : { record }) }))}
+    />
+  );
+}
+
+function LiveSession() {
   const snapshot = useAtomValue(tvSnapshotAtom);
   const results = useAtomValue(roundResultsAtom);
   if (!snapshot) return null;
@@ -109,16 +127,30 @@ function LiveSession({ send }: { readonly send: Send }) {
           <StatusDot key={`${r.round}-${r.team ?? 'none'}`} tone={r.correct ? 'ok' : 'bad'} label={resultLabel(r, teams)} />
         ))}
       </View>
-      <View style={styles.actions}>
-        {!finished ? <Button label="Siguiente" onPress={() => send(nextCommand)} /> : null}
-        <Button label={finished ? 'Volver al inicio' : 'Terminar clase'} variant={finished ? 'primary' : 'danger'} onPress={() => send(endCommand)} />
-      </View>
     </Card>
   );
 }
 
+function LiveActions({ send }: { readonly send: Send }) {
+  const finished = useAtomValue(tvSnapshotAtom)?.phase === 'summary';
+  return (
+    <View style={styles.actions}>
+      {!finished ? <Button label="Siguiente" style={styles.action} onPress={() => send(nextCommand)} /> : null}
+      <Button
+        label={finished ? 'Volver al inicio' : 'Terminar clase'}
+        variant={finished ? 'primary' : 'danger'}
+        style={styles.action}
+        onPress={() => send(endCommand)}
+      />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-  column: { gap: space.lg, padding: space.lg },
+  panel: { flex: 1, gap: space.md },
+  scroll: { flex: 1 },
+  // No top padding: the card's top lines up with the camera next to it.
+  column: { gap: space.lg },
   lesson: { flexDirection: 'row', gap: space.md, alignItems: 'center' },
   cover: { width: 64, height: 64, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center' },
   lessonText: { flex: 1, gap: space.xs },
@@ -126,5 +158,6 @@ const styles = StyleSheet.create({
   sayText: { color: colors.text, fontSize: 20, fontWeight: '800' },
   scores: { flexDirection: 'row', gap: space.xl },
   results: { gap: space.xs },
-  actions: { flexDirection: 'row', gap: space.md, flexWrap: 'wrap' },
+  actions: { flexDirection: 'row', gap: space.md },
+  action: { flex: 1, paddingHorizontal: space.md },
 });

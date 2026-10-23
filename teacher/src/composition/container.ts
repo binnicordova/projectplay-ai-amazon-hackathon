@@ -32,7 +32,7 @@ import { LANE_COUNT } from '../features/perception/domain/moveNet';
 export interface AppServices {
   readonly store: ReturnType<typeof createStore>;
   readonly link: LinkService;
-  /** Sends a message to the TV (used by the console and the touchpad fallback). */
+  /** Sends a message to the TV (used by the console). */
   readonly send: (message: TeacherMessage) => void;
   /** Feeds a camera frame through the perception pipeline. */
   readonly feedPoseFrame: (frame: PoseFrame) => void;

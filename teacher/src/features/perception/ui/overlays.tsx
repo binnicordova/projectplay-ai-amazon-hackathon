@@ -82,12 +82,12 @@ export function TrackingStatus() {
   if (camera.state === 'running') {
     // A hot phone throttles its processor: frames slow down and pointers lag.
     return slowFps === null ? (
-      <StatusDot tone="ok" label="Tracking children" />
+      <StatusDot tone="ok" label="Siguiendo a los niños" />
     ) : (
-      <StatusDot tone="wait" label={`Slow tracking (${slowFps} fps): let the phone cool`} />
+      <StatusDot tone="wait" label={`Seguimiento lento (${slowFps} fps): deja enfriar el celular`} />
     );
   }
-  return <StatusDot tone={camera.state === 'starting' ? 'wait' : 'bad'} label={camera.state === 'error' ? camera.message : 'Starting camera…'} />;
+  return <StatusDot tone={camera.state === 'starting' ? 'wait' : 'bad'} label={camera.state === 'error' ? camera.message : 'Abriendo la cámara…'} />;
 }
 
 /**
@@ -109,7 +109,7 @@ function TeamZones({ rect }: { readonly rect: Rect }) {
         return (
           <View key={`label-${zone.team}`} style={[styles.zoneLabelSlot, { left: p.x - ZONE_LABEL_SLOT / 2, top: p.y - 12 }]}>
             <View style={[styles.zoneLabel, { backgroundColor: TEAM_COLORS[zone.team] }]}>
-              <Text style={styles.zoneLabelText}>{zones.length === 1 ? 'One player' : `Team ${zone.team}`}</Text>
+              <Text style={styles.zoneLabelText}>{zones.length === 1 ? 'Un jugador' : `Equipo ${zone.team}`}</Text>
             </View>
           </View>
         );
@@ -145,12 +145,17 @@ function zoneLines(zones: readonly TeamZone[]): readonly (readonly [Point2, Poin
 }
 
 const BRIGHTNESS_LEVELS: readonly CameraBrightness[] = [0, 1, 2];
-const BRIGHTNESS_LABELS: Record<CameraBrightness, string> = { 0: 'Normal', 1: 'Bright', 2: 'Brighter' };
+const BRIGHTNESS_LABELS: Record<CameraBrightness, string> = { 0: 'Normal', 1: 'Más', 2: 'Máxima' };
 
 /** Exposure boost: in a dark room the projection is bright and the children are silhouettes. */
 export function BrightnessControl() {
   const [brightness, setBrightness] = useAtom(cameraBrightnessAtom);
-  return <Segmented options={BRIGHTNESS_LEVELS} value={brightness} onChange={setBrightness} labelFor={(level) => BRIGHTNESS_LABELS[level]} />;
+  return (
+    <View style={styles.brightness}>
+      <Text style={type.label}>Luz</Text>
+      <Segmented options={BRIGHTNESS_LEVELS} value={brightness} onChange={setBrightness} labelFor={(level) => BRIGHTNESS_LABELS[level]} />
+    </View>
+  );
 }
 
 export function CalibrationOverlay() {
@@ -232,6 +237,7 @@ function Segment({ from, to, color, thickness }: { readonly from: Point2; readon
 const ZONE_LABEL_SLOT = 120;
 
 const styles = StyleSheet.create({
+  brightness: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   joint: { position: 'absolute', width: 10, height: 10, borderRadius: 5, borderWidth: 1, borderColor: '#0008' },
   zoneLabelSlot: { position: 'absolute', width: ZONE_LABEL_SLOT, alignItems: 'center' },
   zoneLabel: { paddingHorizontal: space.sm, paddingVertical: 2, borderRadius: radius.pill, opacity: 0.9 },
