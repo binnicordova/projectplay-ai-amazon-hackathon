@@ -313,6 +313,17 @@ Everything here was written during the submission window, except the starting po
 - **Scales at almost no cost.** Each classroom needs one ≈ $75 setup; lessons are static files, so there are no servers to run per school, and a lesson made once can reach thousands of classrooms. The need is there: 108,239 kindergartens and schools in Peru alone, and about 3 million unconnected schools worldwide.
 - **More reach:** lessons in English, Portuguese and Quechua, a third camera lane for small groups, and distribution on the Amazon Appstore for Fire TV.
 
+### How we'll reach many schools
+
+ProjectPlay already works in class; the next step is more teachers, students and schools.
+
+1. **Pilot (next 3 months):** 10 schools, starting with my kids' schools and nearby public schools in Peru. Measure how often each class plays and the right-answer rate per lesson, and publish the results.
+2. **Teacher to teacher:** each teacher who uses it shares lessons over the hotspot or WhatsApp and helps a colleague set up; a one-page setup guide and a 2-minute video in Spanish make that easy.
+3. **Partners that already reach schools:** regional education offices (UGEL/DRE in Peru), Ministry of Education device programs, NGOs and teacher networks; a Fire TV Stick added to projector kits schools already receive.
+4. **Easy installs:** the Amazon Appstore for Fire TV and Google Play for the teacher app, so no sideloading is needed.
+5. **Across Latin America:** Spanish lessons already cover most of the region; then Portuguese for Brazil and Quechua for the Andes.
+6. **Free for teachers, sustainable:** grants and sponsors cover hardware ("adopt a classroom for $75"); the S3 marketplace costs cents per thousand downloads, so there is never a subscription.
+
 ## Author
 
 **Binni Cordova**, Peru · [LinkedIn](https://www.linkedin.com/in/binnicordova/) · [Portfolio](https://binnicordova.com/) · [GitHub](https://github.com/binnicordova)
