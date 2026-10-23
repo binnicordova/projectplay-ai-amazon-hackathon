@@ -223,8 +223,13 @@ case "$cmd" in
     fi
 
     say "JavaScript errors in the last log lines"
-    for s in $TV_SERIAL $PHONE_SERIAL; do
-      errors="$(adb -s "$s" logcat -d -t 3000 ReactNativeJS:E AndroidRuntime:E '*:S' 2>/dev/null | tr -d '\r' | grep -E ' E (ReactNativeJS|AndroidRuntime)' | tail -5 || true)"
+    for pair in "$TV_SERIAL:$TV_PACKAGE" "$PHONE_SERIAL:$TEACHER_PACKAGE"; do
+      s="${pair%%:*}"; package="${pair#*:}"
+      [ -n "$s" ] || continue
+      # Only our app's lines: other React Native apps on the phone log under the same tag.
+      pid="$(adb -s "$s" shell pidof "$package" 2>/dev/null | tr -d '\r')"
+      [ -n "$pid" ] || continue
+      errors="$(adb -s "$s" logcat -d -t 3000 --pid="$pid" ReactNativeJS:E AndroidRuntime:E '*:S' 2>/dev/null | tr -d '\r' | grep -E ' E (ReactNativeJS|AndroidRuntime)' | tail -5 || true)"
       if [ -z "$errors" ]; then good "$(model "$s"): none"; else bad "$(model "$s"):"; echo "$errors" | while read -r line; do info "$line"; done; fi
     done
 

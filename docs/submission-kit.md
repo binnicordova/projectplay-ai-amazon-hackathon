@@ -4,15 +4,15 @@ Deadline: **Fri Oct 23, 2026, 12:00 PDT** (14:00 Lima). Aim to submit by 11:00 L
 
 ## Checklist
 
-Status as of Thu Oct 22. ✅ done · ⬜ still to do.
+Status as of Fri Oct 23. ✅ done · ⬜ still to do.
 
 - ✅ **Mini challenge material:** [projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine) (MIT, CI) plus upstream PRs [#141](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141) and [#142](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142).
 - ⬜ **On Devpost, select:** track **Fire TV**, mini challenge **Open Source**. Only add AWS Builder if you actually used an AWS service or Kiro Crew.
 - ✅ **Repository:** [binnicordova/projectplay-ai-amazon-hackathon](https://github.com/binnicordova/projectplay-ai-amazon-hackathon) is public, GitHub detects MIT in the About section, and CI is green.
 - ✅ README has setup and run instructions, a "Try it in 2 minutes" section, and the MoveNet model committed.
-- ⬜ **Rebuild both apps natively** (new native modules: `react-native-svg` in both, `expo-file-system` in the teacher app): `npm run setup`, then `scripts/devices.sh teacher --reinstall` and `scripts/devices.sh tv --reinstall`. Check: Biblioteca shows 11 lessons with pictures, a lesson plays on the TV with pictures, levels and points, the summary reaches the phone.
+- ✅ **Both apps rebuilt natively** and checked on the onn 4K Google TV box and a Galaxy A26: Biblioteca shows 11 lessons, a lesson plays on the TV with pictures.
 - ⬜ **AI on the phone:** `teacher/.env` holds the DeepSeek key (gitignored). With internet, *Crear con IA* → "créame 6 ejercicios de la tabla del 7 para niños de 8 años" → draft → **Guardar y jugar**. Note anything surprising in friction F17.
-- ⬜ **Release APKs:** run `npm run release:apks`, install both, play one round, then `gh release create v1.0.0 dist/release/*.apk` (the README's "Try it" links to it). The teacher APK contains the DeepSeek key: keep the spending alert on, and rotate the key after judging.
+- ✅ **Release APKs** (`npm run release:apks`) installed on both devices: the apps link, calibrate and play a lesson with no Metro. The teacher APK contains the DeepSeek key: keep the spending alert on, and rotate the key after judging. The TV APK carries ARM and x86 libraries, so it also runs on the Fire TV emulator.
 - ⬜ **Demo video under 3 minutes**, public on YouTube or Vimeo, in English, with no copyrighted music. It must show the app **running on a real Fire TV device or the Fire TV/Vega simulator**. Script: [`video-script.md`](video-script.md).
 - ⬜ **Devpost text and product feedback:** drafted in [`devpost.md`](devpost.md). Fill in every **[bracket]** (video link, Fire TV device notes, onboarding times), then paste.
 - ⬜ **Friction log** ([`friction-log.md`](friction-log.md)): 17 entries; add what you hit on the real Fire TV.

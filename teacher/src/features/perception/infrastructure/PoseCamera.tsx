@@ -11,7 +11,6 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
-import { useTensorflowModel } from 'react-native-fast-tflite';
 import {
   Camera,
   CommonResolutions,
@@ -32,7 +31,7 @@ import type { LaneLayout } from '../domain/lanes';
 import { CHANNELS, LANE_BYTES, MODEL_INPUT_SIZE, SOURCE_BYTES, SOURCE_HEIGHT, SOURCE_WIDTH, copyLane, decodeRoi, uprightAspect } from '../domain/moveNet';
 import type { Pose } from '../domain/pose';
 import { LUMA_BYTES, LUMA_HEIGHT, LUMA_WIDTH, decodeLuma, encodeLuma, lumaFromRgb } from '../domain/markers';
-import { MODEL_DELEGATES, MOVENET_MODEL } from './model';
+import { useMovenetModel } from './model';
 
 export interface PoseCameraProps {
   readonly isActive: boolean;
@@ -104,7 +103,7 @@ const RGB_OUTPUT = { channelOrder: 'rgb', dataType: 'uint8', scaleMode: 'stretch
 export function PoseCamera({ isActive, lanes, busyLanes, brightness, onPoseFrame, captureLuma, onLumaFrame, onStatus, style, children }: PoseCameraProps) {
   const { hasPermission, canRequestPermission, requestPermission } = useCameraPermission();
   const { device, description } = useTrackingCamera();
-  const plugin = useTensorflowModel(MOVENET_MODEL, MODEL_DELEGATES);
+  const plugin = useMovenetModel();
   const model = plugin.state === 'loaded' ? plugin.model : undefined;
   // Two GPU resizers: one at the lanes' scale for the model, a fixed one for the marker detector.
   const laneResizerState = useResizer({ width: lanes.sourceWidth, height: lanes.sourceHeight, ...RGB_OUTPUT });

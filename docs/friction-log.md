@@ -178,6 +178,15 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 
 ---
 
+### F19 · react-native-fast-tflite 3 cannot load a bundled model in an Android release build
+- **Task:** Build the teacher app as a standalone release APK for judges (`scripts/devices.sh release`) and start a class on a Galaxy A26.
+- **Steps:** `useTensorflowModel(require('…/movenet-singlepose-lightning-int8.tflite'), [])`, exactly as the library's README shows, then `./gradlew assembleRelease` and open the class screen.
+- **Expected:** The model loads as it does in the development build.
+- **Actual:** `Pose model failed to load: java.net.MalformedURLException: no protocol: assets_models_movenetsingleposelightningint8` (from `HybridAssetLoader`). The Nitro rewrite (3.0.1) reads every source with `java.net.URL(path)`. In debug, `Image.resolveAssetSource` gives Metro's `http://` URL, so it works. In release, it gives the bare `res/raw` resource name. Every debug run passed; only the release APK failed, and the model *was* in the APK (`res/Dw.tflite`).
+- **Severity:** Critical. Tracking is the whole product, and the bug only shows in the build you hand out.
+- **Workaround:** `teacher/src/features/perception/infrastructure/model.ts` resolves the model with `expo-asset` (`Asset.loadAsync`), which copies the raw resource to the cache and returns a `file://` URI, then calls `loadTensorflowModel({ url })`. The same path works in debug.
+- **Suggestion:** In `HybridAssetLoader`, fall back to `resources.getIdentifier(name, "raw", packageName)` when the path has no scheme, as v2 did. Add a release-build smoke test to the example app.
+
 ### Template for device-time entries
 
 ```
