@@ -87,6 +87,7 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Severity:** Medium. Every TV command in the README fails on a current Node, with nothing pointing at the Node version.
 - **Workaround:** Use Node 24 LTS, or install Corepack separately (`npm install -g corepack`). A machine where Corepack once ran still has Yarn in its cache: `node ~/.cache/node/corepack/v1/yarn/4.5.0/yarn.js check` (from `tv/`) works without it.
 - **Suggestion:** Pin a Node version in the sample (`.nvmrc` / `engines`) or commit the Yarn release with `yarnPath`, so it works without Corepack. We sent the `.nvmrc` and corrected prerequisites upstream: [#142](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142).
+- **Fix in this repo:** every root script and `scripts/devices.sh` call Yarn through `scripts/yarn.sh`, which uses Corepack when it is installed and `npx -y corepack` otherwise, so `npm run check` passes on Node 26.
 
 ### F10 · The sample's `FocusablePressable` cannot be centred
 - **Task:** Centre a single remote-control button under the lobby content on the projected wall (onn 4K Google TV box, 1920×1080).

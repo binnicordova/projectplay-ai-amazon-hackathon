@@ -4,11 +4,18 @@
     "slug": "projectplay-tv",
     "version": "1.0.0",
     "scheme": "projectplay-tv",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#0B1026",
     "newArchEnabled": false,
     "android": {
-      "package": "com.projectplay.tv"
+      "package": "com.projectplay.tv",
+      "adaptiveIcon": {
+        "backgroundColor": "#0B122C",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
     },
     "ios": {
       "bundleIdentifier": "com.projectplay.tv"

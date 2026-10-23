@@ -20,7 +20,7 @@
       "package": "com.projectplay.teacher",
       "permissions": ["android.permission.CAMERA", "android.permission.INTERNET", "android.permission.ACCESS_NETWORK_STATE"],
       "adaptiveIcon": {
-        "backgroundColor": "#0B1026",
+        "backgroundColor": "#0B122C",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"

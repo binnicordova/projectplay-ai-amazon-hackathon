@@ -33,7 +33,7 @@ say()  { printf '\033[1;36m▸ %s\033[0m\n' "$*"; }
 warn() { printf '\033[1;33m! %s\033[0m\n' "$*"; }
 die()  { printf '\033[1;31m✗ %s\033[0m\n' "$*"; exit 1; }
 
-yarn_cmd() { if command -v corepack >/dev/null 2>&1; then corepack yarn "$@"; else npx -y corepack yarn "$@"; fi; }
+yarn_cmd() { "$ROOT/scripts/yarn.sh" "$@"; }
 
 serials() { adb devices | awk 'NR>1 && $2=="device" {print $1}'; }
 is_tv()   { [ "$(adb -s "$1" shell pm has-feature android.software.leanback 2>/dev/null | tr -d '\r')" = "true" ]; }
@@ -252,10 +252,11 @@ case "$cmd" in
 
     (cd "$ROOT/tv" && yarn_cmd install >/dev/null) || die "yarn install failed in tv/"
     cd "$ROOT/tv/apps/expo-tv"
-    if ! grep -q LEANBACK_LAUNCHER android/app/src/main/AndroidManifest.xml 2>/dev/null; then
-      say "Generating the TV native project (expo prebuild --clean)"
-      EXPO_TV=1 npx expo prebuild --platform android --clean --no-install
-    fi
+    # Always prebuild for a release: icons, banner, version and permissions come from app.json, and a stale android/
+    # would ship the old ones. --clean only when it isn't a TV project yet (a phone prebuild left it behind).
+    if grep -q LEANBACK_LAUNCHER android/app/src/main/AndroidManifest.xml 2>/dev/null; then clean=""; else clean="--clean"; fi
+    say "Generating the TV native project (expo prebuild $clean)"
+    EXPO_TV=1 npx expo prebuild --platform android $clean --no-install || die "TV prebuild failed"
     pin_gradle "$ROOT/tv/apps/expo-tv"
     # Many Fire TV sticks run a 32-bit userland: ship both ARM ABIs. No teacher address is baked in:
     # the TV finds the phone on the hotspot by itself.
@@ -266,7 +267,9 @@ case "$cmd" in
 
     [ -f "$ROOT/teacher/assets/models/movenet-singlepose-lightning-int8.tflite" ] || (say "Fetching the pose model"; npm --prefix "$ROOT/teacher" run fetch-model)
     cd "$ROOT/teacher"
-    [ -f android/gradlew ] || { say "Generating the teacher native project (expo prebuild)"; npx expo prebuild --platform android --no-install; }
+    say "Generating the teacher native project (expo prebuild)"
+    npx expo prebuild --platform android --no-install || die "Teacher prebuild failed"
+    [ -f .env ] || say "No teacher/.env: Crear con IA will be off in this APK (see teacher/.env.example)"
     pin_gradle "$ROOT/teacher"
     say "Building the teacher release APK (arm64-v8a)"
     (cd android && ./gradlew assembleRelease) || die "Teacher release build failed"

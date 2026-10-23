@@ -1,5 +1,7 @@
 # ProjectPlay
 
+![ProjectPlay: a child reaches for a star lit by a classroom projector](docs/brand/banner.png)
+
 [![CI](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/actions/workflows/ci.yml/badge.svg)](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Fire TV](https://img.shields.io/badge/Fire%20TV-Fire%20OS%20%7C%20Vega%20OS-ff9900.svg)
@@ -36,7 +38,7 @@ You need a Fire TV (or any Android TV) with [ADB debugging on](https://developer
 4. On the phone: **Biblioteca** → pick a lesson → **Usar en clase**, point the phone at the screen from 2–4 m away and tap **Jugar en la TV**. The TV flashes four squares, the phone calibrates, and you answer by pointing at a tile with your arm raised. (On a simulator, the TV remote's D-pad moves a cursor and OK selects.)
 5. With internet on the phone, try **Crear con IA**: "créame 6 ejercicios de la tabla del 7 para niños de 8 años".
 
-To build the APKs yourself: `npm run setup && npm run release:apks` (they land in `dist/release/`).
+To build the APKs yourself: `npm run setup && npm run release:apks` (they land in `dist/release/`). The release step re-runs `expo prebuild` for both apps, so icons and `app.json` changes always reach the APKs, and the teacher APK gets *Crear con IA* only if `teacher/.env` holds a key.
 
 ## How children play
 
@@ -120,7 +122,7 @@ Layering inside every feature: `domain` (pure TypeScript) → `application` (use
 **Prerequisites:** Node 22, Android Studio (SDK + platform tools), a Fire TV with [ADB debugging enabled](https://developer.amazon.com/docs/fire-tv/connecting-adb-to-device.html), and an Android phone (iOS works too with Xcode). For Vega OS, also install the [Vega SDK](https://developer.amazon.com/docs/vega/0.21/install-vega-sdk.html).
 
 ```bash
-npm run setup          # installs shared/, teacher/ (npm) and tv/ (Yarn 4 via corepack)
+npm run setup          # installs shared/, teacher/ (npm) and tv/ (Yarn 4 via Corepack; on Node 25+, which dropped it, `scripts/yarn.sh` fetches it with npx)
 npm run fetch-model    # downloads MoveNet SinglePose Lightning INT8 (~3 MB) into teacher/assets/models
 npm run check          # typecheck + lint + all unit tests
 cp teacher/.env.example teacher/.env   # then paste your DeepSeek key (only needed for "Crear con IA")
@@ -151,6 +153,8 @@ cd teacher && npm run android             # development build; Expo Go cannot ru
 The TV needs the phone: lessons come from it. On the Fire TV / Vega simulators, the remote's D-pad moves a cursor during a class and OK selects.
 
 **Release APKs:** `scripts/devices.sh release` builds both apps with the JavaScript bundled in (no Metro needed) into `dist/release/`, ready to attach to a GitHub release.
+
+**App icon:** drawn with Google Gemini (`docs/brand/icon-source.png`: a child's hand reaching for a star lit by a small projector). `scripts/brand-icons.sh` builds the launcher icons, adaptive and themed icons, and the Fire TV banners from it.
 
 **Working with coding agents:** `AGENTS.md` (repo-wide) plus `teacher/`, `tv/` and `shared/` `AGENTS.md` files hold the project rules; Claude Code reads them natively. `.claude/settings.json` pre-approves the test commands, and `.claude/skills/` adds `/device-check` and `/friction-entry`. Device workflow: `scripts/devices.sh doctor | tv | teacher | verify | crash | release`.
 
