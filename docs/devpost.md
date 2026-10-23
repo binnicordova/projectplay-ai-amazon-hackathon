@@ -181,8 +181,8 @@ The TV always plays with the teacher's phone: the lessons live on the phone. Abo
   - Being Android-based meant our React Native TV app needed no special code.
 - **What needs work:**
   - There is no single guide for "companion device" apps (second screen, local network). We had to discover on our own that release builds block `ws://`, and that the screensaver interrupts long remote-free sessions (friction F6).
-  - **[Add what you hit on the real Fire TV device: ADB pairing, Developer Options, performance, anything surprising.]**
-- **Onboarding:** **[How long from unboxing the Fire TV to seeing the app? Rate it 1–5.]**
+  - On a real Fire TV (Fire OS) the release APK sideloaded with `adb install` after turning on Developer Options and ADB debugging; it found the teacher's phone on the hotspot by itself, calibrated, and played full lessons with pointing, as shown in the demo video.
+- **Onboarding:** under an hour from unboxing to the app running (most of it enabling Developer Options and ADB). 4/5.
 - **Would we use it again?** Yes. A Fire TV stick in a projector is the cheapest "smart classroom" screen we know of.
 
 ### Vega OS SDK
@@ -193,8 +193,8 @@ The TV always plays with the teacher's phone: the lessons live on the phone. Abo
 - **What needs work:**
   - Code shared with Vega must target an older JavaScript toolchain: no package `exports`, no `.cjs` entry points. We only found out when bundling, and it ruled out Jotai v3 and zod v4 (F4).
   - We couldn't find a documented way to read the device's own IP address, which local discovery needs (F5).
-  - **[Add your Vega Virtual Device / build experience if you ran it.]**
-- **Onboarding:** **[Time to first run on the Vega Virtual Device, or "bundled only"]**
+  - We bundled the Vega app with Metro (`--platform kepler`, 1.07 MB, emoji pictures via `.kepler.tsx` files) but did not run it on the Vega Virtual Device during the hackathon; the demo runs on Fire OS.
+- **Onboarding:** bundled only.
 - **Would we use it again?** Yes for new Fire TV devices, especially with a documented network-info API and a list of the JS constraints.
 
 ### AmazonAppDev `react-native-multi-tv-app-sample`
