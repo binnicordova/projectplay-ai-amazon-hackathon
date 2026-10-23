@@ -15,7 +15,7 @@ Status as of Fri Oct 23. ✅ done · ⬜ still to do.
 - ✅ **Release APKs** (`npm run release:apks`) installed on both devices: the apps link, calibrate and play a lesson with no Metro. The teacher APK contains the DeepSeek key: keep the spending alert on, and rotate the key after judging. The TV APK carries ARM and x86 libraries, so it also runs on the Fire TV emulator.
 - ⬜ **Demo video under 3 minutes**, public on YouTube or Vimeo, in English, with no copyrighted music. It must show the app **running on a real Fire TV device or the Fire TV/Vega simulator**. Script: [`video-script.md`](video-script.md).
 - ⬜ **Devpost text and product feedback:** drafted in [`devpost.md`](devpost.md). Fill in every **[bracket]** (video link, Fire TV device notes, onboarding times), then paste.
-- ⬜ **Friction log** ([`friction-log.md`](friction-log.md)): 17 entries; add what you hit on the real Fire TV.
+- ⬜ **Friction log** ([`friction-log.md`](friction-log.md)): 19 entries; add what you hit on the real Fire TV.
 - ✅ Optional **feature requests** with priority: the table at the end of `devpost.md`.
 
 ## Video shot list (≈ 2:45)

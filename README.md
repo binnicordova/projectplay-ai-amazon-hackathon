@@ -4,8 +4,10 @@
 
 [![CI](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/actions/workflows/ci.yml/badge.svg)](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Fire TV](https://img.shields.io/badge/Fire%20TV-Fire%20OS%20%7C%20Vega%20OS-ff9900.svg)
-![Classes play offline](https://img.shields.io/badge/class-offline-brightgreen.svg)
+![Amazon Fire TV](https://img.shields.io/badge/Amazon%20Fire%20TV-Fire%20OS%20%7C%20Vega%20OS-ff9900.svg)
+![VisionCamera + MoveNet](https://img.shields.io/badge/VisionCamera%20v5-MoveNet%20on--device-6f42c1.svg)
+![No internet needed in class](https://img.shields.io/badge/internet-not%20needed%20in%20class-brightgreen.svg)
+![About $75 per classroom](https://img.shields.io/badge/cost-%E2%89%88%20%2475%20per%20classroom-orange.svg)
 
 <!-- Demo video: add the YouTube link here on submission day. -->
 
@@ -14,6 +16,39 @@
 **Lessons for every class, from 4-year-olds to teenagers.** The teacher app comes with a library of lessons (numbers, letters, syllables, a hard R sound, English words, sentences, more-or-less, fractions, equations). When the phone has internet, the teacher creates new ones by **chatting with the AI** ("créame 5 ejercicios sobre las sílabas MA, PA, RO"). The AI picks the exercise and the phone's engine computes every answer; the TV plays the lesson from memory, climbing levels as the class gets answers right.
 
 Built for the [Build, Ship, Shape: Amazon Developer Hackathon](https://amazonappdev2026.devpost.com/) · **Fire TV track** (computer vision, multi-modal UX, family entertainment).
+
+## Why it matters
+
+### An interactive wall for about $75, not $1,600–$6,500
+
+![Cost of one interactive classroom setup: Promethean ActivPanel 9 Pro $6,491, SMART Board MX275-V5 $4,167, Epson BrightLink 760Wi interactive projector $1,608, ProjectPlay about $75](docs/images/cost-comparison.svg)
+
+| Option | What the school buys | Price (one classroom) |
+|---|---|---|
+| Interactive flat panel | [Promethean ActivPanel 9 Pro, 75"](https://cdwg.com/product/promethean-activpanel-9-pro-75-interactive-touch-screen-display/7323057) | **$6,490.72** (list $8,069) |
+| Interactive flat panel | [SMART Board MX275-V5, 75"](https://www.bhphotovideo.com/c/product/1841163-REG/smart_technologies_smart_board_mx275_v5_75.html) | **$4,167** |
+| Interactive projector | [Epson BrightLink 760Wi](https://purchasing.jordandistrict.org/wp-content/uploads/sites/16/Epson-Projector-Pricing-2026-Quarter-3.pdf), plus mounting and a whiteboard | **$1,608–$2,101.50** |
+| **ProjectPlay** | **A Fire TV Stick** ([$59.99 list, often $29.99–$44.99 on sale](https://www.notebookcheck.net/Amazon-s-latest-Fire-TV-Stick-4K-4K-is-already-50-off-with-a-free-Game-Pass-subscription.1415665.0.html)) **+ a phone tripod (≈ $15)**. It uses the projector or TV the classroom already has and the teacher's own Android phone | **≈ $75**, about $2.50 per child in a class of 30 |
+
+The price of one SMART Board equips **56 classrooms** with ProjectPlay. Prices checked on 23 Oct 2026; the interactive projector also replaces a projector, while ProjectPlay assumes the room has one (or a TV).
+
+### No internet needed: made for the Andes and every remote classroom
+
+![Map of Peru with the mostly Andean regions shaded, and the numbers: 108,239 basic-education services, 6 in 10 public primary schools without internet, 18 regions with fewer than half their schools online, 0 MB of internet needed in class](docs/images/impact-map.svg)
+
+- **Every class runs offline.** The phone opens its own hotspot, the Fire TV joins it, and nothing else is needed: no school Wi-Fi, no mobile data, no server, no account. Internet is only used, optionally, to create a new lesson with the AI (10–20 KB per lesson).
+- **The schools that need it most are offline.** In Peru about **6 in 10 public primary schools and 3 in 10 public secondary schools have no internet** ([Censo Educativo 2023, via Gestión](https://gestion.pe/peru/brecha-digital-en-escuelas-publicas-solo-1-computadora-por-cada-12-estudiantes-de-primaria-censo-educativo-2023-ministerio-de-educacion-noticia/)). In **18 regions fewer than half of schools are online**, with Amazonas at 14% and Loreto at 18% ([Minedu, via El Comercio](https://elcomercio.pe/ecdata/en-17-regiones-del-peru-menos-de-la-mitad-de-escuelas-tienen-acceso-a-agua-potable-colegios-en-peru-conexion-internet-pobreza-servicio-basico-ecdata-noticia/)). Worldwide only about 40% of primary schools are connected (UNESCO GEM Report 2023).
+- **Kindergarten, primary and secondary.** Peru has **108,239 basic-education services: 54,087 kindergarten (inicial), 38,942 primary and 15,210 secondary** ([Minedu ESCALE, July 2020, via UNESCO IIEP-SITEAL](https://siteal.iiep.unesco.org/pais/peru)). ProjectPlay has lessons for each: pictures, big tiles and a read-aloud line for 4–6-year-olds; letters, syllables, numbers and English for 6–12; fractions and equations with traps for teenagers. Any of these classrooms with a projector or a TV can play.
+- **Cheap to run, nothing to maintain.** No subscription, no backend, no accounts for children; camera images never leave the phone.
+
+### Built on Amazon Fire TV
+
+- **The Fire TV Stick is the classroom computer.** Plugged into the projector's HDMI port, it runs the whole game: the lesson player, levels, points and the touch wall. It finds the teacher's phone by itself and keeps the screen awake.
+- **One codebase for Fire OS and Vega OS.** The TV app started from Amazon's [`react-native-multi-tv-app-sample`](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample): Expo + react-native-tvos on Fire OS, and the Vega SDK (React Native 0.72) for Vega OS, sharing every screen. We sent two fixes back upstream ([#141](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/141), [#142](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample/pull/142)).
+- **The Fire TV remote still works.** During a class its D-pad moves a cursor and OK selects, which is also how the game runs on the Fire TV and Vega simulators.
+- **The phone sees, the Fire TV decides.** On the phone, **VisionCamera v5** feeds a GPU resizer and **MoveNet** (TFLite, INT8, 3 MB) on the camera thread, 7–11 pose updates per second for each child; only ~60-byte pointer events travel to the Fire TV.
+
+## How it works
 
 ```
  ┌──────────── teacher phone (hotspot + camera) ────────────┐        ┌────────── Fire TV → projector ───────────┐
@@ -221,7 +256,8 @@ Everything here was written during the submission window, except the starting po
 
 - ProjectPlay code: MIT ([`LICENSE`](LICENSE)). The exercise engine is also published on its own: [projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine) (MIT).
 - `tv/` is derived from [AmazonAppDev/react-native-multi-tv-app-sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample), MIT-0 ([`tv/LICENSE-sample-MIT-0`](tv/LICENSE-sample-MIT-0)).
+- Map boundaries: INEI departments via [juaneladio/peru-geojson](https://github.com/juaneladio/peru-geojson); South America from Natural Earth via [world-atlas](https://github.com/topojson/world-atlas) (ISC). Prices and school figures in `docs/images/` are cited in [Why it matters](#why-it-matters).
 - MoveNet model © Google, Apache-2.0 (see [`teacher/assets/models/README.md`](teacher/assets/models/README.md)).
 - Pictures: [Twemoji](https://github.com/jdecked/twemoji) graphics © Twitter, Inc. and other contributors, CC-BY 4.0.
 
-See also: [`docs/friction-log.md`](docs/friction-log.md) (17 SDK and tooling frictions, with workarounds) · [`docs/devpost.md`](docs/devpost.md) (submission text and product feedback) · [`docs/video-script.md`](docs/video-script.md) · [`docs/submission-kit.md`](docs/submission-kit.md).
+See also: [`docs/friction-log.md`](docs/friction-log.md) (19 SDK and tooling frictions, with workarounds) · [`docs/devpost.md`](docs/devpost.md) (submission text and product feedback) · [`docs/video-script.md`](docs/video-script.md) · [`docs/submission-kit.md`](docs/submission-kit.md).

@@ -119,10 +119,46 @@ detect() {
   done
 }
 
+# Installs an npm package's dependencies when they are missing or older than its package.json/package-lock.json,
+# e.g. after a pull that added a native module. npm rewrites node_modules/.package-lock.json on every install.
+npm_deps() {
+  local dir="$1" stamp="$1/node_modules/.package-lock.json"
+  if [ ! -f "$stamp" ] || [ "$dir/package.json" -nt "$stamp" ] || [ "$dir/package-lock.json" -nt "$stamp" ]; then
+    say "Installing ${dir#"$ROOT"/}/ (dependencies changed)"
+    npm --prefix "$dir" install --no-audit --no-fund
+    touch "$stamp"
+  fi
+}
+
 ensure_deps() {
-  [ -d "$ROOT/shared/node_modules" ]  || (say "Installing shared/";  npm --prefix "$ROOT/shared" install)
-  [ -d "$ROOT/teacher/node_modules" ] || (say "Installing teacher/"; npm --prefix "$ROOT/teacher" install)
+  npm_deps "$ROOT/shared"
+  npm_deps "$ROOT/teacher"
   [ -d "$ROOT/tv/apps/expo-tv/node_modules" ] || (say "Installing tv/ (Yarn 4)"; cd "$ROOT/tv" && yarn_cmd install)
+}
+
+# React Native caches its autolinking (the native modules compiled into the APK) in
+# android/build/generated/autolinking, and only refreshes it when package.json or the lockfile changes.
+# A build that ran before `npm install` finished (a pull, a build, then the install) leaves a cache without
+# the new module: the APK lacks it and the app stops on its first native view with
+# "IllegalViewOperationException: Can't find ViewManager 'RNSVGSvgViewAndroid'". Drop the cache whenever
+# a native dependency of the app is missing from it, so Gradle links it again.
+relink_if_stale() {
+  local app="$1" cache="$1/android/build/generated/autolinking"
+  [ -f "$cache/autolinking.json" ] || return 0
+  local missing
+  missing="$(cd "$app" && node -e '
+    const fs = require("fs"), path = require("path");
+    const linked = require(path.resolve(process.argv[1])).dependencies || {};
+    const deps = Object.keys(require(path.resolve("package.json")).dependencies || {});
+    const dirOf = (name) => { try { return path.dirname(require.resolve(name + "/package.json", { paths: [process.cwd()] })); } catch { return null; } };
+    // Expo modules are linked by Expo itself, not through this cache.
+    const native = deps.filter((name) => { const dir = dirOf(name); return name !== "react-native" && dir && fs.existsSync(path.join(dir, "android")) && !fs.existsSync(path.join(dir, "expo-module.config.json")); });
+    console.log(native.filter((name) => !(name in linked)).join(" "));
+  ' "$cache/autolinking.json" 2>/dev/null || true)"
+  if [ -n "$missing" ]; then
+    say "Not linked into the last build: $missing. Refreshing native autolinking"
+    rm -rf "$cache"
+  fi
 }
 
 case "$cmd" in
@@ -157,6 +193,7 @@ case "$cmd" in
       EXPO_TV=1 npx expo prebuild --platform android --clean --no-install
     fi
     maybe_clean "$ROOT/tv/apps/expo-tv/android"
+    relink_if_stale "$ROOT/tv/apps/expo-tv"
     maybe_uninstall "$TV_SERIAL" "$TV_PACKAGE"
     watch_crashes "$TV_SERIAL" "$TV_PACKAGE"
     say "Building for $(model "$TV_SERIAL") [$(abi "$TV_SERIAL")]: the first build takes several minutes"
@@ -170,6 +207,7 @@ case "$cmd" in
     ensure_sdk
     pin_gradle "$ROOT/teacher"
     maybe_clean "$ROOT/teacher/android"
+    relink_if_stale "$ROOT/teacher"
     maybe_uninstall "$PHONE_SERIAL" "$TEACHER_PACKAGE"
     watch_crashes "$PHONE_SERIAL" "$TEACHER_PACKAGE"
     say "Building for $(model "$PHONE_SERIAL") [$(abi "$PHONE_SERIAL")]: the first build takes several minutes (C++ camera/ML modules)"
@@ -263,6 +301,7 @@ case "$cmd" in
     say "Generating the TV native project (expo prebuild $clean)"
     EXPO_TV=1 npx expo prebuild --platform android $clean --no-install || die "TV prebuild failed"
     pin_gradle "$ROOT/tv/apps/expo-tv"
+    relink_if_stale "$ROOT/tv/apps/expo-tv"
     # Many Fire TV sticks run a 32-bit userland: ship both ARM ABIs. No teacher address is baked in:
     # the TV finds the phone on the hotspot by itself.
     say "Building the TV release APK (armeabi-v7a + arm64-v8a)"
@@ -276,6 +315,7 @@ case "$cmd" in
     npx expo prebuild --platform android --no-install || die "Teacher prebuild failed"
     [ -f .env ] || say "No teacher/.env: Crear con IA will be off in this APK (see teacher/.env.example)"
     pin_gradle "$ROOT/teacher"
+    relink_if_stale "$ROOT/teacher"
     say "Building the teacher release APK (arm64-v8a)"
     (cd android && ./gradlew assembleRelease) || die "Teacher release build failed"
     cp android/app/build/outputs/apk/release/app-release.apk "$OUT/projectplay-teacher.apk"

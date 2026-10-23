@@ -10,7 +10,7 @@ ProjectPlay
 
 ## Tagline (max ~200 characters)
 
-Turn any classroom projector into a touch wall. A Fire TV plays the lesson, the teacher's phone watches the children, kids answer by pointing. Lessons for ages 4–15, made by chatting with AI.
+A Fire TV Stick and the teacher's phone turn any classroom projector into a touch wall for about $75, with no internet. Kids answer by pointing; lessons for ages 4–15, made with AI.
 
 ## Track and mini challenge
 
@@ -46,13 +46,15 @@ Turn any classroom projector into a touch wall. A Fire TV plays the lesson, the 
 
 ## Inspiration
 
-Most public classrooms we know already have a projector. What they don't have is a $3,000 interactive whiteboard, reliable Wi-Fi, or a tablet for every child. Worldwide, only about 40% of primary schools are connected to the internet (UNESCO GEM Report 2023).
+Picture a public classroom high in the Andes of Peru: thirty five-year-olds, one projector, and no internet. The projector shows slides, and the children sit still and watch. Young children learn better when they move: they point, they run to the board, they argue about the answer.
 
-So the projector shows slides, and 30 six-year-olds sit still and watch. Young children learn better when they move. They point, they run to the board, they argue about the answer.
+Making that wall interactive is out of reach. An interactive projector costs $1,608–$2,101 (Epson BrightLink 760Wi), a 75" SMART Board MX $4,167 and a Promethean ActivPanel 9 Pro $6,491, per classroom. And the schools that need it most are offline: in Peru about 6 in 10 public primary schools and 3 in 10 public secondary schools have no internet (Censo Educativo 2023), 18 regions have fewer than half their schools online (Amazonas 14%, Loreto 18%), and worldwide only about 40% of primary schools are connected (UNESCO GEM Report 2023).
 
-We asked: what is the cheapest way to make the wall itself answer back, using only things a teacher already has, or can buy for the price of a lunch?
+We asked: what is the cheapest way to make the wall itself answer back, using only things a teacher already has, with no internet at all?
 
-The answer was a Fire TV stick in the projector and the teacher's own phone on a tripod.
+The answer was a Fire TV Stick in the projector and the teacher's own phone on a tripod: about $75 per classroom, $2.50 per child, and one SMART Board's price equips 56 classrooms. Peru alone has 108,239 kindergarten, primary and secondary services (54,087 · 38,942 · 15,210; Minedu ESCALE 2020); every one with a projector or a TV could play.
+
+Sources: [CDW-G](https://cdwg.com/product/promethean-activpanel-9-pro-75-interactive-touch-screen-display/7323057), [B&H Photo](https://www.bhphotovideo.com/c/product/1841163-REG/smart_technologies_smart_board_mx275_v5_75.html), [Jordan School District Epson price list Q3 2026](https://purchasing.jordandistrict.org/wp-content/uploads/sites/16/Epson-Projector-Pricing-2026-Quarter-3.pdf), [Notebookcheck (Fire TV Stick)](https://www.notebookcheck.net/Amazon-s-latest-Fire-TV-Stick-4K-4K-is-already-50-off-with-a-free-Game-Pass-subscription.1415665.0.html), [Gestión](https://gestion.pe/peru/brecha-digital-en-escuelas-publicas-solo-1-computadora-por-cada-12-estudiantes-de-primaria-censo-educativo-2023-ministerio-de-educacion-noticia/), [El Comercio](https://elcomercio.pe/ecdata/en-17-regiones-del-peru-menos-de-la-mitad-de-escuelas-tienen-acceso-a-agua-potable-colegios-en-peru-conexion-internet-pobreza-servicio-basico-ecdata-noticia/), [UNESCO IIEP-SITEAL](https://siteal.iiep.unesco.org/pais/peru). Charts and map: `docs/images/` in the repository.
 
 ## What it does
 
@@ -119,7 +121,7 @@ Three apps in one repository, all TypeScript:
 - **Calibration that works without a technician.** Four taps on a phone was too fiddly in a noisy classroom. We designed the marker pattern, a differencing detector and a self-check. Then we debugged the camera stream from the phone itself, live, with a status line on screen.
 - **Answer keys a child can trust.** Asking an AI for "syllable exercises" gave plausible cards with wrong keys (a MAN-zana counted as MA, a silent h). So the AI only picks the exercise and the engine computes the answers, with rules for Spanish syllables, the strong R and fair distractors.
 - **Low-bandwidth schools.** An on-device model was 1 GB to download, unrealistic in the Andes. We moved generation online (10–20 KB per lesson) and kept every class offline.
-- **Build tooling.** An Expo prebuild that generated a Gradle 9 wrapper for an Android Gradle Plugin that only supports Gradle 8 shipped an APK silently missing its resource classes. The TV sample's config plugin crashed prebuild, and Corepack disappeared from Node 26. All of these are documented with workarounds in our friction log (17 entries).
+- **Build tooling.** An Expo prebuild that generated a Gradle 9 wrapper for an Android Gradle Plugin that only supports Gradle 8 shipped an APK silently missing its resource classes. The TV sample's config plugin crashed prebuild, and Corepack disappeared from Node 26. All of these are documented with workarounds in our friction log (19 entries).
 
 ## Accomplishments that we're proud of
 
