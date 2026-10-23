@@ -156,9 +156,12 @@ Three apps in one repository, all TypeScript:
 
 ## What's next
 
-- Classroom pilots with teachers, sharing lessons between teachers' phones over the hotspot, and a third lane for small groups.
-- Saved class reports on the teacher's phone. They stay on the phone.
-- Publishing on the Amazon Appstore for Fire TV.
+- **Already in real classrooms.** ProjectPlay is running at my own kids' schools, and my kids love it: they ask to play the syllable and number lessons again.
+- **Share lessons teacher to teacher, still offline.** A lesson is one small JSON file (3–14 KB), so a teacher can pass it to a colleague over the phone's hotspot (the same local link the Fire TV uses), WhatsApp, Bluetooth or a USB stick. The receiving app checks it with the same validator before saving, so a shared file can never break a class.
+- **A lesson marketplace on Amazon S3.** Teachers publish and download lessons from Amazon S3 behind CloudFront, with a small JSON catalog to browse by subject and age. Downloads stay tiny enough for rural mobile data, and every class keeps running offline.
+- **Same principles at any scale:** no subscription, zero friction (no account needed to play), and privacy first (camera images never leave the phone, no child data stored anywhere).
+- **Scales at almost no cost.** Each classroom needs one ≈ $75 setup; lessons are static files, so there are no servers to run per school, and a lesson made once can reach thousands of classrooms. The need is there: 108,239 kindergartens and schools in Peru alone, and about 3 million unconnected schools worldwide.
+- **More reach:** lessons in English, Portuguese and Quechua, a third camera lane for small groups, and distribution on the Amazon Appstore for Fire TV.
 
 ## Built during the hackathon (pre-existing code)
 

@@ -304,6 +304,15 @@ Everything here was written during the submission window, except the starting po
 - **Changed in the sample:** Expo packages aligned to SDK 54, strict-TypeScript fixes, the TV config plugin upgraded (it crashed prebuild), button centring, and the media-player features removed.
 - **New:** the teacher app, all perception and calibration code, the wire protocol and lesson format, the lesson player, the exercise engine and starter lessons, the AI chat, the Vega wiring, the tests and the device tooling.
 
+## What's next: sharing, a marketplace on Amazon S3, and scale
+
+- **Already in real classrooms.** ProjectPlay is running at my own kids' schools, and my kids love it: they ask to play the syllable and number lessons again.
+- **Share lessons teacher to teacher, still offline.** A lesson is one small JSON file (3–14 KB), so a teacher can pass it to a colleague over the phone's hotspot (the same local link the Fire TV uses), WhatsApp, Bluetooth or a USB stick. The receiving app checks it with the same validator before saving, so a shared file can never break a class.
+- **A lesson marketplace on Amazon S3.** Teachers publish and download lessons from Amazon S3 behind CloudFront, with a small JSON catalog to browse by subject and age. Downloads stay tiny enough for rural mobile data, and every class keeps running offline.
+- **Same principles at any scale:** no subscription, zero friction (no account needed to play), and privacy first (camera images never leave the phone, no child data stored anywhere).
+- **Scales at almost no cost.** Each classroom needs one ≈ $75 setup; lessons are static files, so there are no servers to run per school, and a lesson made once can reach thousands of classrooms. The need is there: 108,239 kindergartens and schools in Peru alone, and about 3 million unconnected schools worldwide.
+- **More reach:** lessons in English, Portuguese and Quechua, a third camera lane for small groups, and distribution on the Amazon Appstore for Fire TV.
+
 ## Author
 
 **Binni Cordova**, Peru · [LinkedIn](https://www.linkedin.com/in/binnicordova/) · [Portfolio](https://binnicordova.com/) · [GitHub](https://github.com/binnicordova)
