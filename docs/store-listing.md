@@ -53,3 +53,23 @@ Requiere la app Mimikai en el celular del docente (Android), que sigue a los ni�
 ## Graphics
 
 Made from `docs/brand/` (feature graphic, TV banner, 512 px icon). Phone screenshots are the real teacher screens in `docs/photos/`, padded to 16:9. TV screenshots come from the Fire TV emulator with a stand-in phone playing starter lessons.
+
+## App content answers (Play Console → Policy → App content)
+
+What the code does, so the declarations stay true. Same answers for both apps unless marked.
+
+| Declaration | Answer |
+|---|---|
+| Privacy policy | https://github.com/binnicordova/projectplay-ai-amazon-hackathon/blob/main/docs/privacy.md (live once `rebrand-mimikai` is merged) |
+| Ads | No ads |
+| Sign in details | Yes, restricted: "actions on another device". Note: no account, login or payment; a class needs the other app (Mimikai ⇄ Mimikai TV) on the same Wi-Fi; without it the phone app still opens the library, any lesson and *Crear con IA*. Tick "full access". |
+| Advertising ID | No |
+| Government apps | No |
+| Financial features | My app doesn't provide any financial features |
+| Health apps | My app does not have any health features |
+| Content rating (IARC) | Category: Education. Every content question (violence, fear, sex, language, drugs, gambling): No. Users interact or share content with each other: No. Shares location: No. Digital purchases: No. |
+| Target audience | Phone: 18 and over (teachers operate it; children never touch it). TV: see below. |
+| Data safety, phone | Collects data: Yes. **App activity → Other user-generated content** (the text typed in *Crear con IA*, sent to DeepSeek to draft a lesson): app functionality, optional, processed ephemerally, not shared. **Device or other IDs** (random install ID sent by `expo-updates`): app functionality, required, not shared. Encrypted in transit: Yes. Account creation: none. Camera images are processed on the phone only, so they are **not** collected. |
+| Data safety, TV | Collects data: Yes. **Device or other IDs** (`expo-updates` install ID): app functionality, required, not shared. Encrypted in transit: Yes. Phone ⇄ TV traffic stays on the local network and is not collected. |
+
+**TV target audience is a judgement call.** Children look at and point at the wall, but only the teacher operates the TV and the phone. Declaring "18 and over" keeps the app out of the Families program; declaring children's ages puts Mimikai TV under the Families policy (teacher-approved review, and Google may object to the `expo-updates` install ID on a children's app).
