@@ -52,7 +52,7 @@ Requiere la app Mimikai en el celular del docente (Android), que sigue a los ni�
 
 ## Graphics
 
-Made from `docs/brand/` (feature graphic, TV banner, 512 px icon). Phone screenshots are the real teacher screens in `docs/photos/`, padded to 16:9. TV screenshots come from the Fire TV emulator with a stand-in phone playing starter lessons.
+Made from `docs/brand/` (feature graphic, TV banner, 512 px icon). The phone and TV screenshots in `docs/store/play/` are exported from the editor in `store-screenshots/` (see its `MIMIKAI.md`), built on real captures: the teacher app on a Galaxy phone, the TV app on the TV box and in a web build with a stand-in phone.
 
 ## App content answers (Play Console → Policy → App content)
 
