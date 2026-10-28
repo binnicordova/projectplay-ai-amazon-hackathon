@@ -1,6 +1,6 @@
 /**
  * Turns three averaged camera frames of the calibration patterns (see
- * @projectplay/contracts calibration.ts) into the projection's corners in camera space.
+ * @mimikai/contracts calibration.ts) into the projection's corners in camera space.
  *
  *   corners − dark → 4 marker centroids → homography (projection → camera)
  *                  → where the projection's real corners are in the camera image
@@ -8,7 +8,7 @@
  *
  * Every failure comes back as a sentence the teacher can act on.
  */
-import { CENTER_MARKER, CORNER_MARKERS } from '@projectplay/contracts';
+import { CENTER_MARKER, CORNER_MARKERS } from '@mimikai/contracts';
 import { UNIT_SQUARE, applyHomography, calibrationHomography, computeHomography, isConvexClockwise, type Quad } from './homography';
 import { MIN_CONTRAST, findBlobs, orderClockwise } from './markers';
 import type { Point2 } from './pose';

@@ -1,26 +1,26 @@
 {
   "expo": {
-    "name": "ProjectPlay Teacher",
-    "slug": "projectplay-teacher",
+    "name": "Mimikai",
+    "slug": "mimikai-teacher",
     "version": "1.0.0",
-    "scheme": "projectplay-teacher",
+    "scheme": "mimikai-teacher",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#0B1026",
     "ios": {
-      "bundleIdentifier": "com.projectplay.teacher",
+      "bundleIdentifier": "com.mimikai.teacher",
       "supportsTablet": true,
       "infoPlist": {
-        "NSCameraUsageDescription": "ProjectPlay uses the camera on this phone to see how children move in front of the projected board. Video is processed on the phone and never stored or sent anywhere.",
-        "NSLocalNetworkUsageDescription": "ProjectPlay talks to the Fire TV on your hotspot to control the classroom game."
+        "NSCameraUsageDescription": "Mimikai uses the camera on this phone to see how children move in front of the projected board. Video is processed on the phone and never stored or sent anywhere.",
+        "NSLocalNetworkUsageDescription": "Mimikai talks to the Fire TV on your hotspot to control the classroom game."
       }
     },
     "android": {
-      "package": "com.projectplay.teacher",
+      "package": "com.mimikai.teacher",
       "permissions": ["android.permission.CAMERA", "android.permission.INTERNET", "android.permission.ACCESS_NETWORK_STATE"],
       "adaptiveIcon": {
-        "backgroundColor": "#0B122C",
+        "backgroundColor": "#0B1026",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"

@@ -1,5 +1,5 @@
 {
-  "name": "@projectplay/exercise-engine",
+  "name": "@mimikai/exercise-engine",
   "version": "2.0.0",
   "description": "Builds lesson cards (numbers, letters, syllables, English words, sentences, fractions, equations, arithmetic) offline and deterministically, with misconception-based wrong answers. Zero runtime dependencies.",
   "license": "MIT",

@@ -1,4 +1,4 @@
-import { teamForX } from '@projectplay/contracts';
+import { teamForX } from '@mimikai/contracts';
 import { describe, expect, it } from 'vitest';
 import { applyHomography, calibrationHomography, type Quad } from './homography';
 import { laneLayout } from './lanes';

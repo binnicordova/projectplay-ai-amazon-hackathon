@@ -1,4 +1,4 @@
-import type { CalibrationPattern, TeacherMessage } from '@projectplay/contracts';
+import type { CalibrationPattern, TeacherMessage } from '@mimikai/contracts';
 import { createStore } from 'jotai';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LUMA_HEIGHT, LUMA_WIDTH } from '../domain/markers';

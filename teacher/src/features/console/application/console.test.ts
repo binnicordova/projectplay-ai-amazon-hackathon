@@ -1,5 +1,5 @@
-import { SAMPLE_ART, SAMPLE_LESSON } from '@projectplay/contracts/src/testing/sampleLesson';
-import { decodeTeacherMessage, encodeMessage } from '@projectplay/contracts';
+import { SAMPLE_ART, SAMPLE_LESSON } from '@mimikai/contracts/src/testing/sampleLesson';
+import { decodeTeacherMessage, encodeMessage } from '@mimikai/contracts';
 import { describe, expect, it } from 'vitest';
 import { resultLabel, startCommand, teamCountFor } from './console';
 

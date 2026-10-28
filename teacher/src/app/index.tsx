@@ -17,7 +17,7 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.screen} edges={['left', 'right']}>
       {/* Each column scrolls on its own: in landscape the cards are taller than a phone screen. */}
       <ScrollView style={styles.column} contentContainerStyle={styles.columnContent}>
-        <Text style={type.title}>ProjectPlay</Text>
+        <Text style={type.title}>Mimikai</Text>
         <Text style={type.caption}>
           El proyector se convierte en una pared táctil: los niños responden señalando. La cámara trabaja en este celular y no envía imágenes a ningún lado.
         </Text>

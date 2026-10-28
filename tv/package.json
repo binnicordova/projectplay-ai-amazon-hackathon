@@ -1,8 +1,8 @@
 {
-  "name": "@projectplay/tv-workspace",
+  "name": "@mimikai/tv-workspace",
   "version": "1.0.0",
   "private": true,
-  "description": "ProjectPlay TV apps, built on the AmazonAppDev react-native-multi-tv-app-sample (MIT-0): Fire OS / Android TV / tvOS / web via Expo, and Vega OS via the Vega SDK.",
+  "description": "Mimikai TV apps, built on the AmazonAppDev react-native-multi-tv-app-sample (MIT-0): Fire OS / Android TV / tvOS / web via Expo, and Vega OS via the Vega SDK.",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -16,16 +16,16 @@
     "ws": "^8.21.0"
   },
   "scripts": {
-    "start": "yarn workspace @projectplay/expo-tv start",
-    "android": "yarn workspace @projectplay/expo-tv android",
-    "android:release": "yarn workspace @projectplay/expo-tv android:release",
-    "ios": "yarn workspace @projectplay/expo-tv ios",
-    "web": "yarn workspace @projectplay/expo-tv web",
-    "vega": "yarn workspace @projectplay/vega start",
-    "build:vega": "yarn workspace @projectplay/vega build",
-    "build:vega:debug": "yarn workspace @projectplay/vega build:debug",
+    "start": "yarn workspace @mimikai/expo-tv start",
+    "android": "yarn workspace @mimikai/expo-tv android",
+    "android:release": "yarn workspace @mimikai/expo-tv android:release",
+    "ios": "yarn workspace @mimikai/expo-tv ios",
+    "web": "yarn workspace @mimikai/expo-tv web",
+    "vega": "yarn workspace @mimikai/vega start",
+    "build:vega": "yarn workspace @mimikai/vega build",
+    "build:vega:debug": "yarn workspace @mimikai/vega build:debug",
     "test": "vitest run",
-    "typecheck": "yarn workspace @projectplay/expo-tv typecheck",
+    "typecheck": "yarn workspace @mimikai/expo-tv typecheck",
     "check": "yarn typecheck && yarn test"
   },
   "devDependencies": {

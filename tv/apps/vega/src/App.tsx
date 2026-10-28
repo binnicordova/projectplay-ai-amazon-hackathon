@@ -6,7 +6,7 @@ import {
   networkInfo,
   webSocketTransport,
   type TvPlatform,
-} from '@projectplay/tv-shared';
+} from '@mimikai/tv-shared';
 
 const platform: TvPlatform = {
   transport: webSocketTransport,

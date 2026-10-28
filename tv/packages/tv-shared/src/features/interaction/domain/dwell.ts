@@ -15,7 +15,7 @@
  * same tile), and holding on another tile takes the usual dwell instead of first draining a
  * full bar.
  */
-import type { NormalizedPoint, TeamId } from '@projectplay/contracts';
+import type { NormalizedPoint, TeamId } from '@mimikai/contracts';
 
 export interface NormalizedRect {
   readonly x: number;

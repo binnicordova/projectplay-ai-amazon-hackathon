@@ -1,24 +1,24 @@
 {
   "expo": {
-    "name": "ProjectPlay",
-    "slug": "projectplay-tv",
+    "name": "Mimikai",
+    "slug": "mimikai-tv",
     "version": "1.0.0",
-    "scheme": "projectplay-tv",
+    "scheme": "mimikai-tv",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#0B1026",
     "newArchEnabled": false,
     "android": {
-      "package": "com.projectplay.tv",
+      "package": "com.mimikai.tv",
       "adaptiveIcon": {
-        "backgroundColor": "#0B122C",
+        "backgroundColor": "#0B1026",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       }
     },
     "ios": {
-      "bundleIdentifier": "com.projectplay.tv"
+      "bundleIdentifier": "com.mimikai.tv"
     },
     "plugins": [
       "expo-router",

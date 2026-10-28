@@ -6,7 +6,7 @@
  * A round's strength is the share of playing teams that got it right: with two teams, one
  * right and one wrong is 0.5; alone, it is 1 or 0.
  */
-import { LEVELS, type Card, type Lesson, type Level } from '@projectplay/contracts';
+import { LEVELS, type Card, type Lesson, type Level } from '@mimikai/contracts';
 import type { Random } from './random';
 
 export interface Progress {

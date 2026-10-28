@@ -1,5 +1,5 @@
 /** Which pictures travel with a lesson: only the ones it shows, plus the game's own icons. */
-import { UI_ICONS, iconsOf, type IconArt, type IconId, type Lesson } from '@projectplay/contracts';
+import { UI_ICONS, iconsOf, type IconArt, type IconId, type Lesson } from '@mimikai/contracts';
 
 export function artForLesson(lesson: Lesson, library: IconArt): IconArt {
   const wanted = [...iconsOf(lesson), ...Object.values(UI_ICONS)];

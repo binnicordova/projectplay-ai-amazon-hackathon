@@ -3,7 +3,7 @@
  * cards climb from easy to hard, and how one right answer and its distractors become a card.
  * Everything is a pure function of its inputs and a seeded random source.
  */
-import type { AgeBand, Card, Level, Prompt, Visual } from '@projectplay/contracts';
+import type { AgeBand, Card, Level, Prompt, Visual } from '@mimikai/contracts';
 import { shuffle, type Random } from './random';
 
 export interface GeneratorContext {

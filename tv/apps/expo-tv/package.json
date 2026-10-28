@@ -1,5 +1,5 @@
 {
-  "name": "@projectplay/expo-tv",
+  "name": "@mimikai/expo-tv",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "private": true,
@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
-    "@projectplay/contracts": "portal:../../../shared/contracts",
-    "@projectplay/tv-shared": "workspace:*",
+    "@mimikai/contracts": "portal:../../../shared/contracts",
+    "@mimikai/tv-shared": "workspace:*",
     "expo": "~54.0.0",
     "expo-build-properties": "~1.0.10",
     "expo-constants": "~18.0.14",

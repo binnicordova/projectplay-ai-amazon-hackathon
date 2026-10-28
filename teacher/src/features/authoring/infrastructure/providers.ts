@@ -2,7 +2,7 @@
  * The AI providers this app can use (strategy pattern): each is a ChatModel factory, picked by
  * name. Adding one (Amazon Bedrock, a school's own server…) is a new file and one line here.
  */
-import { err } from '@projectplay/contracts';
+import { err } from '@mimikai/contracts';
 import type { ChatModel, ProviderId } from '../application/ports';
 import { DEEPSEEK_DEFAULTS, deepSeekChatModel } from './deepseek';
 

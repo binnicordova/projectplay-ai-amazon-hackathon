@@ -2,7 +2,7 @@
  * Chat with the AI to create a lesson: the conversation on the left, the latest draft on the
  * right with every card visible, and Save / Play once the teacher is happy with it.
  */
-import type { Lesson } from '@projectplay/contracts';
+import type { Lesson } from '@mimikai/contracts';
 import { useAtomValue } from 'jotai';
 import { useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';

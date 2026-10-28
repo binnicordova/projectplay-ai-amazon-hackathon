@@ -1,4 +1,4 @@
-import type { Result } from '@projectplay/contracts';
+import type { Result } from '@mimikai/contracts';
 import type { ChatMessage } from '../domain/prompt';
 
 /** Why the AI could not answer, in terms the teacher can act on. */

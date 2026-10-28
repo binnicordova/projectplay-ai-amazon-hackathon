@@ -1,5 +1,5 @@
 /** Counting: recognise how many (numbers) and decide where there is more or less (compare). */
-import type { Card, Level } from '@projectplay/contracts';
+import type { Card, Level } from '@mimikai/contracts';
 import { buildCards, group, text, type ChoiceSpec, type GeneratorContext } from '../cards';
 import { plural, wordsTagged, type Word } from '../lexicon';
 import { randomInt, shuffle, type Random } from '../random';

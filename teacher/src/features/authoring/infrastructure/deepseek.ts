@@ -2,7 +2,7 @@
  * DeepSeek chat model (OpenAI-compatible API) as a ChatModel. JSON mode guarantees valid JSON,
  * not our shape: the application layer checks the shape and asks again when it is wrong.
  */
-import { err, ok, type Result } from '@projectplay/contracts';
+import { err, ok, type Result } from '@mimikai/contracts';
 import type { ChatError, ChatModel } from '../application/ports';
 import type { ChatMessage } from '../domain/prompt';
 

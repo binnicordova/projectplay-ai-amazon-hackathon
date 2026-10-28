@@ -1,6 +1,8 @@
-# ProjectPlay
+# Mimikai
 
-![ProjectPlay: a child reaches for a star lit by a classroom projector](docs/brand/banner.png)
+![Mimikai: a happy violet octopus juggling three rings, next to the mimikai wordmark](docs/brand/banner.png)
+
+*Formerly ProjectPlay, the name of our hackathon entry and of the demo video below.*
 
 [![CI](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/actions/workflows/ci.yml/badge.svg)](https://github.com/binnicordova/projectplay-ai-amazon-hackathon/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -10,8 +12,8 @@
 ![About $75 per classroom](https://img.shields.io/badge/cost-%E2%89%88%20%2475%20per%20classroom-orange.svg)
 
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=wkKDgb5G7V0" title="Watch the ProjectPlay demo on YouTube">
-    <img src="https://i.ytimg.com/vi/wkKDgb5G7V0/hqdefault.jpg" alt="ProjectPlay demo video (2:59): children answer by pointing at a projected wall; a Fire TV plays the lesson and the teacher's phone tracks them" width="480">
+  <a href="https://www.youtube.com/watch?v=wkKDgb5G7V0" title="Watch the demo on YouTube">
+    <img src="https://i.ytimg.com/vi/wkKDgb5G7V0/hqdefault.jpg" alt="Demo video (2:59), recorded as ProjectPlay: children answer by pointing at a projected wall; a Fire TV plays the lesson and the teacher's phone tracks them" width="480">
   </a>
   <br>
   <b>▶ <a href="https://www.youtube.com/watch?v=wkKDgb5G7V0">Watch the demo (2:59)</a></b>
@@ -25,13 +27,13 @@
 
 Built for the [Build, Ship, Shape: Amazon Developer Hackathon](https://amazonappdev2026.devpost.com/) · **Fire TV track** (computer vision, multi-modal UX, family entertainment).
 
-## ProjectPlay at a glance
+## Mimikai at a glance
 
 | | |
 |---|---|
 | **100% offline in class** | No school Wi-Fi, no mobile data, no server, no account. The phone opens its own hotspot and the Fire TV joins it. Built for the schools UNESCO counts as unconnected: only ~40% of primary schools worldwide are online, and about 6 in 10 public primary schools in Peru are not. |
 | **Nothing extra to download** | One install per device and you're done: the teacher APK is 52.5 MB and the Fire TV APK 55.3 MB, with the pose model (3 MB), all 11 starter lessons (121 exercises, ~104 KB) and every picture inside. No content packs, no updates needed to teach. The only optional online feature is creating a new lesson with AI: 10–20 KB per lesson. |
-| **≈ $75 per classroom** | A Fire TV Stick plus a phone tripod, on the projector or TV the school already has, and the teacher's own Android phone. Interactive boards cost $1,608–$6,491 per classroom: one SMART Board pays for 56 ProjectPlay classrooms (about $2.50 per child in a class of 30). |
+| **≈ $75 per classroom** | A Fire TV Stick plus a phone tripod, on the projector or TV the school already has, and the teacher's own Android phone. Interactive boards cost $1,608–$6,491 per classroom: one SMART Board pays for 56 Mimikai classrooms (about $2.50 per child in a class of 30). |
 | **Works on any projector** | Fire TV in the projector's HDMI port; the projection becomes a touch wall for a whole class, two teams at once or one child alone. |
 | **Setup in 4 steps, about a minute** | 1. Turn on the phone's hotspot. 2. Connect the Fire TV to it and open both apps: the TV finds the phone by itself. 3. Put the phone on a tripod facing the wall: the TV flashes four squares and the phone calibrates automatically. 4. Pick a lesson and tap **Jugar en la TV**. |
 | **Learning that feels like a game** | Children answer by pointing. Levels rise as the class gets answers right, fast answers and streaks score more, mistakes never cost points, teams compete and solo players chase three stars and a record. Lessons from kindergarten (ages 4–6) to secondary (fractions, equations). |
@@ -54,16 +56,16 @@ Children playing on a projected brick wall, with a Fire TV driving the projector
 
 ### An interactive wall for about $75, not $1,600–$6,500
 
-![Cost of one interactive classroom setup: Promethean ActivPanel 9 Pro $6,491, SMART Board MX275-V5 $4,167, Epson BrightLink 760Wi interactive projector $1,608, ProjectPlay about $75](docs/images/cost-comparison.svg)
+![Cost of one interactive classroom setup: Promethean ActivPanel 9 Pro $6,491, SMART Board MX275-V5 $4,167, Epson BrightLink 760Wi interactive projector $1,608, Mimikai about $75](docs/images/cost-comparison.svg)
 
 | Option | What the school buys | Price (one classroom) |
 |---|---|---|
 | Interactive flat panel | [Promethean ActivPanel 9 Pro, 75"](https://cdwg.com/product/promethean-activpanel-9-pro-75-interactive-touch-screen-display/7323057) | **$6,490.72** (list $8,069) |
 | Interactive flat panel | [SMART Board MX275-V5, 75"](https://www.bhphotovideo.com/c/product/1841163-REG/smart_technologies_smart_board_mx275_v5_75.html) | **$4,167** |
 | Interactive projector | [Epson BrightLink 760Wi](https://purchasing.jordandistrict.org/wp-content/uploads/sites/16/Epson-Projector-Pricing-2026-Quarter-3.pdf), plus mounting and a whiteboard | **$1,608–$2,101.50** |
-| **ProjectPlay** | **A Fire TV Stick** ([$59.99 list, often $29.99–$44.99 on sale](https://www.notebookcheck.net/Amazon-s-latest-Fire-TV-Stick-4K-4K-is-already-50-off-with-a-free-Game-Pass-subscription.1415665.0.html)) **+ a phone tripod (≈ $15)**. It uses the projector or TV the classroom already has and the teacher's own Android phone | **≈ $75**, about $2.50 per child in a class of 30 |
+| **Mimikai** | **A Fire TV Stick** ([$59.99 list, often $29.99–$44.99 on sale](https://www.notebookcheck.net/Amazon-s-latest-Fire-TV-Stick-4K-4K-is-already-50-off-with-a-free-Game-Pass-subscription.1415665.0.html)) **+ a phone tripod (≈ $15)**. It uses the projector or TV the classroom already has and the teacher's own Android phone | **≈ $75**, about $2.50 per child in a class of 30 |
 
-The price of one SMART Board equips **56 classrooms** with ProjectPlay. Prices checked on 23 Oct 2026; the interactive projector also replaces a projector, while ProjectPlay assumes the room has one (or a TV).
+The price of one SMART Board equips **56 classrooms** with Mimikai. Prices checked on 23 Oct 2026; the interactive projector also replaces a projector, while Mimikai assumes the room has one (or a TV).
 
 ### No internet needed: made for the Andes and every remote classroom
 
@@ -71,7 +73,7 @@ The price of one SMART Board equips **56 classrooms** with ProjectPlay. Prices c
 
 - **Every class runs offline.** The phone opens its own hotspot, the Fire TV joins it, and nothing else is needed: no school Wi-Fi, no mobile data, no server, no account. Internet is only used, optionally, to create a new lesson with the AI (10–20 KB per lesson).
 - **The schools that need it most are offline.** In Peru about **6 in 10 public primary schools and 3 in 10 public secondary schools have no internet** ([Censo Educativo 2023, via Gestión](https://gestion.pe/peru/brecha-digital-en-escuelas-publicas-solo-1-computadora-por-cada-12-estudiantes-de-primaria-censo-educativo-2023-ministerio-de-educacion-noticia/)). In **18 regions fewer than half of schools are online**, with Amazonas at 14% and Loreto at 18% ([Minedu, via El Comercio](https://elcomercio.pe/ecdata/en-17-regiones-del-peru-menos-de-la-mitad-de-escuelas-tienen-acceso-a-agua-potable-colegios-en-peru-conexion-internet-pobreza-servicio-basico-ecdata-noticia/)). Worldwide only about 40% of primary schools are connected (UNESCO GEM Report 2023).
-- **Kindergarten, primary and secondary.** Peru has **108,239 basic-education services: 54,087 kindergarten (inicial), 38,942 primary and 15,210 secondary** ([Minedu ESCALE, July 2020, via UNESCO IIEP-SITEAL](https://siteal.iiep.unesco.org/pais/peru)). ProjectPlay has lessons for each: pictures, big tiles and a read-aloud line for 4–6-year-olds; letters, syllables, numbers and English for 6–12; fractions and equations with traps for teenagers. Any of these classrooms with a projector or a TV can play.
+- **Kindergarten, primary and secondary.** Peru has **108,239 basic-education services: 54,087 kindergarten (inicial), 38,942 primary and 15,210 secondary** ([Minedu ESCALE, July 2020, via UNESCO IIEP-SITEAL](https://siteal.iiep.unesco.org/pais/peru)). Mimikai has lessons for each: pictures, big tiles and a read-aloud line for 4–6-year-olds; letters, syllables, numbers and English for 6–12; fractions and equations with traps for teenagers. Any of these classrooms with a projector or a TV can play.
 - **Cheap to run, nothing to maintain.** No subscription, no backend, no accounts for children; camera images never leave the phone.
 
 ### Beyond Peru: the Americas and the world
@@ -233,7 +235,7 @@ cd teacher && npm run android             # development build; Expo Go cannot ru
 ```
 
 **3 · In the classroom**
-1. Turn on the phone's hotspot. Connect the Fire TV to it, then open ProjectPlay on the TV. It searches for the phone by itself.
+1. Turn on the phone's hotspot. Connect the Fire TV to it, then open Mimikai on the TV. It searches for the phone by itself.
 2. Put the phone on a tripod behind the children, facing the projected image. Calibration is automatic: when the class starts, the TV flashes four white squares for about 2 seconds and the phone finds the projection. (Tapping the 4 corners by hand on **Check camera view** still works as a fallback.)
 3. Pick a lesson in **Biblioteca** (or create one in **Crear con IA**), tap **Empezar clase**, choose who plays and how many cards, and press **Jugar en la TV**.
 
@@ -241,7 +243,7 @@ The TV needs the phone: lessons come from it. On the Fire TV / Vega simulators, 
 
 **Release APKs:** `scripts/devices.sh release` builds both apps with the JavaScript bundled in (no Metro needed) into `dist/release/`, ready to attach to a GitHub release.
 
-**App icon:** drawn with Google Gemini (`docs/brand/icon-source.png`: a child's hand reaching for a star lit by a small projector). `scripts/brand-icons.sh` builds the launcher icons, adaptive and themed icons, and the Fire TV banners from it.
+**Brand:** Mimikai is a kawaii octopus that juggles three rings, one for each team and one for the projector's light; the wordmark highlights the *ai*. The SVG masters and usage rules are in [`docs/brand/`](docs/brand/README.md), and `scripts/brand-icons.sh` builds the launcher, adaptive and themed icons and the Fire TV banners from them. The first icon, drawn with Google Gemini for the hackathon, is kept as `docs/brand/icon-source.png`.
 
 **Working with coding agents:** `AGENTS.md` (repo-wide) plus `teacher/`, `tv/` and `shared/` `AGENTS.md` files hold the project rules; Claude Code reads them natively. `.claude/settings.json` pre-approves the test commands, and `.claude/skills/` adds `/device-check` and `/friction-entry`. Device workflow: `scripts/devices.sh doctor | tv | teacher | verify | crash | release`.
 
@@ -306,7 +308,7 @@ Everything here was written during the submission window, except the starting po
 
 ## What's next: sharing, a marketplace on Amazon S3, and scale
 
-- **Already in real classrooms.** ProjectPlay is running at my own kids' schools, and my kids love it: they ask to play the syllable and number lessons again.
+- **Already in real classrooms.** Mimikai is running at my own kids' schools, and my kids love it: they ask to play the syllable and number lessons again.
 - **Share lessons teacher to teacher, still offline.** A lesson is one small JSON file (3–14 KB), so a teacher can pass it to a colleague over the phone's hotspot (the same local link the Fire TV uses), WhatsApp, Bluetooth or a USB stick. The receiving app checks it with the same validator before saving, so a shared file can never break a class.
 - **A lesson marketplace on Amazon S3.** Teachers publish and download lessons from Amazon S3 behind CloudFront, with a small JSON catalog to browse by subject and age. Downloads stay tiny enough for rural mobile data, and every class keeps running offline.
 - **Same principles at any scale:** no subscription, zero friction (no account needed to play), and privacy first (camera images never leave the phone, no child data stored anywhere).
@@ -315,7 +317,7 @@ Everything here was written during the submission window, except the starting po
 
 ### How we'll reach many schools
 
-ProjectPlay already works in class; the next step is more teachers, students and schools.
+Mimikai already works in class; the next step is more teachers, students and schools.
 
 1. **Pilot (next 3 months):** 10 schools, starting with my kids' schools and nearby public schools in Peru. Measure how often each class plays and the right-answer rate per lesson, and publish the results.
 2. **Teacher to teacher:** each teacher who uses it shares lessons over the hotspot or WhatsApp and helps a colleague set up; a one-page setup guide and a 2-minute video in Spanish make that easy.
@@ -332,7 +334,7 @@ Solo developer: product design, the teacher and Fire TV apps, the exercise engin
 
 ## Licenses
 
-- ProjectPlay code: MIT ([`LICENSE`](LICENSE)). The exercise engine is also published on its own: [projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine) (MIT).
+- Mimikai code: MIT ([`LICENSE`](LICENSE)). The exercise engine is also published on its own: [projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine) (MIT).
 - `tv/` is derived from [AmazonAppDev/react-native-multi-tv-app-sample](https://github.com/AmazonAppDev/react-native-multi-tv-app-sample), MIT-0 ([`tv/LICENSE-sample-MIT-0`](tv/LICENSE-sample-MIT-0)).
 - Map boundaries: INEI departments via [juaneladio/peru-geojson](https://github.com/juaneladio/peru-geojson); South America from Natural Earth via [world-atlas](https://github.com/topojson/world-atlas) (ISC). Prices and school figures in `docs/images/` are cited in [Why it matters](#why-it-matters).
 - MoveNet model © Google, Apache-2.0 (see [`teacher/assets/models/README.md`](teacher/assets/models/README.md)).

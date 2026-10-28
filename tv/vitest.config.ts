@@ -9,7 +9,7 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: /^jotai(\/.*)?$/, replacement: `${appModules}/jotai$1` },
-      { find: '@projectplay/contracts', replacement: path.resolve(__dirname, '../shared/contracts/src/index.ts') },
+      { find: '@mimikai/contracts', replacement: path.resolve(__dirname, '../shared/contracts/src/index.ts') },
     ],
   },
   test: {

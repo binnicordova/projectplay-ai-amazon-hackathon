@@ -1,5 +1,5 @@
 /**
- * @projectplay/exercise-engine
+ * @mimikai/exercise-engine
  *
  * Offline, deterministic arithmetic exercises for early-grade maths, with
  * wrong answers built from real misconceptions (counting slips, wrong operation,

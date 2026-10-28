@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { PointerHub } from '../application/pointerHub';
 import { DwellTracker, contains } from './dwell';
-import type { Visual } from '@projectplay/contracts';
+import type { Visual } from '@mimikai/contracts';
 import { TEAM_AREA, WHOLE_WALL, choiceTargets, truthTargets } from './layout';
 
 const numbers = (...values: number[]): Visual[] => values.map((v) => ({ kind: 'text', text: String(v) }));

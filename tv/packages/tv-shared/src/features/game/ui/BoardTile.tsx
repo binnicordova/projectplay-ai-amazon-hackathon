@@ -4,7 +4,7 @@
  * so children see the selection coming and learn to keep their hand still.
  * The team's chosen tile turns solid in its colour; the others stay open to change to.
  */
-import type { IconArt } from '@projectplay/contracts';
+import type { IconArt } from '@mimikai/contracts';
 import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { scaledPixels } from '../../../hooks/useScale';

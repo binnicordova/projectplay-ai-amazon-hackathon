@@ -6,7 +6,7 @@
  * What keeps children playing: points that grow with harder cards and quick answers, a fire
  * streak per team, and a banner when the class climbs a level.
  */
-import { UI_ICONS, type Card, type IconArt, type TeamId } from '@projectplay/contracts';
+import { UI_ICONS, type Card, type IconArt, type TeamId } from '@mimikai/contracts';
 import { useAtomValue } from 'jotai';
 import { useEffect, useMemo } from 'react';
 import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';

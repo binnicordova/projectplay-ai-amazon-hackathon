@@ -8,8 +8,8 @@
  */
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { SUBJECT_ICONS, UI_ICONS } from '@projectplay/contracts';
-import { LEXICON } from '@projectplay/exercise-engine';
+import { SUBJECT_ICONS, UI_ICONS } from '@mimikai/contracts';
+import { LEXICON } from '@mimikai/exercise-engine';
 import { STARTER_REQUESTS, buildStarterLesson, lessonFileText } from './starterLessons';
 
 const ROOT = path.resolve(__dirname, '../..');

@@ -1,6 +1,6 @@
 ---
 name: device-check
-description: Run, verify and debug ProjectPlay on the real phone and Fire TV over adb. Use when asked to test on devices, check that the TV and teacher apps are running and linked, read device logs, or fix an app that crashes, won't install, won't connect or won't calibrate.
+description: Run, verify and debug Mimikai on the real phone and Fire TV over adb. Use when asked to test on devices, check that the TV and teacher apps are running and linked, read device logs, or fix an app that crashes, won't install, won't connect or won't calibrate.
 ---
 
 # Run and check both apps on real devices

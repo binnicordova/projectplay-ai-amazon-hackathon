@@ -1,4 +1,4 @@
-import { TvServicesProvider, networkInfo, useCurrentScreen, webSocketTransport, type Screen, type TvPlatform } from '@projectplay/tv-shared';
+import { TvServicesProvider, networkInfo, useCurrentScreen, webSocketTransport, type Screen, type TvPlatform } from '@mimikai/tv-shared';
 import { Stack, router, usePathname } from 'expo-router';
 import { useKeepAwake } from 'expo-keep-awake';
 import { useEffect } from 'react';

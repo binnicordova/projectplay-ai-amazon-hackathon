@@ -1,4 +1,4 @@
-import { ScreenFor } from '@projectplay/tv-shared';
+import { ScreenFor } from '@mimikai/tv-shared';
 
 export default function SummaryRoute() {
   return <ScreenFor screen="summary" />;

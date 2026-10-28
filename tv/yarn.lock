@@ -2899,6 +2899,123 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mimikai/contracts@portal:../../../shared/contracts::locator=%40mimikai%2Fexpo-tv%40workspace%3Aapps%2Fexpo-tv":
+  version: 0.0.0-use.local
+  resolution: "@mimikai/contracts@portal:../../../shared/contracts::locator=%40mimikai%2Fexpo-tv%40workspace%3Aapps%2Fexpo-tv"
+  languageName: node
+  linkType: soft
+
+"@mimikai/contracts@portal:../../../shared/contracts::locator=%40mimikai%2Fvega%40workspace%3Aapps%2Fvega":
+  version: 0.0.0-use.local
+  resolution: "@mimikai/contracts@portal:../../../shared/contracts::locator=%40mimikai%2Fvega%40workspace%3Aapps%2Fvega"
+  languageName: node
+  linkType: soft
+
+"@mimikai/expo-tv@workspace:apps/expo-tv":
+  version: 0.0.0-use.local
+  resolution: "@mimikai/expo-tv@workspace:apps/expo-tv"
+  dependencies:
+    "@babel/core": "npm:^7.29.6"
+    "@expo/metro-runtime": "npm:~6.1.2"
+    "@mimikai/contracts": "portal:../../../shared/contracts"
+    "@mimikai/tv-shared": "workspace:*"
+    "@react-native-tvos/config-tv": "npm:^0.1.7"
+    "@types/react": "npm:~19.1.0"
+    expo: "npm:~54.0.0"
+    expo-build-properties: "npm:~1.0.10"
+    expo-constants: "npm:~18.0.14"
+    expo-keep-awake: "npm:~15.0.8"
+    expo-linking: "npm:~8.0.12"
+    expo-network: "npm:~8.0.8"
+    expo-router: "npm:~6.0.24"
+    expo-system-ui: "npm:~6.0.9"
+    jotai: "npm:2.20.3"
+    mitt: "npm:^3.0.1"
+    react: "npm:19.1.0"
+    react-dom: "npm:19.1.0"
+    react-native: "npm:react-native-tvos@~0.81.0-0"
+    react-native-keyevent: "npm:^0.3.2"
+    react-native-pixel-perfect: "npm:^1.0.2"
+    react-native-safe-area-context: "npm:~5.6.0"
+    react-native-screens: "npm:^4.24.0"
+    react-native-svg: "npm:15.12.1"
+    react-native-web: "npm:~0.21.0"
+    react-tv-space-navigation: "npm:6.0.0-beta1"
+    typescript: "npm:~5.7.0"
+  languageName: unknown
+  linkType: soft
+
+"@mimikai/tv-shared@workspace:*, @mimikai/tv-shared@workspace:packages/tv-shared":
+  version: 0.0.0-use.local
+  resolution: "@mimikai/tv-shared@workspace:packages/tv-shared"
+  peerDependencies:
+    "@mimikai/contracts": "*"
+    jotai: "*"
+    mitt: "*"
+    react: "*"
+    react-native: "*"
+    react-native-pixel-perfect: "*"
+    react-native-svg: "*"
+    react-tv-space-navigation: "*"
+  languageName: unknown
+  linkType: soft
+
+"@mimikai/tv-workspace@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@mimikai/tv-workspace@workspace:."
+  dependencies:
+    vitest: "npm:^3.2.4"
+  languageName: unknown
+  linkType: soft
+
+"@mimikai/vega@workspace:apps/vega":
+  version: 0.0.0-use.local
+  resolution: "@mimikai/vega@workspace:apps/vega"
+  dependencies:
+    "@amazon-devices/kepler-cli-platform": "npm:^0"
+    "@amazon-devices/react-native-gesture-handler": "npm:~2.0.0"
+    "@amazon-devices/react-native-kepler": "npm:^2.0.0"
+    "@amazon-devices/react-native-reanimated": "npm:~2.0.0"
+    "@amazon-devices/react-native-safe-area-context": "npm:*"
+    "@amazon-devices/react-native-screens": "npm:*"
+    "@babel/core": "npm:^7.29.6"
+    "@babel/plugin-transform-arrow-functions": "npm:^7.27.1"
+    "@babel/plugin-transform-shorthand-properties": "npm:^7.27.1"
+    "@babel/plugin-transform-template-literals": "npm:^7.27.1"
+    "@babel/traverse": "npm:^7.20.0"
+    "@mimikai/contracts": "portal:../../../shared/contracts"
+    "@mimikai/tv-shared": "workspace:*"
+    "@react-native-community/cli": "npm:17.0.1"
+    "@react-native-community/cli-tools": "npm:^11.0.0"
+    "@react-native/eslint-config": "npm:0.72.2"
+    "@react-native/metro-config": "npm:^0.72.6"
+    "@testing-library/react-native": "npm:^7.2.0"
+    "@tsconfig/react-native": "npm:^3.0.2"
+    "@types/jest": "npm:^28.0.0"
+    "@types/react": "npm:^18.0.24"
+    "@types/react-test-renderer": "npm:^18.0.0"
+    "@typescript-eslint/eslint-plugin": "npm:^5.30.0"
+    "@typescript-eslint/parser": "npm:^5.30.0"
+    babel-jest: "npm:^28.0.0"
+    eslint: "npm:^8.12.0"
+    jest: "npm:^28.0.0"
+    jotai: "npm:2.20.3"
+    metro-react-native-babel-preset: "npm:^0.76.5"
+    mitt: "npm:^3.0.1"
+    mustache: "npm:^4.2.0"
+    npm-run-all: "npm:^4.1.5"
+    prettier: "npm:^2.6.2"
+    react: "npm:18.2.0"
+    react-native: "npm:0.72.0"
+    react-native-keyevent: "npm:*"
+    react-native-pixel-perfect: "npm:*"
+    react-test-renderer: "npm:18.2.0"
+    react-tv-space-navigation: "npm:*"
+    ts-jest: "npm:^28.0.0"
+    typescript: "npm:4.8.4"
+  languageName: unknown
+  linkType: soft
+
 "@napi-rs/lzma-linux-x64-gnu@npm:1.5.1":
   version: 1.5.1
   resolution: "@napi-rs/lzma-linux-x64-gnu@npm:1.5.1"
@@ -2970,123 +3087,6 @@ __metadata:
   checksum: 10c0/a1e9ba9c70a6b40e175bda2c3dd8cfdaf096e6b7f7a132c855c083c8dfe545c3237cd56702e2e6627a580b1d63373599d49a1192c4078a85bf47bbde824df31c
   languageName: node
   linkType: hard
-
-"@projectplay/contracts@portal:../../../shared/contracts::locator=%40projectplay%2Fexpo-tv%40workspace%3Aapps%2Fexpo-tv":
-  version: 0.0.0-use.local
-  resolution: "@projectplay/contracts@portal:../../../shared/contracts::locator=%40projectplay%2Fexpo-tv%40workspace%3Aapps%2Fexpo-tv"
-  languageName: node
-  linkType: soft
-
-"@projectplay/contracts@portal:../../../shared/contracts::locator=%40projectplay%2Fvega%40workspace%3Aapps%2Fvega":
-  version: 0.0.0-use.local
-  resolution: "@projectplay/contracts@portal:../../../shared/contracts::locator=%40projectplay%2Fvega%40workspace%3Aapps%2Fvega"
-  languageName: node
-  linkType: soft
-
-"@projectplay/expo-tv@workspace:apps/expo-tv":
-  version: 0.0.0-use.local
-  resolution: "@projectplay/expo-tv@workspace:apps/expo-tv"
-  dependencies:
-    "@babel/core": "npm:^7.29.6"
-    "@expo/metro-runtime": "npm:~6.1.2"
-    "@projectplay/contracts": "portal:../../../shared/contracts"
-    "@projectplay/tv-shared": "workspace:*"
-    "@react-native-tvos/config-tv": "npm:^0.1.7"
-    "@types/react": "npm:~19.1.0"
-    expo: "npm:~54.0.0"
-    expo-build-properties: "npm:~1.0.10"
-    expo-constants: "npm:~18.0.14"
-    expo-keep-awake: "npm:~15.0.8"
-    expo-linking: "npm:~8.0.12"
-    expo-network: "npm:~8.0.8"
-    expo-router: "npm:~6.0.24"
-    expo-system-ui: "npm:~6.0.9"
-    jotai: "npm:2.20.3"
-    mitt: "npm:^3.0.1"
-    react: "npm:19.1.0"
-    react-dom: "npm:19.1.0"
-    react-native: "npm:react-native-tvos@~0.81.0-0"
-    react-native-keyevent: "npm:^0.3.2"
-    react-native-pixel-perfect: "npm:^1.0.2"
-    react-native-safe-area-context: "npm:~5.6.0"
-    react-native-screens: "npm:^4.24.0"
-    react-native-svg: "npm:15.12.1"
-    react-native-web: "npm:~0.21.0"
-    react-tv-space-navigation: "npm:6.0.0-beta1"
-    typescript: "npm:~5.7.0"
-  languageName: unknown
-  linkType: soft
-
-"@projectplay/tv-shared@workspace:*, @projectplay/tv-shared@workspace:packages/tv-shared":
-  version: 0.0.0-use.local
-  resolution: "@projectplay/tv-shared@workspace:packages/tv-shared"
-  peerDependencies:
-    "@projectplay/contracts": "*"
-    jotai: "*"
-    mitt: "*"
-    react: "*"
-    react-native: "*"
-    react-native-pixel-perfect: "*"
-    react-native-svg: "*"
-    react-tv-space-navigation: "*"
-  languageName: unknown
-  linkType: soft
-
-"@projectplay/tv-workspace@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@projectplay/tv-workspace@workspace:."
-  dependencies:
-    vitest: "npm:^3.2.4"
-  languageName: unknown
-  linkType: soft
-
-"@projectplay/vega@workspace:apps/vega":
-  version: 0.0.0-use.local
-  resolution: "@projectplay/vega@workspace:apps/vega"
-  dependencies:
-    "@amazon-devices/kepler-cli-platform": "npm:^0"
-    "@amazon-devices/react-native-gesture-handler": "npm:~2.0.0"
-    "@amazon-devices/react-native-kepler": "npm:^2.0.0"
-    "@amazon-devices/react-native-reanimated": "npm:~2.0.0"
-    "@amazon-devices/react-native-safe-area-context": "npm:*"
-    "@amazon-devices/react-native-screens": "npm:*"
-    "@babel/core": "npm:^7.29.6"
-    "@babel/plugin-transform-arrow-functions": "npm:^7.27.1"
-    "@babel/plugin-transform-shorthand-properties": "npm:^7.27.1"
-    "@babel/plugin-transform-template-literals": "npm:^7.27.1"
-    "@babel/traverse": "npm:^7.20.0"
-    "@projectplay/contracts": "portal:../../../shared/contracts"
-    "@projectplay/tv-shared": "workspace:*"
-    "@react-native-community/cli": "npm:17.0.1"
-    "@react-native-community/cli-tools": "npm:^11.0.0"
-    "@react-native/eslint-config": "npm:0.72.2"
-    "@react-native/metro-config": "npm:^0.72.6"
-    "@testing-library/react-native": "npm:^7.2.0"
-    "@tsconfig/react-native": "npm:^3.0.2"
-    "@types/jest": "npm:^28.0.0"
-    "@types/react": "npm:^18.0.24"
-    "@types/react-test-renderer": "npm:^18.0.0"
-    "@typescript-eslint/eslint-plugin": "npm:^5.30.0"
-    "@typescript-eslint/parser": "npm:^5.30.0"
-    babel-jest: "npm:^28.0.0"
-    eslint: "npm:^8.12.0"
-    jest: "npm:^28.0.0"
-    jotai: "npm:2.20.3"
-    metro-react-native-babel-preset: "npm:^0.76.5"
-    mitt: "npm:^3.0.1"
-    mustache: "npm:^4.2.0"
-    npm-run-all: "npm:^4.1.5"
-    prettier: "npm:^2.6.2"
-    react: "npm:18.2.0"
-    react-native: "npm:0.72.0"
-    react-native-keyevent: "npm:*"
-    react-native-pixel-perfect: "npm:*"
-    react-test-renderer: "npm:18.2.0"
-    react-tv-space-navigation: "npm:*"
-    ts-jest: "npm:^28.0.0"
-    typescript: "npm:4.8.4"
-  languageName: unknown
-  linkType: soft
 
 "@radix-ui/primitive@npm:1.2.0":
   version: 1.2.0

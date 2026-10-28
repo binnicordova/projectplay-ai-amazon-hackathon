@@ -10,7 +10,7 @@ import {
   encodeMessage,
   type TeacherMessage,
   type TvMessage,
-} from '@projectplay/contracts';
+} from '@mimikai/contracts';
 import { atom, type createStore } from 'jotai';
 import { candidateHosts, teacherUrl } from '../domain/discovery';
 

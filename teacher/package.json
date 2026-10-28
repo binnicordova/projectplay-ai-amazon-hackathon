@@ -1,10 +1,10 @@
 {
-  "name": "@projectplay/teacher",
+  "name": "@mimikai/teacher",
   "version": "1.0.0",
   "main": "expo-router/entry",
   "dependencies": {
-    "@projectplay/contracts": "file:../shared/contracts",
-    "@projectplay/exercise-engine": "file:../shared/exercise-engine",
+    "@mimikai/contracts": "file:../shared/contracts",
+    "@mimikai/exercise-engine": "file:../shared/exercise-engine",
     "expo": "~56.0.23",
     "expo-asset": "~56.0.25",
     "expo-build-properties": "~56.0.27",

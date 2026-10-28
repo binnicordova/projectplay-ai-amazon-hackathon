@@ -13,7 +13,7 @@ import {
   type PlayerId,
   type TeamCount,
   type TeamId,
-} from '@projectplay/contracts';
+} from '@mimikai/contracts';
 import { DEFAULT_DWELL, DwellTracker, type DwellOptions } from '../domain/dwell';
 import type { BoardTarget } from '../domain/layout';
 

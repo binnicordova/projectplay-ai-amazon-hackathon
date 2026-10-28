@@ -4,7 +4,7 @@
  * Two teams each own one half of the wall, matching the camera lanes on the phone;
  * one player gets the whole wall (the phone then looks at it with a single lane).
  */
-import { visualText, type TeamId, type Visual } from '@projectplay/contracts';
+import { visualText, type TeamId, type Visual } from '@mimikai/contracts';
 import type { NormalizedRect, Target } from './dwell';
 
 export const TEAM_AREA: Readonly<Record<TeamId, NormalizedRect>> = {

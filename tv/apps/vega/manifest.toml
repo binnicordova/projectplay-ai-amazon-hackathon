@@ -1,14 +1,14 @@
 #
-# ProjectPlay for Fire TV (Vega OS).
+# Mimikai for Fire TV (Vega OS).
 # Derived from the AmazonAppDev multi-TV sample manifest (MIT-0); media playback,
 # DRM and content-launcher entries were removed because this app plays no video.
 #
 schema-version = 1
 
 [package]
-title = "ProjectPlay"
+title = "Mimikai"
 version = "0.1.0"
-id = "com.projectplay.tv"
+id = "com.mimikai.tv"
 
 [os.version]
 min = "1.2"
@@ -16,14 +16,14 @@ target = "1.2"
 
 [components]
 [[components.interactive]]
-id = "com.projectplay.tv.main"
+id = "com.mimikai.tv.main"
 runtime-module = "/com.amazon.kepler.keplerscript.runtime.loader_2@IKeplerScript_2_0"
 launch-type = "singleton"
 categories = ["com.amazon.category.main"]
 
 [processes]
 [[processes.group]]
-component-ids = ["com.projectplay.tv.main"]
+component-ids = ["com.mimikai.tv.main"]
 
 [wants]
 # On-screen keyboard and remote button events
@@ -49,13 +49,13 @@ id = "/com.amazon.vega.os@IVega_1_2"
 
 [offers]
 [[offers.interaction]]
-id = "com.projectplay.tv.main"
+id = "com.mimikai.tv.main"
 
 [[offers.module]]
-id = "/com.projectplay.tv.main@IMod1"
-includes-messages = ["pkg://com.projectplay.tv.main"]
+id = "/com.mimikai.tv.main@IMod1"
+includes-messages = ["pkg://com.mimikai.tv.main"]
 
 [[message]]
-uri = "pkg://com.projectplay.tv.main"
+uri = "pkg://com.mimikai.tv.main"
 sender-privileges = ["*"]
 receiver-privileges = ["self"]

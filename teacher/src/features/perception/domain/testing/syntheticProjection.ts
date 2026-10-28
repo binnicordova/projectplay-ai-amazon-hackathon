@@ -2,7 +2,7 @@
  * Synthetic camera frames of the calibration patterns, for unit tests: a keystoned
  * projection in a dim room with a bright static object and sensor noise.
  */
-import { MARKER_SIZE, markersFor, type CalibrationPattern } from '@projectplay/contracts';
+import { MARKER_SIZE, markersFor, type CalibrationPattern } from '@mimikai/contracts';
 import { UNIT_SQUARE, applyHomography, computeHomography, type Quad } from '../homography';
 import { LUMA_HEIGHT, LUMA_WIDTH } from '../markers';
 import { jitter } from './syntheticPose';

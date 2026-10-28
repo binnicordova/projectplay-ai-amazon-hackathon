@@ -3,7 +3,7 @@
  * request into one of these; the engine then builds the cards, so every answer key is computed,
  * never guessed.
  */
-import type { AgeBand, Card, Subject } from '@projectplay/contracts';
+import type { AgeBand, Card, Subject } from '@mimikai/contracts';
 import type { GeneratorContext } from './cards';
 import { compareCards, numberCards, type CompareParams, type NumbersParams } from './generators/counting';
 import { englishCards, type EnglishParams } from './generators/english';

@@ -1,5 +1,5 @@
 /** Library gallery: big subject tiles, an age filter, and one card per lesson. */
-import { AGE_BANDS, SUBJECTS, type AgeBand, type Lesson, type Subject } from '@projectplay/contracts';
+import { AGE_BANDS, SUBJECTS, type AgeBand, type Lesson, type Subject } from '@mimikai/contracts';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Segmented } from '../../../ui-kit/components';
 import { colors, radius, space, type } from '../../../ui-kit/theme';

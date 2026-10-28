@@ -12,7 +12,7 @@
  * - The status reports what is happening (TV confirmed? frames received?), so a stuck
  *   step says why on screen and in the log.
  */
-import type { CalibrationPattern, TeacherMessage } from '@projectplay/contracts';
+import type { CalibrationPattern, TeacherMessage } from '@mimikai/contracts';
 import { atom, type createStore } from 'jotai';
 import { solveAutoCalibration } from '../domain/autoCalibration';
 import { FrameAverager } from '../domain/markers';

@@ -1,8 +1,8 @@
 /**
- * Calibration pattern requested by the phone (see @projectplay/contracts calibration.ts).
+ * Calibration pattern requested by the phone (see @mimikai/contracts calibration.ts).
  * A new object per request, so a repeated request is shown — and confirmed — again.
  */
-import type { CalibrationPattern } from '@projectplay/contracts';
+import type { CalibrationPattern } from '@mimikai/contracts';
 import { atom } from 'jotai';
 
 export interface PatternRequest {
