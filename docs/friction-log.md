@@ -205,6 +205,15 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Workaround:** `"corepack": true` in every build profile of `tv/apps/expo-tv/eas.json`.
 - **Suggestion:** Enable Corepack automatically when `package.json` has `packageManager`, or fail in seconds, before queueing, with that message as the error.
 
+### F22 · expo-updates fails to compile on the TV app: its KSP version follows `kotlinVersion`, not the Kotlin compiler in use
+- **Task:** Add `expo-updates` (SDK 54) to the TV app (react-native-tvos 0.81) and build a release bundle.
+- **Steps:** `npx expo install expo-updates`, then `./gradlew bundleRelease` (locally and on EAS Build). `app.json` pinned `expo-build-properties` → `android.kotlinVersion: "2.0.21"`.
+- **Expected:** expo-updates builds with the project's Kotlin.
+- **Actual:** `:expo-updates:kspReleaseKotlin FAILED` with `e: java.lang.NoSuchMethodError: ... KotlinTypeMapper$Companion.getLANGUAGE_VERSION_SETTINGS_DEFAULT()` ("Internal compiler error"). expo-updates picks KSP `2.0.21-1.0.28` from `kotlinVersion`, but the React Native Gradle plugin puts Kotlin 2.1.20 on the classpath, so KSP and the compiler disagree. EAS showed only `EAS_BUILD_UNKNOWN_GRADLE_ERROR`.
+- **Severity:** High. The store build fails after a long queue, and nothing points at the Kotlin pin.
+- **Workaround:** `kotlinVersion: "2.1.20"` in `tv/apps/expo-tv/app.json` (and the fallback in `plugins/withKotlinJvmTarget.js`), matching React Native 0.81's Gradle plugin.
+- **Suggestion:** Derive the KSP version from the Kotlin Gradle plugin actually applied, or fail at configuration time when `kotlinVersion` and the applied plugin differ.
+
 ### Template for device-time entries
 
 ```

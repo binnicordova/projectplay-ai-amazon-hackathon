@@ -47,7 +47,7 @@
             "deploymentTarget": "15.1"
           },
           "android": {
-            "kotlinVersion": "2.0.21",
+            "kotlinVersion": "2.1.20",
             "compileSdkVersion": 36,
             "targetSdkVersion": 34,
             "minSdkVersion": 24,
