@@ -60,6 +60,21 @@
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": false
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e8441193-8a47-4cf8-92f1-a7161c5535f5"
+      }
+    },
+    "owner": "llaapp",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e8441193-8a47-4cf8-92f1-a7161c5535f5",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
     }
   }
 }

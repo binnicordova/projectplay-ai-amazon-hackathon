@@ -187,6 +187,15 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Workaround:** `teacher/src/features/perception/infrastructure/model.ts` resolves the model with `expo-asset` (`Asset.loadAsync`), which copies the raw resource to the cache and returns a `file://` URI, then calls `loadTensorflowModel({ url })`. The same path works in debug.
 - **Suggestion:** In `HybridAssetLoader`, fall back to `resources.getIdentifier(name, "raw", packageName)` when the path has no scheme, as v2 did. Add a release-build smoke test to the example app.
 
+### F20 · `eas credentials:configure-build` cannot create a keystore without a terminal
+- **Task:** Create the EAS-managed Android upload keystores for both apps before the first Play Store build, from a script (no build yet).
+- **Steps:** `npx eas-cli credentials:configure-build -p android -e production` with the answer piped in (`printf 'y\n' | …`).
+- **Expected:** A `--non-interactive` mode that generates the keystore (as `eas build --non-interactive` does), or a flag such as `--generate-keystore`.
+- **Actual:** `Input is required, but stdin is not readable. Failed to display prompt: Generate a new Android Keystore?` The command has no flag for the one question it asks, so the only scripted ways are a full (billed, slow) `eas build`, or faking a terminal.
+- **Severity:** Low. It blocks automation and CI set-up, not people at a keyboard.
+- **Workaround:** Run it under a pseudo-terminal: `(sleep 15; printf 'y\r'; sleep 40) | script -q /dev/null npx eas-cli credentials:configure-build -p android -e production`.
+- **Suggestion:** Add `--non-interactive` to `credentials:configure-build`, generating a new keystore when none exists (the same default `eas build` uses).
+
 ### Template for device-time entries
 
 ```
