@@ -196,6 +196,15 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Workaround:** Run it under a pseudo-terminal: `(sleep 15; printf 'y\r'; sleep 40) | script -q /dev/null npx eas-cli credentials:configure-build -p android -e production`.
 - **Suggestion:** Add `--non-interactive` to `credentials:configure-build`, generating a new keystore when none exists (the same default `eas build` uses).
 
+### F21 · EAS Build installs a Yarn 4 workspace with Yarn 1 unless the profile says `corepack: true`
+- **Task:** First store build of the TV app (`tv/apps/expo-tv`, a Yarn 4 workspace with `"packageManager": "yarn@4.5.0"`) on EAS Build.
+- **Steps:** `EXPO_TV=1 npx eas-cli build -p android -e production` from `tv/apps/expo-tv`.
+- **Expected:** EAS sees `packageManager` (it already detects the workspace) and runs the Yarn version it names.
+- **Actual:** After a long free-tier queue, the build failed in *Install dependencies*: `This project's package.json defines "packageManager": "yarn@4.5.0". However the current global version of Yarn is 1.22.22 ... Corepack must currently be enabled`. The CLI reported only `UNKNOWN_ERROR`; the reason was inside a compressed log file.
+- **Severity:** Medium. It costs a whole queue wait and a build credit, and the error code says nothing.
+- **Workaround:** `"corepack": true` in every build profile of `tv/apps/expo-tv/eas.json`.
+- **Suggestion:** Enable Corepack automatically when `package.json` has `packageManager`, or fail in seconds, before queueing, with that message as the error.
+
 ### Template for device-time entries
 
 ```

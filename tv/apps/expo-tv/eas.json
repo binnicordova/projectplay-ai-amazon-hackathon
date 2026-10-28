@@ -11,7 +11,8 @@
       "env": {
         "EXPO_TV": "1"
       },
-      "environment": "development"
+      "environment": "development",
+      "corepack": true
     },
     "preview": {
       "distribution": "internal",
@@ -22,7 +23,8 @@
       "env": {
         "EXPO_TV": "1"
       },
-      "environment": "preview"
+      "environment": "preview",
+      "corepack": true
     },
     "production": {
       "channel": "production",
@@ -33,7 +35,8 @@
       "env": {
         "EXPO_TV": "1"
       },
-      "environment": "production"
+      "environment": "production",
+      "corepack": true
     }
   },
   "submit": {
