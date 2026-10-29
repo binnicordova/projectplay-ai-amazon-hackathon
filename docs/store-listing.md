@@ -54,6 +54,12 @@ Requiere la app Mimikai en el celular del docente (Android), que sigue a los ni�
 
 Made from `docs/brand/` (feature graphic, TV banner, 512 px icon). The phone and TV screenshots in `docs/store/play/` are exported from the editor in `store-screenshots/` (see its `MIMIKAI.md`), built on real captures: the teacher app on a Galaxy phone, the TV app on the TV box and in a web build with a stand-in phone.
 
+## Release settings
+
+- **Countries / regions (Production, both apps):** every country Play offers in the Americas and Europe (81). Countries outside those continents are not targeted.
+- **AI asset label:** the icon, feature graphic and (TV) banner are labelled "created or edited using AI"; the screenshots are real app captures and are not labelled.
+- **First bundles:** Mimikai version code 2, Mimikai TV version code 6 (TV targets API 36; Play rejected 34).
+
 ## App content answers (Play Console → Policy → App content)
 
 What the code does, so the declarations stay true. Same answers for both apps unless marked.

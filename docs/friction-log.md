@@ -214,6 +214,15 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Workaround:** `kotlinVersion: "2.1.20"` in `tv/apps/expo-tv/app.json` (and the fallback in `plugins/withKotlinJvmTarget.js`), matching React Native 0.81's Gradle plugin.
 - **Suggestion:** Derive the KSP version from the Kotlin Gradle plugin actually applied, or fail at configuration time when `kotlinVersion` and the applied plugin differ.
 
+### F23 · The TV sample targets API 34; Play only says so after the bundle is uploaded
+- **Task:** First production release of the TV app on Google Play.
+- **Steps:** `eas build -p android -e production`, upload the AAB to a Production release draft, open *Preview and confirm*.
+- **Expected:** The starting template (AmazonAppDev/react-native-multi-tv-app-sample) targets an API level Play accepts, or the build warns about it.
+- **Actual:** `Your app currently targets API level 34 and must target at least API level 36`. The sample pins `targetSdkVersion: 34` in `expo-build-properties`; nothing in Expo, EAS or Gradle warns, so it shows up only after a queued build, a download and an upload.
+- **Severity:** Medium. One more full build-and-upload cycle on release day.
+- **Workaround:** `targetSdkVersion: 36` in `tv/apps/expo-tv/app.json` (`compileSdkVersion` was already 36).
+- **Suggestion:** Keep the sample's `targetSdkVersion` at Play's current minimum, and have `eas build` (production profile) warn when `targetSdkVersion` is below it.
+
 ### Template for device-time entries
 
 ```
