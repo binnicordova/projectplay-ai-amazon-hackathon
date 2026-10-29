@@ -5,7 +5,7 @@
  * - letters with pictures in a range (e.g. a–m with animals): one picture per letter, then
  *   turned around (which animal starts with this letter?).
  */
-import type { Card, Level } from '@projectplay/contracts';
+import type { Card, Level } from '@mimikai/contracts';
 import { buildCards, cycle, icon, optionCount, orList, spoken, text, type ChoiceSpec, type GeneratorContext } from '../cards';
 import { LEXICON, foldWord, type Tag, type Word } from '../lexicon';
 import { shuffle, type Random } from '../random';

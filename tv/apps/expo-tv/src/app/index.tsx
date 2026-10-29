@@ -1,4 +1,4 @@
-import { ScreenFor, useCurrentScreen } from '@projectplay/tv-shared';
+import { ScreenFor, useCurrentScreen } from '@mimikai/tv-shared';
 
 /** Home: pairing with the teacher's phone, then the lobby once connected. */
 export default function HomeRoute() {

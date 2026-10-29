@@ -1,4 +1,4 @@
-import type { Lesson, Result } from '@projectplay/contracts';
+import type { Lesson, Result } from '@mimikai/contracts';
 import type { Records } from '../domain/catalog';
 
 /** Where the teacher's own lessons and records live (files on the phone). */

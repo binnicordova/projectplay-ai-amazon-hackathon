@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ProjectPlay: build and run both apps on real devices over adb (USB or wireless).
+# Mimikai: build and run both apps on real devices over adb (USB or wireless).
 #
 #   scripts/devices.sh doctor     # check tools, list devices, show which is the TV / the phone
 #   scripts/devices.sh tv         # terminal 1: build + install + run the TV app (Metro on :8081)
@@ -43,8 +43,8 @@ running() { [ -n "$(adb -s "$1" shell pidof "$2" 2>/dev/null | tr -d '\r')" ]; }
 # Filter first, then keep the tail: the phone's camera driver logs so much that `-t 3000` alone
 # drops app lines (such as the last calibration) within minutes.
 js_log()  { adb -s "$1" logcat -d -s ReactNativeJS:V 2>/dev/null | tr -d '\r' | tail -n 3000; }
-TV_PACKAGE=com.projectplay.tv
-TEACHER_PACKAGE=com.projectplay.teacher
+TV_PACKAGE=com.mimikai.tv
+TEACHER_PACKAGE=com.mimikai.teacher
 LINK_PORT_HEX=2253 # 8787, the phone's WebSocket server
 wifi_ip() { adb -s "$1" shell ip -f inet addr show wlan0 2>/dev/null | awk '/inet /{print $2}' | cut -d/ -f1 | head -1; }
 
@@ -307,7 +307,7 @@ case "$cmd" in
     say "Building the TV release APK (armeabi-v7a + arm64-v8a)"
     (cd android && EXPO_TV=1 EXPO_PUBLIC_TEACHER_HOST="" ./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a,arm64-v8a) \
       || die "TV release build failed"
-    cp android/app/build/outputs/apk/release/app-release.apk "$OUT/projectplay-tv.apk"
+    cp android/app/build/outputs/apk/release/app-release.apk "$OUT/mimikai-tv.apk"
 
     [ -f "$ROOT/teacher/assets/models/movenet-singlepose-lightning-int8.tflite" ] || (say "Fetching the pose model"; npm --prefix "$ROOT/teacher" run fetch-model)
     cd "$ROOT/teacher"
@@ -318,16 +318,16 @@ case "$cmd" in
     relink_if_stale "$ROOT/teacher"
     say "Building the teacher release APK (arm64-v8a)"
     (cd android && ./gradlew assembleRelease) || die "Teacher release build failed"
-    cp android/app/build/outputs/apk/release/app-release.apk "$OUT/projectplay-teacher.apk"
+    cp android/app/build/outputs/apk/release/app-release.apk "$OUT/mimikai-teacher.apk"
 
     say "Release APKs"
     ls -lh "$OUT"/*.apk
     cat <<EOF2
   Before publishing, install both and play one round (release builds shrink code, so test them):
-    adb -s <tv serial>    install -r "$OUT/projectplay-tv.apk"
-    adb -s <phone serial> install -r "$OUT/projectplay-teacher.apk"
+    adb -s <tv serial>    install -r "$OUT/mimikai-tv.apk"
+    adb -s <phone serial> install -r "$OUT/mimikai-teacher.apk"
   Then attach them to a GitHub release:
-    gh release create v1.0.0 "$OUT"/*.apk --title "ProjectPlay v1.0.0" --notes "Hackathon build: install the TV APK on a Fire TV and the teacher APK on an Android phone."
+    gh release create v1.0.0 "$OUT"/*.apk --title "Mimikai v1.0.0" --notes "Hackathon build: install the TV APK on a Fire TV and the teacher APK on an Android phone."
 EOF2
     ;;
   *) die "Usage: scripts/devices.sh doctor|tv|teacher|verify|crash|release  (tv/teacher accept --reinstall, --clean)" ;;

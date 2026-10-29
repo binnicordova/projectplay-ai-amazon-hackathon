@@ -3,7 +3,7 @@
  * geometry as the preview (resizeMode "contain"), so what you see lines up with
  * what the model sees. If the skeleton sits on the child, coordinates are right.
  */
-import type { TeamId } from '@projectplay/contracts';
+import type { TeamId } from '@mimikai/contracts';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native';

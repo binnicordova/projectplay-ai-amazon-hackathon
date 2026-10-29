@@ -20,8 +20,8 @@ import {
   type Result,
   type Subject,
   type Visual,
-} from '@projectplay/contracts';
-import { EXERCISE_KINDS, TAGS, findWord, generateCards, mixSeed, mulberry32, shuffle, type ExerciseRequest, type Tag } from '@projectplay/exercise-engine';
+} from '@mimikai/contracts';
+import { EXERCISE_KINDS, TAGS, findWord, generateCards, mixSeed, mulberry32, shuffle, type ExerciseRequest, type Tag } from '@mimikai/exercise-engine';
 
 /** A card the AI writes for a topic the engine does not cover. Pictures are named by word. */
 export type AiCard =

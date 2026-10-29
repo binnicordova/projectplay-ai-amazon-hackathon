@@ -1,5 +1,5 @@
 {
-  "name": "@projectplay/shared",
+  "name": "@mimikai/shared",
   "version": "1.0.0",
   "private": true,
   "description": "Code shared by the teacher phone and the TV: the wire protocol and lesson format (contracts) and the exercise engine. Pure TypeScript only.",

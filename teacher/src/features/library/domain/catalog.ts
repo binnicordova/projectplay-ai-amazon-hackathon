@@ -2,7 +2,7 @@
  * The teacher's library: the starter collection plus the lessons they created, grouped by
  * subject, with the best score each lesson has seen. Pure functions over read-only data.
  */
-import { LEVELS, SUBJECTS, SUBJECT_ICONS, type AgeBand, type IconId, type Lesson, type Level, type Subject, type TeamCount } from '@projectplay/contracts';
+import { LEVELS, SUBJECTS, SUBJECT_ICONS, type AgeBand, type IconId, type Lesson, type Level, type Subject, type TeamCount } from '@mimikai/contracts';
 
 export interface SubjectInfo {
   readonly label: string;

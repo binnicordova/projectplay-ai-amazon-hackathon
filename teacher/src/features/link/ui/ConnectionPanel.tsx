@@ -1,4 +1,4 @@
-import { DEFAULT_PORT } from '@projectplay/contracts';
+import { DEFAULT_PORT } from '@mimikai/contracts';
 import { useAtomValue } from 'jotai';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, SectionLabel, StatusDot } from '../../../ui-kit/components';
@@ -8,7 +8,7 @@ import { latencyMsAtom, serverStatusAtom, tvClientsAtom } from '../application/l
 const STEPS = [
   'Turn on this phone’s hotspot (no mobile data needed).',
   'On the Fire TV: Settings → Network → join the hotspot.',
-  'Open ProjectPlay on the TV. It finds this phone on its own.',
+  'Open Mimikai on the TV. It finds this phone on its own.',
 ];
 
 export function ConnectionPanel() {

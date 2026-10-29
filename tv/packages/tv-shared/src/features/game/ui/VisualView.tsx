@@ -2,7 +2,7 @@
  * Draws a lesson visual inside a box of a given size: words, one picture, or a group of
  * pictures to count (laid out in even rows so children can count them one by one).
  */
-import type { IconArt, Visual } from '@projectplay/contracts';
+import type { IconArt, Visual } from '@mimikai/contracts';
 import { StyleSheet, Text, View, type TextStyle } from 'react-native';
 import { colors } from '../../../theme/colors';
 import { Picture } from './Picture';

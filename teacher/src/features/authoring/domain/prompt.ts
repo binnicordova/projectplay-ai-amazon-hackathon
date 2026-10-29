@@ -2,8 +2,8 @@
  * The instructions the AI gets with every conversation. Built from the engine's own catalogue,
  * so the AI only ever asks for exercises the engine can build and pictures the app has.
  */
-import { SUBJECTS } from '@projectplay/contracts';
-import { EXERCISE_GUIDE, EXERCISE_KINDS, LEXICON, TAGS } from '@projectplay/exercise-engine';
+import { SUBJECTS } from '@mimikai/contracts';
+import { EXERCISE_GUIDE, EXERCISE_KINDS, LEXICON, TAGS } from '@mimikai/exercise-engine';
 
 export interface ChatMessage {
   readonly role: 'system' | 'user' | 'assistant';
@@ -33,7 +33,7 @@ const CARDS_EXAMPLE = {
 export function systemPrompt(): string {
   const words = LEXICON.map((w) => w.es).join(', ');
   return [
-    'Eres el asistente de ProjectPlay. Ayudas a docentes de América Latina a crear ejercicios que los niños responden señalando la pared proyectada.',
+    'Eres el asistente de Mimikai. Ayudas a docentes de América Latina a crear ejercicios que los niños responden señalando la pared proyectada.',
     'Respondes SIEMPRE con un único objeto JSON, sin texto fuera del JSON:',
     '{"reply": "1 o 2 frases para la docente, en español", "lesson": null o la lección}',
     '',

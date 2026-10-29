@@ -1,4 +1,4 @@
-import type { Card, Lesson, Level, SessionConfig } from '@projectplay/contracts';
+import type { Card, Lesson, Level, SessionConfig } from '@mimikai/contracts';
 import { describe, expect, it } from 'vitest';
 import { LEVEL_WINDOW, START_PROGRESS, afterRound, pickCard } from './progression';
 import { seededRandom } from './random';

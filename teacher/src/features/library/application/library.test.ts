@@ -1,5 +1,5 @@
-import { SAMPLE_LESSON } from '@projectplay/contracts/src/testing/sampleLesson';
-import { ok, type Lesson } from '@projectplay/contracts';
+import { SAMPLE_LESSON } from '@mimikai/contracts/src/testing/sampleLesson';
+import { ok, type Lesson } from '@mimikai/contracts';
 import { createStore } from 'jotai';
 import { describe, expect, it } from 'vitest';
 import type { Records } from '../domain/catalog';

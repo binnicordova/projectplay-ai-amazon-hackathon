@@ -2,7 +2,7 @@
  * Teacher console: choose who plays and how many cards, start the selected lesson on the TV,
  * and drive the class. The TV owns the game rules; the phone sends the lesson and commands.
  */
-import { DEFAULT_TEAM_COUNT, type IconArt, type Lesson, type SessionSnapshot, type TeacherMessage, type TeamCount, type TvMessage } from '@projectplay/contracts';
+import { DEFAULT_TEAM_COUNT, type IconArt, type Lesson, type SessionSnapshot, type TeacherMessage, type TeamCount, type TvMessage } from '@mimikai/contracts';
 import { atom } from 'jotai';
 import { roundsFor } from '../../library/domain/catalog';
 import { artForLesson } from '../../pictures/domain/art';

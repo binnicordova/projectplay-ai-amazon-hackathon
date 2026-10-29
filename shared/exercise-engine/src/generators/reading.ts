@@ -5,7 +5,7 @@
  * Every answer comes from `syllabify`, so "manzana" is never offered as starting with MA
  * (it is man-za-na).
  */
-import type { Card, Level } from '@projectplay/contracts';
+import type { Card, Level } from '@mimikai/contracts';
 import { buildCards, cycle, icon, optionCount, orList, spoken, text, type ChoiceSpec, type GeneratorContext } from '../cards';
 import { LEXICON, article, type Tag, type Word } from '../lexicon';
 import { shuffle, type Random } from '../random';

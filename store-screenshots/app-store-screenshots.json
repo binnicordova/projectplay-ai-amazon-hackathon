@@ -1,0 +1,807 @@
+{
+  "schemaVersion": 3,
+  "appName": "Mimikai",
+  "themeId": "mimikai",
+  "fontId": "avenir-next",
+  "connectedCanvas": true,
+  "locales": [
+    "es-419"
+  ],
+  "locale": "es-419",
+  "device": "tvos",
+  "orientation": "portrait",
+  "appIcon": "/app-icon.png",
+  "slidesByDevice": {
+    "iphone": [
+      {
+        "id": "s_mvsfjwjz_0",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "Sell one\nidea per slide."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_1",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Your headline\nlives here."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_2",
+        "layout": "two-devices",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "Show two\nscreens at once."
+        },
+        "screenshot": "",
+        "screenshotSecondary": ""
+      },
+      {
+        "id": "s_mvsfjwjz_3",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 03"
+        },
+        "headline": {
+          "en": "Flip the contrast\nfor visual rhythm."
+        },
+        "screenshot": "",
+        "inverted": true
+      },
+      {
+        "id": "s_mvsfjwjz_4",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE"
+        },
+        "headline": {
+          "en": "And so\nmuch more."
+        },
+        "screenshot": ""
+      }
+    ],
+    "android": [
+      {
+        "id": "a1",
+        "layout": "hero",
+        "label": {
+          "es-419": "MIMIKAI"
+        },
+        "headline": {
+          "es-419": "Tu pared,\nahora es táctil."
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/01.png",
+        "transforms": {
+          "device": {
+            "x": 310,
+            "y": 382,
+            "width": 460,
+            "height": 997,
+            "rotation": -90,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "a1-octo",
+            "src": "/brand/mimikai-logo.png",
+            "transform": {
+              "x": 300,
+              "y": 1180,
+              "width": 480,
+              "height": 541,
+              "rotation": 0,
+              "zIndex": 6
+            },
+            "fit": "contain"
+          }
+        ],
+        "typography": {
+          "headlineScale": 1.2
+        }
+      },
+      {
+        "id": "a2",
+        "layout": "no-device",
+        "inverted": true,
+        "label": {
+          "es-419": "SEÑALAR ES RESPONDER"
+        },
+        "headline": {
+          "es-419": "Los niños\nresponden\nseñalando."
+        },
+        "screenshot": "",
+        "imageElements": [
+          {
+            "id": "a2-tv1",
+            "src": "/brand/tv-device.png",
+            "transform": {
+              "x": 60,
+              "y": 1090,
+              "width": 900,
+              "height": 506,
+              "rotation": 3,
+              "zIndex": 3
+            },
+            "fit": "cover"
+          },
+          {
+            "id": "a2-tv2",
+            "src": "/brand/tv-2.png",
+            "transform": {
+              "x": 160,
+              "y": 1500,
+              "width": 860,
+              "height": 484,
+              "rotation": -4,
+              "zIndex": 4
+            },
+            "fit": "cover"
+          }
+        ]
+      },
+      {
+        "id": "a3",
+        "layout": "device-top",
+        "label": {
+          "es-419": "CREAR CON IA"
+        },
+        "headline": {
+          "es-419": "Escribe el tema.\nLa IA la arma."
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/02.png",
+        "transforms": {
+          "device": {
+            "x": 310,
+            "y": 142,
+            "width": 460,
+            "height": 997,
+            "rotation": -90,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "a3-octo",
+            "src": "/brand/mimikai-logo.png",
+            "transform": {
+              "x": 400,
+              "y": 1640,
+              "width": 260,
+              "height": 293,
+              "rotation": -6,
+              "zIndex": 6
+            },
+            "fit": "contain"
+          }
+        ]
+      },
+      {
+        "id": "a4",
+        "layout": "hero",
+        "inverted": true,
+        "label": {
+          "es-419": "BIBLIOTECA"
+        },
+        "headline": {
+          "es-419": "Lecciones listas\npara primaria."
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/03.png",
+        "transforms": {
+          "device": {
+            "x": 310,
+            "y": 482,
+            "width": 460,
+            "height": 997,
+            "rotation": -90,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "a4-tv",
+            "src": "/brand/tv-2.png",
+            "transform": {
+              "x": 140,
+              "y": 1330,
+              "width": 800,
+              "height": 450,
+              "rotation": 4,
+              "zIndex": 2
+            },
+            "fit": "cover"
+          }
+        ]
+      },
+      {
+        "id": "a5",
+        "layout": "no-device",
+        "label": {
+          "es-419": "PRIVADO Y LIBRE"
+        },
+        "headline": {
+          "es-419": "Sin internet.\nSin cuentas.\nSin anuncios."
+        },
+        "screenshot": "",
+        "imageElements": [
+          {
+            "id": "a4-octo",
+            "src": "/brand/mimikai-logo.png",
+            "transform": {
+              "x": 290,
+              "y": 1080,
+              "width": 500,
+              "height": 564,
+              "rotation": 0,
+              "zIndex": 6
+            },
+            "fit": "contain"
+          },
+          {
+            "id": "a4-word",
+            "src": "/brand/mimikai-wordmark.png",
+            "transform": {
+              "x": 240,
+              "y": 1690,
+              "width": 600,
+              "height": 184,
+              "rotation": 0,
+              "zIndex": 6
+            },
+            "fit": "contain"
+          }
+        ]
+      }
+    ],
+    "ipad": [
+      {
+        "id": "s_mvsfjwjz_a",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "Made for\nthe big screen."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_b",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Built for\nfocus."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_c",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "Always within reach."
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "tvos": [
+      {
+        "id": "t0",
+        "layout": "split-landscape",
+        "label": {
+          "es-419": "MIMIKAI TV"
+        },
+        "headline": {
+          "es-419": "La pared\nse vuelve juego."
+        },
+        "screenshot": "/screenshots/apple/tvos/{locale}/05.png"
+      },
+      {
+        "id": "t1",
+        "layout": "split-landscape",
+        "label": {
+          "es-419": "DE PIE"
+        },
+        "headline": {
+          "es-419": "Toda la clase\njuega de pie."
+        },
+        "screenshot": "/screenshots/apple/tvos/{locale}/01.png",
+        "inverted": true
+      },
+      {
+        "id": "t2",
+        "layout": "split-landscape",
+        "label": {
+          "es-419": "DOS EQUIPOS"
+        },
+        "headline": {
+          "es-419": "Cada equipo\nen su mitad."
+        },
+        "screenshot": "/screenshots/apple/tvos/{locale}/03.png",
+        "inverted": false
+      },
+      {
+        "id": "t3",
+        "layout": "split-landscape",
+        "label": {
+          "es-419": "INGLÉS Y MÁS"
+        },
+        "headline": {
+          "es-419": "Aprenden\nseñalando."
+        },
+        "screenshot": "/screenshots/apple/tvos/{locale}/02.png"
+      },
+      {
+        "id": "t4",
+        "layout": "split-landscape",
+        "label": {
+          "es-419": "MATEMÁTICA"
+        },
+        "headline": {
+          "es-419": "Del conteo\na las fracciones."
+        },
+        "screenshot": "/screenshots/apple/tvos/{locale}/04.png",
+        "inverted": true
+      }
+    ],
+    "watchos": [
+      {
+        "id": "s_mvsfjwjz_h",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "On your\nwrist."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_i",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "One glance.\nDone."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_j",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "Always\nwith you."
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "carplay": [
+      {
+        "id": "s_mvsfjwjz_k",
+        "layout": "split-landscape",
+        "label": {
+          "en": "CARPLAY"
+        },
+        "headline": {
+          "en": "Eyes on\nthe road."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_l",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Everything, one tap away."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_m",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "Made for every drive."
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "mac": [
+      {
+        "id": "s_mvsfjwjz_n",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "Made for\nyour Mac."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_o",
+        "layout": "split-landscape",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Everything in\none window."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_p",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "One shortcut away."
+        },
+        "screenshot": "",
+        "inverted": true
+      },
+      {
+        "id": "s_mvsfjwjz_q",
+        "layout": "two-devices",
+        "label": {
+          "en": "FEATURE 03"
+        },
+        "headline": {
+          "en": "Work across windows."
+        },
+        "screenshot": "",
+        "screenshotSecondary": ""
+      },
+      {
+        "id": "s_mvsfjwjz_r",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE"
+        },
+        "headline": {
+          "en": "And so\nmuch more."
+        },
+        "screenshot": ""
+      }
+    ],
+    "android-7": [
+      {
+        "id": "s_mvsfjwjz_s",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "Pocket-sized\npower."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_t",
+        "layout": "split-landscape",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Wide canvas,\nbigger ideas."
+        },
+        "screenshot": ""
+      }
+    ],
+    "android-10": [
+      {
+        "id": "s_mvsfjwjz_u",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "Made for\nthe big screen."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_v",
+        "layout": "split-landscape",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Wide canvas,\nbigger ideas."
+        },
+        "screenshot": ""
+      }
+    ],
+    "feature-graphic": [
+      {
+        "id": "f1",
+        "layout": "feature-graphic",
+        "label": {},
+        "headline": {
+          "es-419": "La pared del aula se vuelve táctil."
+        },
+        "screenshot": ""
+      }
+    ],
+    "duo-outer": [
+      {
+        "id": "s_mvsfjwjz_x",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "Everything,\none hand."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_y",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "One idea\nper screen."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_z",
+        "layout": "two-devices",
+        "label": {
+          "en": "OPEN IT"
+        },
+        "headline": {
+          "en": "Open it for\nthe full view."
+        },
+        "screenshot": "",
+        "screenshotSecondary": ""
+      },
+      {
+        "id": "s_mvsfjwjz_10",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "Flip the contrast."
+        },
+        "screenshot": "",
+        "inverted": true
+      },
+      {
+        "id": "s_mvsfjwjz_11",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE"
+        },
+        "headline": {
+          "en": "And so\nmuch more."
+        },
+        "screenshot": ""
+      }
+    ],
+    "duo-outer-landscape": [
+      {
+        "id": "s_mvsfjwjz_12",
+        "layout": "hero",
+        "label": {
+          "en": "TURN IT"
+        },
+        "headline": {
+          "en": "Made for the wide view."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_13",
+        "layout": "split-landscape",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "One idea\nper screen."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_14",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "Flip the contrast."
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "duo-inner": [
+      {
+        "id": "s_mvsfjwjz_15",
+        "layout": "hero",
+        "label": {
+          "en": "UNFOLD IT"
+        },
+        "headline": {
+          "en": "Room for\nthe whole view."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_16",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "One idea\nper screen."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_17",
+        "layout": "two-devices",
+        "label": {
+          "en": "FOLDED + OPEN"
+        },
+        "headline": {
+          "en": "Turn it, open it,\nkeep going."
+        },
+        "screenshot": "",
+        "screenshotSecondary": ""
+      },
+      {
+        "id": "s_mvsfjwjz_18",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "Flip the contrast."
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "duo-inner-landscape": [
+      {
+        "id": "s_mvsfjwjz_19",
+        "layout": "hero",
+        "label": {
+          "en": "UNFOLD IT"
+        },
+        "headline": {
+          "en": "Lead with the two-pane view."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_1a",
+        "layout": "two-devices",
+        "label": {
+          "en": "FOLDED + OPEN"
+        },
+        "headline": {
+          "en": "Same moment, closed and open."
+        },
+        "screenshot": "",
+        "screenshotSecondary": ""
+      },
+      {
+        "id": "s_mvsfjwjz_1b",
+        "layout": "split-landscape",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "One idea\nper screen."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mvsfjwjz_1c",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 03"
+        },
+        "headline": {
+          "en": "Show what only the wide screen can."
+        },
+        "screenshot": "",
+        "inverted": true
+      },
+      {
+        "id": "s_mvsfjwjz_1d",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE"
+        },
+        "headline": {
+          "en": "And so much more."
+        },
+        "screenshot": ""
+      }
+    ],
+    "creative-universal": [
+      {
+        "id": "s_mvsfjwjz_1e",
+        "layout": "split-landscape",
+        "label": {
+          "en": "NEW"
+        },
+        "headline": {
+          "en": "Your app,\nat a glance."
+        },
+        "screenshot": ""
+      }
+    ],
+    "creative-header": [
+      {
+        "id": "s_mvsfjwjz_1f",
+        "layout": "split-landscape",
+        "label": {
+          "en": "NEW"
+        },
+        "headline": {
+          "en": "Your app,\nat a glance."
+        },
+        "screenshot": ""
+      }
+    ],
+    "creative-search": [
+      {
+        "id": "s_mvsfjwjz_1g",
+        "layout": "split-landscape",
+        "label": {
+          "en": "NEW"
+        },
+        "headline": {
+          "en": "Your app,\nat a glance."
+        },
+        "screenshot": ""
+      }
+    ]
+  },
+  "scene": {
+    "backdrop": "spotlight",
+    "span": true,
+    "decoration": "none",
+    "shadow": 60,
+    "glow": 35,
+    "tilt": 0,
+    "headlineWeight": 800,
+    "headlineScale": 1,
+    "headlineCase": "as-typed",
+    "captionAlign": "auto"
+  }
+}

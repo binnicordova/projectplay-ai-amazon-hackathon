@@ -20,7 +20,7 @@ import {
   type TeamCount,
   type TeamId,
   type TvMessage,
-} from '@projectplay/contracts';
+} from '@mimikai/contracts';
 import { START_PROGRESS, afterRound, pickCard, type LevelChange, type Progress } from './progression';
 import { seededRandom } from './random';
 import { NO_TEAM_STATS, applyRound, leader, pointsFor, scoresOf, starsFor, type TeamStats } from './scoring';

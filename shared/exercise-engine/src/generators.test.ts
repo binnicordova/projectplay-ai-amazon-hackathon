@@ -1,4 +1,4 @@
-import { AGE_BANDS, decodeLesson, visualText, type Card, type Lesson } from '@projectplay/contracts';
+import { AGE_BANDS, decodeLesson, visualText, type Card, type Lesson } from '@mimikai/contracts';
 import { describe, expect, it } from 'vitest';
 import { keyOf, levelsFor } from './cards';
 import { LEXICON } from './lexicon';

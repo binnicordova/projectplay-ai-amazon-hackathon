@@ -9,7 +9,7 @@ import {
   type SessionSnapshot,
   type TeacherMessage,
   type TvMessage,
-} from '@projectplay/contracts';
+} from '@mimikai/contracts';
 import { atom, type createStore } from 'jotai';
 import type { ClientId, LinkServer, ServerStatus } from './ports';
 

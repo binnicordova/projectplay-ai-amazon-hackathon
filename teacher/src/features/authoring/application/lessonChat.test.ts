@@ -1,4 +1,4 @@
-import { err, ok } from '@projectplay/contracts';
+import { err, ok } from '@mimikai/contracts';
 import { createStore } from 'jotai';
 import { describe, expect, it } from 'vitest';
 import type { ChatMessage } from '../domain/prompt';

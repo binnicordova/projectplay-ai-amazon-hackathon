@@ -3,7 +3,7 @@
  * word (level 2 with words of the same kind, dog / cat / cow); level 3 from the word to the
  * picture, which children must read.
  */
-import type { Card } from '@projectplay/contracts';
+import type { Card } from '@mimikai/contracts';
 import { buildCards, cycle, icon, optionCount, text, type ChoiceSpec, type GeneratorContext } from '../cards';
 import { LEXICON, foldWord, type Tag, type Word } from '../lexicon';
 import { shuffle } from '../random';

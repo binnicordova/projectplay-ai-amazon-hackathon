@@ -2,7 +2,7 @@
  * Composition root: the only place that knows concrete implementations.
  * Creates the single Jotai store and wires infrastructure adapters to use cases.
  */
-import type { TeacherMessage } from '@projectplay/contracts';
+import type { TeacherMessage } from '@mimikai/contracts';
 import { createStore } from 'jotai';
 import { makeAskForLesson, makeLessonChat, type LessonChat } from '../features/authoring/application/lessonChat';
 import { aiSettingsFromEnv, chatModelFor } from '../features/authoring/infrastructure/providers';

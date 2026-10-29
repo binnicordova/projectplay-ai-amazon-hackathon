@@ -4,7 +4,7 @@
  * re-render per sample). Each move glides over most of the measured gap between samples:
  * smooth at any rate, and the cursor is already resting when the next sample lands.
  */
-import type { TeamId } from '@projectplay/contracts';
+import type { TeamId } from '@mimikai/contracts';
 import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { scaledPixels } from '../../../hooks/useScale';

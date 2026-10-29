@@ -2,7 +2,7 @@
  * Composition root for the TV: wires the phone link, the pointer hub, the remote
  * control and the session reducer around one Jotai store.
  */
-import { DEFAULT_TEAM_COUNT, TEAMS, type AgeBand, type CalibrationPattern, type PlayerId, type TeamId } from '@projectplay/contracts';
+import { DEFAULT_TEAM_COUNT, TEAMS, type AgeBand, type CalibrationPattern, type PlayerId, type TeamId } from '@mimikai/contracts';
 import { createStore } from 'jotai';
 import { PATTERN_TIMEOUT_MS, calibrationPatternAtom } from '../features/calibration/application/calibrationPattern';
 import type { GameServices } from '../features/game/application/gameServices';

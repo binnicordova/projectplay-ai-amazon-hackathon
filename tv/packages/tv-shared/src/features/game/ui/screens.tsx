@@ -2,7 +2,7 @@
  * Pairing, lobby and summary screens. Kid-facing text is in Spanish, like the lessons.
  * Lessons always come from the teacher's phone: without it the TV shows how to connect.
  */
-import { DEFAULT_PORT, UI_ICONS, type TeamId } from '@projectplay/contracts';
+import { DEFAULT_PORT, UI_ICONS, type TeamId } from '@mimikai/contracts';
 import { useAtomValue } from 'jotai';
 import { StyleSheet, Text, View } from 'react-native';
 import { SpatialNavigationRoot, SpatialNavigationView } from 'react-tv-space-navigation';
@@ -29,13 +29,13 @@ export function PairingScreen() {
   return (
     <SpaceBackground>
       <View style={styles.centered}>
-        <Heading style={styles.centeredText}>ProjectPlay</Heading>
+        <Heading style={styles.centeredText}>Mimikai</Heading>
         <Body style={styles.centeredText}>Este proyector se convierte en una pared táctil</Body>
         <Panel style={styles.panel}>
           <Text style={styles.status}>{searching}</Text>
           <Body>1. En el celular de la profesora, activa el punto de acceso (hotspot).</Body>
           <Body>2. Conecta este Fire TV a ese punto de acceso.</Body>
-          <Body>3. Abre ProjectPlay Teacher. Esta pantalla se conecta sola (puerto {DEFAULT_PORT}).</Body>
+          <Body>3. Abre Mimikai en el celular. Esta pantalla se conecta sola (puerto {DEFAULT_PORT}).</Body>
         </Panel>
       </View>
     </SpaceBackground>

@@ -2,7 +2,7 @@
  * LessonStore adapter: one JSON file per lesson in the app's document folder, plus one file
  * for the records. Lessons are a few kilobytes each, so plain files are plenty.
  */
-import { err, ok, type Lesson, type Result } from '@projectplay/contracts';
+import { err, ok, type Lesson, type Result } from '@mimikai/contracts';
 import { Directory, File, Paths } from 'expo-file-system';
 import type { Records } from '../domain/catalog';
 import type { LessonStore } from '../application/ports';

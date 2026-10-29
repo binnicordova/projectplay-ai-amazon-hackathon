@@ -1,10 +1,10 @@
 {
-  "name": "@projectplay/teacher",
+  "name": "@mimikai/teacher",
   "version": "1.0.0",
   "main": "expo-router/entry",
   "dependencies": {
-    "@projectplay/contracts": "file:../shared/contracts",
-    "@projectplay/exercise-engine": "file:../shared/exercise-engine",
+    "@mimikai/contracts": "file:../shared/contracts",
+    "@mimikai/exercise-engine": "file:../shared/exercise-engine",
     "expo": "~56.0.23",
     "expo-asset": "~56.0.25",
     "expo-build-properties": "~56.0.27",
@@ -15,6 +15,7 @@
     "expo-linking": "~56.0.18",
     "expo-router": "~56.2.21",
     "expo-status-bar": "~56.0.4",
+    "expo-updates": "~56.0.28",
     "jotai": "^2.20.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",

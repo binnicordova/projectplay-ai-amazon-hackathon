@@ -1,5 +1,5 @@
-import { SAMPLE_LESSON } from '@projectplay/contracts/src/testing/sampleLesson';
-import { UI_ICONS } from '@projectplay/contracts';
+import { SAMPLE_LESSON } from '@mimikai/contracts/src/testing/sampleLesson';
+import { UI_ICONS } from '@mimikai/contracts';
 import { describe, expect, it } from 'vitest';
 import { artForLesson, missingIcons } from './art';
 

@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
-import { decodeLesson } from '@projectplay/contracts';
+import { decodeLesson } from '@mimikai/contracts';
 import { describe, expect, it } from 'vitest';
 import { STARTER_REQUESTS, buildStarterLesson, lessonFileText } from './starterLessons';
 

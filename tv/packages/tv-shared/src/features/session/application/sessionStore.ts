@@ -1,4 +1,4 @@
-import type { IconArt, TeamId } from '@projectplay/contracts';
+import type { IconArt, TeamId } from '@mimikai/contracts';
 import { atom } from 'jotai';
 import { atomWithReducer } from 'jotai/utils';
 import { INITIAL_SESSION, reduceSession, snapshotOf } from '../domain/session';

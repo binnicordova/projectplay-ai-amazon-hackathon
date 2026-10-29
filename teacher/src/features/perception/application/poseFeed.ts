@@ -2,7 +2,7 @@
  * What perception decided on the latest frame (skeleton overlay) and how fast it runs (status).
  * Written at camera rate by the composition root; read by small overlays only.
  */
-import { DEFAULT_TEAM_COUNT, type TeamCount } from '@projectplay/contracts';
+import { DEFAULT_TEAM_COUNT, type TeamCount } from '@mimikai/contracts';
 import { atom } from 'jotai';
 import { SLOW_FPS, type FrameRate } from '../domain/frameRate';
 import type { BusyLanes } from '../domain/laneSchedule';

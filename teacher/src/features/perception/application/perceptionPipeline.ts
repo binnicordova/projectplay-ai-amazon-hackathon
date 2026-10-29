@@ -12,7 +12,7 @@
  * It also returns what it decided for each lane, so the preview shows exactly what the
  * TV receives: a skeleton only for a child it tracks, a ring only for a hand it sends.
  */
-import { POINTER_MARGIN, type HandId, type PlayerId, type TeacherMessage } from '@projectplay/contracts';
+import { POINTER_MARGIN, type HandId, type PlayerId, type TeacherMessage } from '@mimikai/contracts';
 import { isPlausibleBody, minTorsoFor } from '../domain/body';
 import { applyHomography, type Mat3, type Quad } from '../domain/homography';
 import { busyLanesOf, type BusyLanes } from '../domain/laneSchedule';

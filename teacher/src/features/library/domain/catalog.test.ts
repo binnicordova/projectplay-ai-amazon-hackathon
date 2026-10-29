@@ -1,4 +1,4 @@
-import { SAMPLE_LESSON } from '@projectplay/contracts/src/testing/sampleLesson';
+import { SAMPLE_LESSON } from '@mimikai/contracts/src/testing/sampleLesson';
 import { describe, expect, it } from 'vitest';
 import { countBySubject, coverIcon, levelCounts, lessonsIn, mergeLibrary, recordOf, roundsFor, withScore } from './catalog';
 

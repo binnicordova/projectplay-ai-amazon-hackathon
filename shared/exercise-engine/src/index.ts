@@ -1,5 +1,5 @@
 /**
- * @projectplay/exercise-engine
+ * @mimikai/exercise-engine
  *
  * Builds lesson cards for early-grade to secondary classes, offline and deterministically:
  * the same request and seed always give the same cards, and every answer is computed

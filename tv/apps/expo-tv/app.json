@@ -1,24 +1,24 @@
 {
   "expo": {
-    "name": "ProjectPlay",
-    "slug": "projectplay-tv",
+    "name": "Mimikai",
+    "slug": "mimikai-tv",
     "version": "1.0.0",
-    "scheme": "projectplay-tv",
+    "scheme": "mimikai-tv",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#0B1026",
     "newArchEnabled": false,
     "android": {
-      "package": "com.projectplay.tv",
+      "package": "com.mimikai.tv",
       "adaptiveIcon": {
-        "backgroundColor": "#0B122C",
+        "backgroundColor": "#0B1026",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       }
     },
     "ios": {
-      "bundleIdentifier": "com.projectplay.tv"
+      "bundleIdentifier": "com.mimikai.tv"
     },
     "plugins": [
       "expo-router",
@@ -47,9 +47,9 @@
             "deploymentTarget": "15.1"
           },
           "android": {
-            "kotlinVersion": "2.0.21",
+            "kotlinVersion": "2.1.20",
             "compileSdkVersion": 36,
-            "targetSdkVersion": 34,
+            "targetSdkVersion": 36,
             "minSdkVersion": 24,
             "usesCleartextTraffic": true
           }
@@ -60,6 +60,21 @@
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": false
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e8441193-8a47-4cf8-92f1-a7161c5535f5"
+      }
+    },
+    "owner": "llaapp",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e8441193-8a47-4cf8-92f1-a7161c5535f5",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
     }
   }
 }

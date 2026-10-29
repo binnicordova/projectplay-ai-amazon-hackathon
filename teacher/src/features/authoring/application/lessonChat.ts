@@ -3,7 +3,7 @@
  * with a short message and a lesson draft; the draft is built and checked here. An answer that
  * breaks the format is sent back to the AI once with the reason, before giving up.
  */
-import { err, flatMapResult, ok, type Lesson, type Result } from '@projectplay/contracts';
+import { err, flatMapResult, ok, type Lesson, type Result } from '@mimikai/contracts';
 import { atom, type createStore } from 'jotai';
 import { decodeAiReply, lessonFromDraft } from '../domain/draft';
 import { modelMessages, type ChatMessage, type ChatTurn } from '../domain/prompt';

@@ -3,7 +3,7 @@
  * pure black with white squares at the positions both apps agree on. Once the pattern
  * has actually been drawn (two animation frames later) the TV tells the phone.
  */
-import { MARKER_SIZE, markersFor, type CalibrationPattern } from '@projectplay/contracts';
+import { MARKER_SIZE, markersFor, type CalibrationPattern } from '@mimikai/contracts';
 import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';

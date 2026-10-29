@@ -1,4 +1,4 @@
-import { decodeTeacherMessage, encodeMessage, type TeacherMessage } from '@projectplay/contracts';
+import { decodeTeacherMessage, encodeMessage, type TeacherMessage } from '@mimikai/contracts';
 import { createStore } from 'jotai';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createLinkService, roundResultsAtom, serverStatusAtom, tvClientsAtom, tvSnapshotAtom } from './linkService';

@@ -2,7 +2,7 @@
  * Library use cases: load the starter collection and the teacher's lessons, save and delete
  * lessons, choose what to play, and keep the best score of each lesson.
  */
-import { decodeLesson, type AgeBand, type Lesson, type Result, type Subject, type TeamCount } from '@projectplay/contracts';
+import { decodeLesson, type AgeBand, type Lesson, type Result, type Subject, type TeamCount } from '@mimikai/contracts';
 import { atom, type createStore } from 'jotai';
 import { mergeLibrary, withScore, type Records } from '../domain/catalog';
 import type { LessonStore } from './ports';

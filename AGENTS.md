@@ -2,7 +2,9 @@
      Keep this file under ~150 lines: repo-wide rules only. Package rules live in
      teacher/AGENTS.md, tv/AGENTS.md and shared/AGENTS.md, which load when an agent works there. -->
 
-# ProjectPlay
+# Mimikai (formerly ProjectPlay)
+
+The product, both apps and the octopus pet are called **Mimikai** (package IDs `com.mimikai.teacher` and `com.mimikai.tv`, packages `@mimikai/*`). The GitHub repo and the v1.0.0 release still use the old name ProjectPlay. Brand masters and rules: `docs/brand/README.md`.
 
 A classroom projector becomes a touch wall. The teacher's phone (camera on a tripod, Wi-Fi hotspot) runs on-device pose detection and sends *what the body did* over a local WebSocket. A Fire TV app owns the screen and decides *what it means*. The phone also holds the lessons: a starter collection plus lessons the teacher creates by chatting with an AI (DeepSeek, only when online). Classes need no backend and no internet; camera images never leave the phone.
 
@@ -66,7 +68,7 @@ Most changes are JavaScript only: the running apps hot-reload (press `r` in that
 - **Functional core in the lesson features.** In `library`, `authoring`, `pictures` and `console`, domain and application code has no classes and no `throw` (ESLint): pure functions over read-only data, `Result` values for errors, use cases made from their dependencies (`makeX(deps)`).
 - **One player or two teams.** Two teams split the wall in halves, one camera lane each. One player (`teams: 1` on the start command, team A) gets the whole wall and one lane over all of it. Older apps leave `teams` out and play two teams.
 - **Pointing is the only interaction.** Children answer by holding a hand on a tile; a choice can change until the question's time is up (no early end when everyone has chosen). Field tests showed kids point by themselves; don't bring back gestures or jump counting without new field evidence.
-- **Offline by design.** The only network calls are the phone ⇄ TV WebSocket and, from the teacher's *Crear con IA* screen, the AI provider. No analytics. A new dependency must work offline and keep the APKs small.
+- **Offline by design.** The only network calls are the phone ⇄ TV WebSocket, the AI provider from the teacher's *Crear con IA* screen, and the `expo-updates` check at launch (store builds only; it never delays a launch, see `docs/release.md`). No analytics. A new dependency must work offline and keep the APKs small.
 - **Secrets:** the DeepSeek key lives only in `teacher/.env` (gitignored; `teacher/.env.example` documents it) as `EXPO_PUBLIC_DEEPSEEK_API_KEY`. Never commit a key, paste one in docs or logs, or hard-code it. CI fails on anything that looks like `sk-…`.
 - No code duplication across apps: shared logic goes to `shared/contracts` (wire-level), `shared/exercise-engine` (lesson content) or `tv/packages/*` (TV-level).
 
@@ -89,7 +91,7 @@ Most changes are JavaScript only: the running apps hot-reload (press `r` in that
 ## Pitfalls already paid for (don't repeat them)
 
 - `./gradlew clean` fails in React Native's CMake step after deleting library outputs. The next build then ships an APK missing R classes, and the app crashes at launch with `NoClassDefFoundError: …/R$string`. Use `scripts/devices.sh <app> --clean`.
-- Expo CLI's `a` key opens the *first* adb device, often the TV. "No development build (com.projectplay.teacher) installed" there is harmless; use `shift+a` to pick the device.
+- Expo CLI's `a` key opens the *first* adb device, often the TV. "No development build (com.mimikai.teacher) installed" there is harmless; use `shift+a` to pick the device.
 - `@react-native-tvos/config-tv` older than 0.1.7 crashes `expo prebuild` and leaves a half-generated `android/` behind ("Unresolved reference R/BuildConfig"). Keep ≥ 0.1.7.
 - `android/` and `ios/` are generated (Continuous Native Generation) and gitignored. Change native behaviour through `app.json` or config plugins (`tv/apps/expo-tv/plugins/`), never by editing generated files.
 - A full disk silently corrupts Gradle outputs. On "ENOSPC" or odd build failures, free space first, then `--clean`.

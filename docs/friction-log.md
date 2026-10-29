@@ -187,6 +187,42 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Workaround:** `teacher/src/features/perception/infrastructure/model.ts` resolves the model with `expo-asset` (`Asset.loadAsync`), which copies the raw resource to the cache and returns a `file://` URI, then calls `loadTensorflowModel({ url })`. The same path works in debug.
 - **Suggestion:** In `HybridAssetLoader`, fall back to `resources.getIdentifier(name, "raw", packageName)` when the path has no scheme, as v2 did. Add a release-build smoke test to the example app.
 
+### F20 · `eas credentials:configure-build` cannot create a keystore without a terminal
+- **Task:** Create the EAS-managed Android upload keystores for both apps before the first Play Store build, from a script (no build yet).
+- **Steps:** `npx eas-cli credentials:configure-build -p android -e production` with the answer piped in (`printf 'y\n' | …`).
+- **Expected:** A `--non-interactive` mode that generates the keystore (as `eas build --non-interactive` does), or a flag such as `--generate-keystore`.
+- **Actual:** `Input is required, but stdin is not readable. Failed to display prompt: Generate a new Android Keystore?` The command has no flag for the one question it asks, so the only scripted ways are a full (billed, slow) `eas build`, or faking a terminal.
+- **Severity:** Low. It blocks automation and CI set-up, not people at a keyboard.
+- **Workaround:** Run it under a pseudo-terminal: `(sleep 15; printf 'y\r'; sleep 40) | script -q /dev/null npx eas-cli credentials:configure-build -p android -e production`.
+- **Suggestion:** Add `--non-interactive` to `credentials:configure-build`, generating a new keystore when none exists (the same default `eas build` uses).
+
+### F21 · EAS Build installs a Yarn 4 workspace with Yarn 1 unless the profile says `corepack: true`
+- **Task:** First store build of the TV app (`tv/apps/expo-tv`, a Yarn 4 workspace with `"packageManager": "yarn@4.5.0"`) on EAS Build.
+- **Steps:** `EXPO_TV=1 npx eas-cli build -p android -e production` from `tv/apps/expo-tv`.
+- **Expected:** EAS sees `packageManager` (it already detects the workspace) and runs the Yarn version it names.
+- **Actual:** After a long free-tier queue, the build failed in *Install dependencies*: `This project's package.json defines "packageManager": "yarn@4.5.0". However the current global version of Yarn is 1.22.22 ... Corepack must currently be enabled`. The CLI reported only `UNKNOWN_ERROR`; the reason was inside a compressed log file.
+- **Severity:** Medium. It costs a whole queue wait and a build credit, and the error code says nothing.
+- **Workaround:** `"corepack": true` in every build profile of `tv/apps/expo-tv/eas.json`.
+- **Suggestion:** Enable Corepack automatically when `package.json` has `packageManager`, or fail in seconds, before queueing, with that message as the error.
+
+### F22 · expo-updates fails to compile on the TV app: its KSP version follows `kotlinVersion`, not the Kotlin compiler in use
+- **Task:** Add `expo-updates` (SDK 54) to the TV app (react-native-tvos 0.81) and build a release bundle.
+- **Steps:** `npx expo install expo-updates`, then `./gradlew bundleRelease` (locally and on EAS Build). `app.json` pinned `expo-build-properties` → `android.kotlinVersion: "2.0.21"`.
+- **Expected:** expo-updates builds with the project's Kotlin.
+- **Actual:** `:expo-updates:kspReleaseKotlin FAILED` with `e: java.lang.NoSuchMethodError: ... KotlinTypeMapper$Companion.getLANGUAGE_VERSION_SETTINGS_DEFAULT()` ("Internal compiler error"). expo-updates picks KSP `2.0.21-1.0.28` from `kotlinVersion`, but the React Native Gradle plugin puts Kotlin 2.1.20 on the classpath, so KSP and the compiler disagree. EAS showed only `EAS_BUILD_UNKNOWN_GRADLE_ERROR`.
+- **Severity:** High. The store build fails after a long queue, and nothing points at the Kotlin pin.
+- **Workaround:** `kotlinVersion: "2.1.20"` in `tv/apps/expo-tv/app.json` (and the fallback in `plugins/withKotlinJvmTarget.js`), matching React Native 0.81's Gradle plugin.
+- **Suggestion:** Derive the KSP version from the Kotlin Gradle plugin actually applied, or fail at configuration time when `kotlinVersion` and the applied plugin differ.
+
+### F23 · The TV sample targets API 34; Play only says so after the bundle is uploaded
+- **Task:** First production release of the TV app on Google Play.
+- **Steps:** `eas build -p android -e production`, upload the AAB to a Production release draft, open *Preview and confirm*.
+- **Expected:** The starting template (AmazonAppDev/react-native-multi-tv-app-sample) targets an API level Play accepts, or the build warns about it.
+- **Actual:** `Your app currently targets API level 34 and must target at least API level 36`. The sample pins `targetSdkVersion: 34` in `expo-build-properties`; nothing in Expo, EAS or Gradle warns, so it shows up only after a queued build, a download and an upload.
+- **Severity:** Medium. One more full build-and-upload cycle on release day.
+- **Workaround:** `targetSdkVersion: 36` in `tv/apps/expo-tv/app.json` (`compileSdkVersion` was already 36).
+- **Suggestion:** Keep the sample's `targetSdkVersion` at Play's current minimum, and have `eas build` (production profile) warn when `targetSdkVersion` is below it.
+
 ### Template for device-time entries
 
 ```

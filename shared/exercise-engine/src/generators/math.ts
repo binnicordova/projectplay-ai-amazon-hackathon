@@ -3,7 +3,7 @@
  * linear equations with the traps teenagers fall into. Wrong options are the answers that
  * those exact mistakes produce, so a wrong choice tells the teacher which mistake it was.
  */
-import type { Card, Level } from '@projectplay/contracts';
+import type { Card, Level } from '@mimikai/contracts';
 import { generateQuestion, type Level as ArithmeticLevel, type Skill } from '../arithmetic';
 import { buildCards, cycle, optionCount, text, type ChoiceSpec, type GeneratorContext } from '../cards';
 import { mixSeed, randomInt, shuffle, type Random } from '../random';

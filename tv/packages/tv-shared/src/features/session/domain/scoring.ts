@@ -2,7 +2,7 @@
  * Points, streaks and stars. Every right answer scores; harder cards, quick final choices and
  * answer streaks score more. Wrong answers never cost points: children keep trying.
  */
-import { TEAMS, type Level, type Scores, type TeamId } from '@projectplay/contracts';
+import { TEAMS, type Level, type Scores, type TeamId } from '@mimikai/contracts';
 
 export interface TeamStats {
   readonly points: number;

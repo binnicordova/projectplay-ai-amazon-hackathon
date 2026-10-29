@@ -1,5 +1,5 @@
 /** Every card of a lesson as the teacher will see it played: question, tiles, the right one marked. */
-import type { Card, Lesson, Visual } from '@projectplay/contracts';
+import type { Card, Lesson, Visual } from '@mimikai/contracts';
 import type { ReactElement } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { colors, radius, space, type } from '../../../ui-kit/theme';

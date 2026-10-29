@@ -17,7 +17,7 @@ function withKotlinJvmTarget(config) {
         if (!contents.includes("ext.kotlinVersion")) {
           contents = contents.replace(
             "buildscript {",
-            'buildscript {\n  ext.kotlinVersion = findProperty("android.kotlinVersion") ?: "2.0.21"'
+            'buildscript {\n  ext.kotlinVersion = findProperty("android.kotlinVersion") ?: "2.1.20"'
           );
           fs.writeFileSync(rootBuildGradle, contents);
         }

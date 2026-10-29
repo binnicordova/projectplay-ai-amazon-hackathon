@@ -1,4 +1,4 @@
-import type { TeacherMessage } from '@projectplay/contracts';
+import type { TeacherMessage } from '@mimikai/contracts';
 import { createStore } from 'jotai';
 import { describe, expect, it } from 'vitest';
 import { containRect, cameraToView, frameRect, viewToCamera } from '../domain/previewGeometry';

@@ -1,4 +1,4 @@
-import { DEFAULT_TEAM_COUNT, type TeacherMessage, type TeamCount } from '@projectplay/contracts';
+import { DEFAULT_TEAM_COUNT, type TeacherMessage, type TeamCount } from '@mimikai/contracts';
 import { useAtom, useAtomValue } from 'jotai';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Button, Card, SectionLabel, Segmented, StatusDot } from '../../../ui-kit/components';

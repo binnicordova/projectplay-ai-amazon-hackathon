@@ -1,5 +1,5 @@
 {
-  "name": "@projectplay/vega",
+  "name": "@mimikai/vega",
   "version": "0.0.1",
   "private": true,
   "files": [
@@ -22,8 +22,8 @@
     "@amazon-devices/react-native-reanimated": "~2.0.0",
     "@amazon-devices/react-native-safe-area-context": "*",
     "@amazon-devices/react-native-screens": "*",
-    "@projectplay/contracts": "portal:../../../shared/contracts",
-    "@projectplay/tv-shared": "workspace:*",
+    "@mimikai/contracts": "portal:../../../shared/contracts",
+    "@mimikai/tv-shared": "workspace:*",
     "jotai": "2.20.3",
     "mitt": "^3.0.1",
     "react": "18.2.0",
@@ -63,7 +63,7 @@
   },
   "kepler": {
     "projectType": "application",
-    "appName": "ProjectPlay",
+    "appName": "Mimikai",
     "targets": [
       "tv"
     ]

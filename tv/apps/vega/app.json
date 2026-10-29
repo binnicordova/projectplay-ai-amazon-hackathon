@@ -1,5 +1,5 @@
 {
   "//": "The declared app name must follow this pattern to be KRL-compatible",
-  "name": "com.projectplay.tv.main",
-  "displayName": "ProjectPlay"
+  "name": "com.mimikai.tv.main",
+  "displayName": "Mimikai"
 }

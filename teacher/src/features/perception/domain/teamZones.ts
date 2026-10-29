@@ -8,7 +8,7 @@
  *
  * With one player there is no divider: one zone, the whole projection.
  */
-import type { TeamCount, TeamId } from '@projectplay/contracts';
+import type { TeamCount, TeamId } from '@mimikai/contracts';
 import { projectionToCamera, type Quad } from './homography';
 import type { Point2 } from './pose';
 

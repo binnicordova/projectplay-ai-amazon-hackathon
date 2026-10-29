@@ -1,4 +1,4 @@
-# @projectplay/exercise-engine
+# @mimikai/exercise-engine
 
 Builds the cards of a lesson, offline and deterministically. The teacher app uses it to turn a teacher's request (typed in the AI chat, or hand-written for the starter lessons) into a lesson file. The TV never needs it: it plays the cards it receives.
 
@@ -20,4 +20,4 @@ Every card has a level (1 easy, 2 medium, 3 hard); a lesson climbs from easy to 
 
 Pictures are [Twemoji](https://github.com/jdecked/twemoji) code points (graphics CC-BY 4.0); the teacher app bundles the SVGs for the words in `src/lexicon.ts`.
 
-The arithmetic core (`arithmetic.ts`, `diagnose()`) is also published as **[projectplay-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine)** (MIT).
+The arithmetic core (`arithmetic.ts`, `diagnose()`) is also published as **[mimikai-exercise-engine](https://github.com/binnicordova/projectplay-exercise-engine)** (MIT).

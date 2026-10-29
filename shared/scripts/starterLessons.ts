@@ -2,8 +2,8 @@
  * The starter collection: real requests from a teacher, each turned into an exercise request
  * the way the AI chat does it, then built by the engine. Bundled in the teacher app as files.
  */
-import { decodeLesson, type AgeBand, type Audience, type Lesson, type Subject } from '@projectplay/contracts';
-import { generateCards, type ExerciseRequest } from '@projectplay/exercise-engine';
+import { decodeLesson, type AgeBand, type Audience, type Lesson, type Subject } from '@mimikai/contracts';
+import { generateCards, type ExerciseRequest } from '@mimikai/exercise-engine';
 
 export interface StarterRequest {
   readonly id: string;
