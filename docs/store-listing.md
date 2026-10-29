@@ -66,15 +66,15 @@ What the code does, so the declarations stay true. Same answers for both apps un
 
 | Declaration | Answer |
 |---|---|
-| Privacy policy | https://github.com/binnicordova/projectplay-ai-amazon-hackathon/blob/main/docs/privacy.md (live once `rebrand-mimikai` is merged) |
+| Privacy policy | https://github.com/binnicordova/projectplay-ai-amazon-hackathon/blob/main/docs/privacy.md#readme (the `#readme` anchor only made Play re-check the URL after it had cached a 404 from before the merge) |
 | Ads | No ads |
 | Sign in details | Yes, restricted: "actions on another device". Note: no account, login or payment; a class needs the other app (Mimikai ⇄ Mimikai TV) on the same Wi-Fi; without it the phone app still opens the library, any lesson and *Crear con IA*. Tick "full access". |
 | Advertising ID | No |
 | Government apps | No |
 | Financial features | My app doesn't provide any financial features |
 | Health apps | My app does not have any health features |
-| Content rating (IARC) | Category: Education. Every content question (violence, fear, sex, language, drugs, gambling): No. Users interact or share content with each other: No. Shares location: No. Digital purchases: No. |
-| Target audience | Phone: 18 and over (teachers operate it; children never touch it). TV: see below. |
+| Content rating (IARC) | Category: All Other App Types. Ratings-relevant content in the package: No. Users interact or share content: No. Online content not in the download: **Yes** (AI-made and phone-sent lessons), then violence, sexuality, language, drugs: No. Age-restricted products: No. Shares location, digital purchases, cash rewards, browser: No. Primarily educational: Yes. Result: ESRB Everyone, PEGI 3, ClassInd All ages. |
+| Target audience | 18 and over for both apps (teachers operate them; see the TV note below). The optional "restrict minors" box is left off. |
 | Data safety, phone | Collects data: Yes. **App activity → Other user-generated content** (the text typed in *Crear con IA*, sent to DeepSeek to draft a lesson): app functionality, optional, processed ephemerally, not shared. **Device or other IDs** (random install ID sent by `expo-updates`): app functionality, required, not shared. Encrypted in transit: Yes. Account creation: none. Camera images are processed on the phone only, so they are **not** collected. |
 | Data safety, TV | Collects data: Yes. **Device or other IDs** (`expo-updates` install ID): app functionality, required, not shared. Encrypted in transit: Yes. Phone ⇄ TV traffic stays on the local network and is not collected. |
 
