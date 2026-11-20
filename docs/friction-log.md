@@ -274,7 +274,7 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Expected:** The update is exported with the same environment as the build that will run it.
 - **Actual:** `eas update` exports locally and reads only EAS environment variables, not a build profile's `env`; nothing warns that the bundle is built without `EXPO_TV`.
 - **Severity:** Medium. A TV update exported as a phone app is a silent mismatch against the installed build.
-- **Workaround:** `EXPO_TV=1 eas update --channel preview --environment preview --platform android`. The TV took it on the first launch and ran it on the second (`dev.expo.updates` in logcat: `CheckCompleteAvailable`, then `NoUpdatesAvailable`).
+- **Workaround:** `EXPO_TV=1 eas update --channel preview --environment preview --platform android`. The TV and the phone took it on the first launch and ran it on the second (`dev.expo.updates` in logcat: `CheckCompleteAvailable`, then `NoUpdatesAvailable`).
 - **Suggestion:** Let `eas update` take a build profile (or warn when the channel's builds used `env` values the update lacks).
 
 ### F30 · `eas submit` can't set up a Play service account non-interactively, and a 32 MB `.aab` is too big to hand to a browser agent
