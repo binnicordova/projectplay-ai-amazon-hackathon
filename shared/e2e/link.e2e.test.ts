@@ -12,7 +12,7 @@ import { SAMPLE_ART, SAMPLE_LESSON } from '@mimikai/contracts/src/testing/sample
 import { decodeLesson, type CalibrationPattern, type Lesson, type TeacherMessage } from '@mimikai/contracts';
 import { startCommand } from '../../teacher/src/features/console/application/console';
 import { TWEMOJI_ART } from '../../teacher/src/features/pictures/infrastructure/twemojiArt.generated';
-import { INITIAL_SESSION, reduceSession, roundResults, snapshotOf, type SessionState } from '../../tv/packages/tv-shared/src/features/session/domain/session';
+import { INITIAL_SESSION, INTRO_MS, reduceSession, roundResults, snapshotOf, type SessionState } from '../../tv/packages/tv-shared/src/features/session/domain/session';
 import { FrameDecoder, encodeCloseFrame, encodePongFrame, encodeTextFrame, processHandshake } from '../../teacher/src/features/link/domain/websocket';
 import { createLinkService, latencyMsAtom, roundResultsAtom, tvClientsAtom, tvSnapshotAtom } from '../../teacher/src/features/link/application/linkService';
 import type { LinkServer, LinkServerEvents } from '../../teacher/src/features/link/application/ports';
@@ -164,8 +164,9 @@ describe('phone ⇄ TV over a real WebSocket', () => {
     // A round is played on the TV; the phone gets each team's result with its points.
     const card = session.round.card;
     const right = card.kind === 'choice' ? card.answer : 0;
-    session = reduceSession(session, { type: 'answer', team: 'A', value: right, now: 1500 });
-    session = reduceSession(session, { type: 'next', now: 2000 });
+    // The first card opens after Mimikai's greeting.
+    session = reduceSession(session, { type: 'answer', team: 'A', value: right, now: INTRO_MS + 1500 });
+    session = reduceSession(session, { type: 'next', now: INTRO_MS + 2000 });
     roundResults(session).forEach((r) => tv.send(r));
     await until(() => phoneStore.get(roundResultsAtom).length === 1);
     expect(phoneStore.get(roundResultsAtom)[0]).toMatchObject({ team: 'A', correct: true });

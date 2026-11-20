@@ -3,8 +3,9 @@
  * question sits on top. Children answer by pointing: a hand held on a tile chooses it. A choice
  * can change until the countdown ends; only then is it marked, scored and explained.
  *
- * What keeps children playing: points that grow with harder cards and quick answers, a fire
- * streak per team, and a banner when the class climbs a level.
+ * What keeps children playing: Mimikai, who watches with them and reacts to every answer (its
+ * face is the feedback), points that grow with harder cards and quick answers, a fire streak per
+ * team, and one more juggled ring each time the class climbs a level.
  */
 import { UI_ICONS, type Card, type IconArt, type TeamId } from '@mimikai/contracts';
 import { useAtomValue } from 'jotai';
@@ -13,12 +14,14 @@ import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { scaledPixels } from '../../../hooks/useScale';
 import { colors, teamColor } from '../../../theme/colors';
 import { choiceTargets, truthTargets, type BoardTarget } from '../../interaction/domain/layout';
-import { activeTeamsAtom, artAtom, clockAtom, sessionAtom } from '../../session/application/sessionStore';
-import { playingTeams, questionTimeMs, roundsOf, solutionOf, timeLeftMs, type Round, type SessionState } from '../../session/domain/session';
+import { petCueAtom } from '../../pet/application/petStore';
+import { activeTeamsAtom, artAtom, clockAtom, questionOpenAtom, sessionAtom } from '../../session/application/sessionStore';
+import { HURRY_MS, playingTeams, questionTimeMs, roundsOf, solutionOf, timeLeftMs, type Round, type SessionState } from '../../session/domain/session';
 import type { GameServices } from '../application/gameServices';
 import { BoardTile, type TileState } from './BoardTile';
 import { CursorLayer } from './CursorLayer';
 import { Picture } from './Picture';
+import { PANEL, PlayPet, STAGE_PET, STAGE_PET_WIDTH } from './PlayPet';
 import { SpaceBackground } from './primitives';
 import { VisualView } from './VisualView';
 
@@ -27,20 +30,20 @@ type Playing = Extract<SessionState, { phase: 'question' | 'feedback' }>;
 export function PlayScreen({ services }: { readonly services: GameServices }) {
   const session = useAtomValue(sessionAtom);
   const art = useAtomValue(artAtom);
+  const cue = useAtomValue(petCueAtom);
   if (session.phase !== 'question' && session.phase !== 'feedback') return null;
   return (
     <SpaceBackground>
       <TopBar session={session} art={art} />
       <TileBoard session={session} services={services} art={art} />
-      {session.phase === 'feedback' ? <Feedback session={session} art={art} /> : null}
+      {session.phase === 'feedback' ? <Feedback session={session} art={art} line={cue.line} /> : null}
+      {/* Above the board: it can take the whole wall for a big moment. */}
+      <PlayPet pointers={services.pointers} />
       {/* With one player, "A" over the cursor would only raise the question of where B is. */}
       <CursorLayer pointers={services.pointers} showTeam={playingTeams(session.config).length > 1} />
     </SpaceBackground>
   );
 }
-
-/** The countdown turns to the warning colour for the last seconds: last chance to change your mind. */
-const HURRY_MS = 5_000;
 
 function TopBar({ session, art }: { readonly session: Playing; readonly art: IconArt }) {
   const now = useAtomValue(clockAtom);
@@ -122,13 +125,15 @@ const correctValue = (card: Card): number | boolean => card.answer;
 function TileBoard({ session, services, art }: { readonly session: Playing; readonly services: GameServices; readonly art: IconArt }) {
   const { card } = session.round;
   const teams = playingTeams(session.config);
+  const open = useAtomValue(questionOpenAtom);
   const targets = useMemo(() => (card.kind === 'trueFalse' ? truthTargets(teams) : choiceTargets(card.options, teams)), [card, teams]);
 
   // Every tile stays a target for the whole question (a choice can change). Targets are only
-  // replaced when the card or phase changes: replacing them resets every hand's hold.
+  // replaced when the card changes, opens or closes: replacing them resets every hand's hold.
+  // Round 1 opens after Mimikai's greeting: no hold fills before then.
   useEffect(() => {
-    services.pointers.setTargets(session.phase === 'question' ? targets : []);
-  }, [services, targets, session.phase]);
+    services.pointers.setTargets(open ? targets : []);
+  }, [services, targets, open]);
 
   return (
     <>
@@ -139,21 +144,18 @@ function TileBoard({ session, services, art }: { readonly session: Playing; read
   );
 }
 
-function Feedback({ session, art }: { readonly session: Extract<SessionState, { phase: 'feedback' }>; readonly art: IconArt }) {
+/** The answer panel. Its headline is what Mimikai says, so the words and the pet's face agree. */
+function Feedback({ session, art, line }: { readonly session: Extract<SessionState, { phase: 'feedback' }>; readonly art: IconArt; readonly line: string | null }) {
   const { card } = session.round;
   const teams = playingTeams(session.config);
   const anyCorrect = teams.some((t) => session.round.answers[t]?.correct);
   const answerVisual = card.kind === 'choice' ? card.options[card.answer] : undefined;
-  const levelUp = session.outcome.level === 'up';
   return (
-    <>
-      {levelUp ? (
-        <View pointerEvents="none" style={styles.levelBanner}>
-          <Text style={styles.levelBannerText}>¡Subimos al nivel {session.progress.level}!</Text>
-        </View>
-      ) : null}
-      <View pointerEvents="none" style={styles.feedback}>
-        <Text style={styles.feedbackTitle}>{anyCorrect ? '¡Muy bien!' : '¡Casi! Veamos juntos'}</Text>
+    <View pointerEvents="none" style={styles.feedback}>
+      {/* Mimikai (PlayPet) stands here. */}
+      <View style={styles.petSlot} />
+      <View style={styles.feedbackBody}>
+        <Text style={styles.feedbackTitle}>{line ?? (anyCorrect ? '¡Muy bien!' : '¡Casi! Veamos juntos')}</Text>
         <View style={styles.solutionRow}>
           {answerVisual && answerVisual.kind !== 'text' ? (
             <VisualView visual={answerVisual} art={art} width={scaledPixels(260)} height={scaledPixels(110)} />
@@ -176,7 +178,7 @@ function Feedback({ session, art }: { readonly session: Extract<SessionState, { 
             ))}
         </View>
       </View>
-    </>
+    </View>
   );
 }
 
@@ -205,30 +207,24 @@ const styles = StyleSheet.create({
   secondsHurry: { color: colors.error },
   feedback: {
     position: 'absolute',
-    left: '18%',
-    right: '18%',
-    bottom: scaledPixels(36),
+    left: `${PANEL.side * 100}%`,
+    right: `${PANEL.side * 100}%`,
+    bottom: PANEL.bottom,
+    flexDirection: 'row',
     alignItems: 'center',
+    minHeight: STAGE_PET * 0.78,
     backgroundColor: colors.overlay,
     borderRadius: scaledPixels(32),
     paddingVertical: scaledPixels(20),
-    paddingHorizontal: scaledPixels(32),
-    gap: scaledPixels(8),
+    paddingHorizontal: PANEL.padding,
+    gap: scaledPixels(24),
   },
+  petSlot: { width: STAGE_PET_WIDTH },
+  feedbackBody: { flex: 1, alignItems: 'center', gap: scaledPixels(8) },
   feedbackTitle: { color: colors.primary, fontSize: scaledPixels(56), fontWeight: '900', textAlign: 'center' },
   solutionRow: { alignItems: 'center', justifyContent: 'center', minHeight: scaledPixels(80) },
   feedbackSolution: { color: colors.text, fontSize: scaledPixels(64), fontWeight: '900', textAlign: 'center' },
   explain: { color: colors.textSecondary, fontSize: scaledPixels(32), fontWeight: '700', textAlign: 'center' },
   pointsRow: { flexDirection: 'row', gap: scaledPixels(48) },
   points: { fontSize: scaledPixels(48), fontWeight: '900' },
-  levelBanner: {
-    position: 'absolute',
-    top: '36%',
-    alignSelf: 'center',
-    backgroundColor: colors.primary,
-    borderRadius: scaledPixels(40),
-    paddingVertical: scaledPixels(20),
-    paddingHorizontal: scaledPixels(56),
-  },
-  levelBannerText: { color: colors.textOnPrimary, fontSize: scaledPixels(72), fontWeight: '900' },
 });

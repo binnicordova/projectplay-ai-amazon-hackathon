@@ -223,6 +223,51 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Workaround:** `targetSdkVersion: 36` in `tv/apps/expo-tv/app.json` (`compileSdkVersion` was already 36).
 - **Suggestion:** Keep the sample's `targetSdkVersion` at Play's current minimum, and have `eas build` (production profile) warn when `targetSdkVersion` is below it.
 
+### F24 · The TV app's web build is a blank page: Metro serves Jotai's ESM build, which uses `import.meta`
+- **Task:** Check the new class pet in the TV app's web build (`expo start --web`), with a scripted phone on loopback.
+- **Steps:** `cd tv/apps/expo-tv && EXPO_PUBLIC_TEACHER_HOST=127.0.0.1 npx expo start --web --port 8082`, open the page.
+- **Expected:** The same screens as on the Fire TV (the web target is in the sample's scripts).
+- **Actual:** A blank page and `Uncaught SyntaxError: Cannot use 'import.meta' outside a module`. On web, Metro resolves `jotai` to `esm/*.mjs`, which reads `import.meta.env.MODE`; Android resolves the CommonJS build, so only web breaks. Once past that, expo-keep-awake throws `Wake Lock permission request denied` as an uncaught error overlay in an embedded browser.
+- **Severity:** Low for the product (Fire TV is the target), Medium for development: the quickest way to look at a TV screen without a device doesn't start.
+- **Workaround:** A temporary `babel.config.js` with `['babel-preset-expo', { unstable_transformImportMeta: true }]` for the check; then devices.
+- **Suggestion:** Turn `unstable_transformImportMeta` on by default for web bundles in babel-preset-expo (packages in the wild ship `import.meta` in their ESM builds), and make `useKeepAwake` on web log instead of throwing when the Wake Lock is refused.
+
+### F25 · Fast Refresh breaks the TV app when a component becomes `React.memo`, and Metro's reload doesn't recover it
+- **Task:** Memoise the class pet's components (`Pet`, `ClassPet`) while the TV dev build was running on an Android TV box.
+- **Steps:** Change `export function Pet(…)` to `export const Pet = memo(function Pet(…))` and save; then `curl -X POST http://127.0.0.1:8081/reload`.
+- **Expected:** Fast Refresh swaps the component, or does a full reload.
+- **Actual:** A red box, `Render Error: Component is not a function (it is Object)`, pointing at an unrelated file (`SpeechBubble.tsx:42`). The reload request returned 200, but the app stayed on the error.
+- **Severity:** Low. It costs a few minutes and looks like a real bug in the new code.
+- **Workaround:** Cold restart: `adb shell am force-stop com.mimikai.tv`, then open the dev client link (`projectplay-tv://expo-development-client/?url=…:8081`). A cold start renders fine.
+- **Suggestion:** Have Fast Refresh fall back to a full reload when a module's export changes kind (function ↔ memo object), and make Metro's `/reload` reach a client that is showing a red box.
+
+### F26 · Sharing a React Native component through a `file:` package: TypeScript can't find `react-native` from it
+- **Task:** Share Mimikai's rig (a React Native component) between the phone app (RN 0.85) and the TV app (react-native-tvos 0.81) from `shared/pet`, linked with `file:` and `portal:` like the contracts.
+- **Steps:** `import { Pet } from '@mimikai/pet/rig'` in the phone app, then `tsc --noEmit`.
+- **Expected:** The shared file is typechecked against the app's React Native, as Metro bundles it with the app's copy.
+- **Actual:** TypeScript follows the symlink to the real path (`shared/pet/src/rig/Pet.tsx`) and looks for `react-native` beside it, where there is none. The TV app hides the problem with its tsconfig `"*"` path mapping, which the phone app can't use (with Expo's `tsconfigPaths`, it breaks Metro).
+- **Severity:** Low. A config line, once you know which one.
+- **Workaround:** `"preserveSymlinks": true` in `teacher/tsconfig.json`, so the shared file resolves from `teacher/node_modules/@mimikai/pet`. Metro needs the folder in `watchFolders` and the app's `node_modules` in `nodeModulesPaths`; the subpath import goes through a root file (`shared/pet/rig.ts`), not package `exports`, so Vega's older Metro resolves it too.
+- **Suggestion:** Document the monorepo setup for sharing React Native UI (not only plain TypeScript) between Expo apps on different React Native versions.
+
+### F27 · React Native 0.85's typings drop `StyleSheet.absoluteFillObject`, which 0.72 and 0.81 still have
+- **Task:** Share the energy ball's React Native component between the phone (RN 0.85) and the TV (react-native-tvos 0.81, and RN 0.72 on Vega).
+- **Steps:** A style `{ ...StyleSheet.absoluteFillObject, … }` in `shared/pet/src/rig/EnergyBall.tsx`; `npm run check`.
+- **Expected:** One API across the versions the repo builds with, or a deprecation warning first.
+- **Actual:** The TV typechecks; the phone fails with `TS2551: Property 'absoluteFillObject' does not exist on type 'typeof StyleSheet'. Did you mean 'absoluteFill'?`.
+- **Severity:** Low. Caught by the typecheck, before any device.
+- **Workaround:** Write the four offsets out (`position: 'absolute', left: 0, top: 0, right: 0, bottom: 0`), valid on every version.
+- **Suggestion:** Keep removed APIs in the typings as `@deprecated` for a few releases, so code shared across React Native versions gets a warning instead of a break.
+
+### F28 · Play rejects an opaque Android TV banner as "transparent", and the Expo TV plugin can't produce the size it asks for
+- **Task:** Get Mimikai TV (`@react-native-tvos/config-tv`, `androidTVBanner`) through Google Play's Android TV review.
+- **Steps:** Set `androidTVBanner` to the 400×240 PNG that the TV sample's layout uses, on a near-black background. Build with EAS and submit to production.
+- **Expected:** Banner size checked at upload, or a rejection that names the real fault.
+- **Actual:** Rejected after review: "Android TV App Quality Guidelines: No full-size app banner and/or icon … Your app banner is transparent", while the PNG has no alpha channel. The same message asks for 320×180 in `drawable-xhdpi`; the plugin copies one file unchanged into every drawable folder, so xhdpi only gets that size if the single source is that size.
+- **Severity:** High. The app is held back from all of Play until a new bundle goes through review again.
+- **Workaround:** A 320×180, 16:9, full-bleed PNG, flattened, on a colour clearly lighter than the launcher (`docs/brand/icons/tv-banner-16x9.svg`).
+- **Suggestion:** Play Console could validate the banner's size and alpha when the bundle is uploaded. `config-tv` could document 320×180 and warn on other sizes.
+
 ### Template for device-time entries
 
 ```

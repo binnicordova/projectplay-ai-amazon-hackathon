@@ -16,10 +16,11 @@ Entry for the Amazon "Build, Ship, Shape" hackathon, Fire TV track. Deadline: **
 |---|---|---|---|
 | `shared/contracts` | Wire protocol, lesson format + checker, `Result` | npm | Pure TypeScript, **zero runtime deps** |
 | `shared/exercise-engine` | Builds lesson cards (syllables, letters, numbers, English, sentences, fractions, equations) | npm | Pure TypeScript; imports only types from contracts |
+| `shared/pet` | Mimikai the class pet: moods, choreography, juggled rings, art, and the rig both apps draw it with | npm | Pure TypeScript, except the React Native rig (`rig.ts` → `src/rig/`) |
 | `teacher/` | Phone app (camera, pose model, WebSocket server, lesson library, AI chat) | npm | Expo SDK 56, RN 0.85, new architecture, dev build |
 | `tv/` | TV app, forked from AmazonAppDev/react-native-multi-tv-app-sample | **Yarn 4** (corepack) | `apps/expo-tv`: Expo 54 + react-native-tvos 0.81 (legacy arch) · `apps/vega`: Vega SDK, RN 0.72 · `packages/tv-shared` |
 
-Both apps consume `shared/contracts` from source (`file:` in teacher, `portal:` in tv, plus Metro `watchFolders`). Only the teacher app uses `shared/exercise-engine`: the TV plays whatever lesson it is sent. Never copy contract types into an app.
+Both apps consume `shared/contracts` from source (`file:` in teacher, `portal:` in tv, plus Metro `watchFolders`). Only the teacher app uses `shared/exercise-engine`: the TV plays whatever lesson it is sent. Both apps draw Mimikai with `shared/pet` (`@mimikai/pet` for the model, `@mimikai/pet/rig` for the React Native rig). Never copy contract types or the pet into an app.
 
 ## Commands
 
@@ -68,9 +69,10 @@ Most changes are JavaScript only: the running apps hot-reload (press `r` in that
 - **Functional core in the lesson features.** In `library`, `authoring`, `pictures` and `console`, domain and application code has no classes and no `throw` (ESLint): pure functions over read-only data, `Result` values for errors, use cases made from their dependencies (`makeX(deps)`).
 - **One player or two teams.** Two teams split the wall in halves, one camera lane each. One player (`teams: 1` on the start command, team A) gets the whole wall and one lane over all of it. Older apps leave `teams` out and play two teams.
 - **Pointing is the only interaction.** Children answer by holding a hand on a tile; a choice can change until the question's time is up (no early end when everyone has chosen). Field tests showed kids point by themselves; don't bring back gestures or jump counting without new field evidence.
-- **Offline by design.** The only network calls are the phone ⇄ TV WebSocket, the AI provider from the teacher's *Crear con IA* screen, and the `expo-updates` check at launch (store builds only; it never delays a launch, see `docs/release.md`). No analytics. A new dependency must work offline and keep the APKs small.
+- **Offline by design.** The only network calls are the phone ⇄ TV WebSocket, the AI provider from the teacher's *Crea con Mimi* screen, and the `expo-updates` check at launch (store builds only; it never delays a launch, see `docs/release.md`). No analytics. A new dependency must work offline and keep the APKs small.
 - **Secrets:** the DeepSeek key lives only in `teacher/.env` (gitignored; `teacher/.env.example` documents it) as `EXPO_PUBLIC_DEEPSEEK_API_KEY`. Never commit a key, paste one in docs or logs, or hard-code it. CI fails on anything that looks like `sk-…`.
-- No code duplication across apps: shared logic goes to `shared/contracts` (wire-level), `shared/exercise-engine` (lesson content) or `tv/packages/*` (TV-level).
+- No code duplication across apps: shared logic goes to `shared/contracts` (wire-level), `shared/exercise-engine` (lesson content), `shared/pet` (the pet) or `tv/packages/*` (TV-level).
+- **Mimikai is the heart of both apps.** On the wall it greets the class, reacts to every answer and throws full-screen parties for level ups and streaks (`tv-shared/src/features/pet`); on the phone it greets the teacher, creates lessons with them (*Crea con Mimi*) and grows with the classes they play (`teacher/src/features/mimi`). Each app decides its pet's cue from its own state; the shared rig only performs it.
 
 ## Conventions
 

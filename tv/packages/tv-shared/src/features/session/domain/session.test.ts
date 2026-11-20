@@ -4,8 +4,14 @@ import { LEVEL_WINDOW, START_PROGRESS, afterRound, pickCard } from './progressio
 import { seededRandom } from './random';
 import { NO_STATS, applyRound, leader, pointsFor, starsFor } from './scoring';
 import {
+  BIG_STREAK_PARTY_MS,
+  CELEBRATION_MS,
   FEEDBACK_MS,
+  LEVEL_UP_PARTY_MS,
   INITIAL_SESSION,
+  INTRO_MS,
+  feedbackMsOf,
+  timeLeftMs,
   questionTimeMs,
   reduceSession,
   roundResults,
@@ -61,7 +67,8 @@ function playRound(state: SessionState, answers: Partial<Record<'A' | 'B', boole
     now: start + at,
   }));
   const fed = run([...events, { type: 'tick', now: start + TIME }], state);
-  return run([{ type: 'tick', now: start + TIME + FEEDBACK_MS }], fed);
+  if (fed.phase !== 'feedback') throw new Error(`expected feedback, got ${fed.phase}`);
+  return run([{ type: 'tick', now: start + TIME + feedbackMsOf(fed.outcome) }], fed);
 }
 
 describe('session reducer', () => {
@@ -79,11 +86,11 @@ describe('session reducer', () => {
     const wrong = (right + 1) % 3;
     const s = run(
       [
-        { type: 'answer', team: 'A', value: wrong, now: 1000 },
-        { type: 'answer', team: 'A', value: right, now: 4000 },
-        { type: 'answer', team: 'B', value: right, now: 2000 },
-        { type: 'answer', team: 'B', value: wrong, now: 9000 },
-        { type: 'tick', now: TIME },
+        { type: 'answer', team: 'A', value: wrong, now: INTRO_MS + 1000 },
+        { type: 'answer', team: 'A', value: right, now: INTRO_MS + 4000 },
+        { type: 'answer', team: 'B', value: right, now: INTRO_MS + 2000 },
+        { type: 'answer', team: 'B', value: wrong, now: INTRO_MS + 9000 },
+        { type: 'tick', now: INTRO_MS + TIME },
       ],
       s0,
     );
@@ -100,9 +107,60 @@ describe('session reducer', () => {
 
   it('ignores answers outside the card, from absent teams, or of the wrong kind', () => {
     const s0 = run([{ type: 'start', config: config({ teams: 1 }), now: 0 }]);
-    expect(run([{ type: 'answer', team: 'A', value: 7, now: 10 }], s0)).toBe(s0);
-    expect(run([{ type: 'answer', team: 'A', value: true, now: 10 }], s0)).toBe(s0);
-    expect(run([{ type: 'answer', team: 'B', value: 0, now: 10 }], s0)).toBe(s0);
+    const open = INTRO_MS + 10;
+    expect(run([{ type: 'answer', team: 'A', value: 7, now: open }], s0)).toBe(s0);
+    expect(run([{ type: 'answer', team: 'A', value: true, now: open }], s0)).toBe(s0);
+    expect(run([{ type: 'answer', team: 'B', value: 0, now: open }], s0)).toBe(s0);
+  });
+
+  it('greets the class before the first card: tiles open and the clock starts after the intro', () => {
+    const s0 = run([{ type: 'start', config: config({ teams: 1 }), now: 0 }]);
+    expect(run([{ type: 'answer', team: 'A', value: 0, now: INTRO_MS - 1 }], s0)).toBe(s0);
+    expect(timeLeftMs(s0, 0)).toBe(TIME);
+    expect(timeLeftMs(s0, INTRO_MS + 1000)).toBe(TIME - 1000);
+    expect(run([{ type: 'tick', now: TIME }], s0).phase).toBe('question');
+    expect(run([{ type: 'tick', now: INTRO_MS + TIME }], s0).phase).toBe('feedback');
+  });
+
+  it('celebrates a level up and a streak of 3 with more time on the answer screen', () => {
+    let s = run([{ type: 'start', config: config({ rounds: 9, teams: 1 }), now: 0 }]);
+    s = playRound(s, { A: true });
+    const second = run([{ type: 'answer', team: 'A', value: (current(s) as Extract<Card, { kind: 'choice' }>).answer, now: (s as Extract<SessionState, { phase: 'question' }>).round.startedAt + 1000 }, { type: 'next', now: 0 }], s);
+    if (second.phase !== 'feedback') throw new Error(second.phase);
+    expect(second.outcome.milestone).toEqual({ kind: 'levelUp', level: 2 });
+    expect(feedbackMsOf(second.outcome)).toBe(FEEDBACK_MS + LEVEL_UP_PARTY_MS);
+    expect(run([{ type: 'tick', now: second.feedbackAt + FEEDBACK_MS + CELEBRATION_MS }], second).phase).toBe('feedback');
+    expect(run([{ type: 'tick', now: second.feedbackAt + FEEDBACK_MS + LEVEL_UP_PARTY_MS }], second).phase).toBe('question');
+    s = run([{ type: 'next', now: 0 }], second);
+    const third = run([{ type: 'answer', team: 'A', value: (current(s) as Extract<Card, { kind: 'choice' }>).answer, now: (s as Extract<SessionState, { phase: 'question' }>).round.startedAt + 1000 }, { type: 'next', now: 0 }], s);
+    if (third.phase !== 'feedback') throw new Error(third.phase);
+    expect(third.outcome.milestone).toEqual({ kind: 'streak', teams: ['A'], streak: 3 });
+    expect(feedbackMsOf(third.outcome)).toBe(FEEDBACK_MS + CELEBRATION_MS);
+  });
+
+  it("gives a team's first five in a row the long party, and the next five none", () => {
+    const long: Lesson = { ...LESSON, cards: Array.from({ length: 12 }, (_, i) => card(`x${i}`, 1)) };
+    let s = run([{ type: 'start', config: config({ lesson: long, rounds: 12, teams: 1 }), now: 0 }]);
+    const milestones: (string | null)[] = [];
+    const play = (right: boolean) => {
+      if (s.phase !== 'question') throw new Error(s.phase);
+      const answer = (current(s) as Extract<Card, { kind: 'choice' }>).answer;
+      const fed = run([{ type: 'answer', team: 'A', value: right ? answer : (answer + 1) % 3, now: s.round.startedAt + 1000 }, { type: 'next', now: 0 }], s);
+      if (fed.phase !== 'feedback') throw new Error(fed.phase);
+      const m = fed.outcome.milestone;
+      milestones.push(m === null ? null : m.kind === 'levelUp' ? 'levelUp' : `streak ${m.streak}`);
+      if (m?.kind === 'streak' && m.streak === 5) expect(feedbackMsOf(fed.outcome)).toBe(FEEDBACK_MS + BIG_STREAK_PARTY_MS);
+      s = run([{ type: 'next', now: 0 }], fed);
+    };
+    [true, true, true, true, true, false, true, true, true, true, true].forEach(play);
+    expect(milestones[4]).toBe('streak 5');
+    expect(milestones[10]).toBeNull();
+  });
+
+  it('remembers when the class ended, for the energy ball', () => {
+    const s0 = run([{ type: 'start', config: config(), now: 0 }]);
+    const ended = run([{ type: 'end', now: 42_000 }], s0);
+    expect(ended).toMatchObject({ phase: 'summary', endedAt: 42_000 });
   });
 
   it('climbs a level after two strong rounds, and comes back down after two weak ones', () => {
@@ -152,9 +210,9 @@ describe('session reducer', () => {
     const skipped = run([{ type: 'next', now: 100 }], s0);
     expect(skipped.phase).toBe('feedback');
     expect(run([{ type: 'next', now: 200 }], skipped).phase).toBe('question');
-    const ended = run([{ type: 'end' }], s0);
+    const ended = run([{ type: 'end', now: 0 }], s0);
     expect(ended.phase).toBe('summary');
-    expect(run([{ type: 'end' }], ended)).toBe(INITIAL_SESSION);
+    expect(run([{ type: 'end', now: 0 }], ended)).toBe(INITIAL_SESSION);
   });
 
   it('keeps the same state object on idle ticks', () => {

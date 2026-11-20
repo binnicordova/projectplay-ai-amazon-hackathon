@@ -21,9 +21,12 @@
 | `mimikai-wordmark-mono.svg` | The name in one colour |
 | `mimikai-lockup.svg`, `mimikai-lockup-paper.svg` | Octopus and name side by side |
 | `icons/*.svg` | Layouts for the launcher icon, Android adaptive and themed icon, splash, favicon and Fire TV banners |
+| `motion/mimikai-moods.html` | The pet's 13 animated moods (hello, got it, nice try, on fire, level up…), the juggled rings (one per class level, plus a ring for each team on a streak), Rayitas the tiger cub who jumps through them, the end-of-class energy ball with four endings by score, when the TV plays each one, and build notes. Built from `mimikai-logo.svg` |
 | `icon-source.png` | The first icon (drawn with Google Gemini for the hackathon), kept for the record |
 
 `scripts/brand-icons.sh` renders `icons/*.svg` into both apps' assets and `banner.png`. Rebuild the native apps afterwards (`scripts/devices.sh <app> --clean`).
+
+The Android TV launcher banner (`icons/tv-banner-16x9.svg`) sits on indigo `#2D2170`, not Night: on a dark launcher, Night reads as transparent and Google Play rejected it.
 
 ## Colours
 
@@ -35,6 +38,7 @@
 | Sun | `#FFD23F` | `#F0A500` | The top ring, the third i-dot and the *ai* |
 | Night | `#0B1026` | | The projected wall and the app background |
 | Blush | `#FF8FBF` | `#FF85B6` | Cheeks only |
+| Rayitas orange | `#FF9A3D` | | Rayitas, Mimikai's tiger cub, only; its stripes are Ink |
 | Ink | `#1E1747` | | Eyes, mouth, wordmark on paper |
 
 ## Rules

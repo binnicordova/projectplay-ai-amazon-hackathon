@@ -2,10 +2,11 @@
   "name": "@mimikai/shared",
   "version": "1.0.0",
   "private": true,
-  "description": "Code shared by the teacher phone and the TV: the wire protocol and lesson format (contracts) and the exercise engine. Pure TypeScript only.",
+  "description": "Code shared by the teacher phone and the TV: the wire protocol and lesson format (contracts), the exercise engine and Mimikai the class pet. Pure TypeScript, except the pet's React Native rig (pet/src/rig), which each app typechecks with its own React Native.",
   "workspaces": [
     "contracts",
-    "exercise-engine"
+    "exercise-engine",
+    "pet"
   ],
   "scripts": {
     "test": "vitest run",

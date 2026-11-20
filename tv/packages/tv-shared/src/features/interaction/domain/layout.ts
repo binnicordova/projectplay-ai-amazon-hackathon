@@ -33,6 +33,7 @@ export const optionTargetId = (team: TeamId, index: number) => `${team}:option:$
 export const truthTargetId = (team: TeamId, value: boolean) => `${team}:truth:${value}`;
 
 export interface BoardTarget extends Target {
+  readonly kind: 'answer';
   readonly team: TeamId;
   /** The option's index (choice cards) or true/false. */
   readonly value: number | boolean;
@@ -53,6 +54,7 @@ export function choiceTargets(options: readonly Visual[], teams: readonly TeamId
     const area = areaOf(team, teams);
     const cells = teams.length === 1 || options.length <= 3 ? grid(area, options.length, 1) : grid(area, 2, Math.ceil(options.length / 2));
     return cells.slice(0, options.length).map((rect, i) => ({
+      kind: 'answer' as const,
       id: optionTargetId(team, i),
       rect,
       team,
@@ -63,6 +65,15 @@ export function choiceTargets(options: readonly Visual[], teams: readonly TeamId
   });
 }
 
+/** Mimikai in the lobby: any child can hold a hand on it (the same gesture that answers). */
+export interface PetTarget extends Target {
+  readonly kind: 'pet';
+  readonly team: null;
+}
+
+/** Everything on the wall a hand can hold on. */
+export type WallTarget = BoardTarget | PetTarget;
+
 export const TRUE_LABEL = 'VERDADERO';
 export const FALSE_LABEL = 'FALSO';
 
@@ -72,8 +83,8 @@ export function truthTargets(teams: readonly TeamId[]): BoardTarget[] {
     const area = areaOf(team, teams);
     const [yes, no] = grid({ ...area, y: area.y + 0.2, height: area.height - 0.2 }, 2, 1);
     return [
-      { id: truthTargetId(team, true), rect: yes!, team, value: true, visual: { kind: 'text', text: TRUE_LABEL }, label: TRUE_LABEL },
-      { id: truthTargetId(team, false), rect: no!, team, value: false, visual: { kind: 'text', text: FALSE_LABEL }, label: FALSE_LABEL },
+      { kind: 'answer', id: truthTargetId(team, true), rect: yes!, team, value: true, visual: { kind: 'text', text: TRUE_LABEL }, label: TRUE_LABEL },
+      { kind: 'answer', id: truthTargetId(team, false), rect: no!, team, value: false, visual: { kind: 'text', text: FALSE_LABEL }, label: FALSE_LABEL },
     ];
   });
 }

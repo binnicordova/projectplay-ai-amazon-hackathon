@@ -15,7 +15,7 @@ import {
   type TeamId,
 } from '@mimikai/contracts';
 import { DEFAULT_DWELL, DwellTracker, type DwellOptions } from '../domain/dwell';
-import type { BoardTarget } from '../domain/layout';
+import type { WallTarget } from '../domain/layout';
 
 export interface PointerSample {
   readonly pointerId: number;
@@ -37,10 +37,10 @@ interface Fill {
 
 export class PointerHub {
   private readonly dwell: DwellTracker;
-  private targets: readonly BoardTarget[] = [];
+  private targets: readonly WallTarget[] = [];
   private readonly listeners = new Set<(sample: PointerSample) => void>();
   private readonly progressListeners = new Set<(targetId: string, progress: number) => void>();
-  private readonly selectListeners = new Set<(team: TeamId, target: BoardTarget) => void>();
+  private readonly selectListeners = new Set<(team: TeamId, target: WallTarget) => void>();
   private readonly lastSeen = new Map<number, { readonly team: TeamId; readonly at: number }>();
   /** Progress per pointer, and the per-target maximum last shown on screen. */
   private readonly fills = new Map<number, Fill>();
@@ -58,7 +58,7 @@ export class PointerHub {
     this.dwell.setDwellMs(dwellMs);
   }
 
-  setTargets(targets: readonly BoardTarget[]): void {
+  setTargets(targets: readonly WallTarget[]): void {
     this.targets = targets;
     this.dwell.setTargets(targets);
     this.fills.clear();
@@ -89,7 +89,7 @@ export class PointerHub {
     return () => this.progressListeners.delete(listener);
   }
 
-  onSelect(listener: (team: TeamId, target: BoardTarget) => void): () => void {
+  onSelect(listener: (team: TeamId, target: WallTarget) => void): () => void {
     this.selectListeners.add(listener);
     return () => this.selectListeners.delete(listener);
   }

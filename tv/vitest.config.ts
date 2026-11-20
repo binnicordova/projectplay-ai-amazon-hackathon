@@ -10,6 +10,7 @@ export default defineConfig({
     alias: [
       { find: /^jotai(\/.*)?$/, replacement: `${appModules}/jotai$1` },
       { find: '@mimikai/contracts', replacement: path.resolve(__dirname, '../shared/contracts/src/index.ts') },
+      { find: /^@mimikai\/pet$/, replacement: path.resolve(__dirname, '../shared/pet/src/index.ts') },
     ],
   },
   test: {

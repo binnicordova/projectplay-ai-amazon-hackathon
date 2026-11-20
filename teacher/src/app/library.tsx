@@ -19,7 +19,7 @@ export default function LibraryScreen() {
       <View style={styles.header}>
         <Text style={type.title}>Biblioteca</Text>
         <View style={styles.spacer} />
-        <Button label="Crear con IA" onPress={() => router.push('/create')} />
+        <Button label="Crea con Mimi" onPress={() => router.push('/create')} />
         <Button label="Volver" variant="secondary" onPress={() => router.back()} />
       </View>
       <SubjectTiles lessons={lessons} selected={subject} onSelect={setSubject} />
@@ -30,7 +30,7 @@ export default function LibraryScreen() {
         numColumns={2}
         columnWrapperStyle={styles.columns}
         contentContainerStyle={styles.grid}
-        ListEmptyComponent={<Text style={type.caption}>No hay lecciones con ese filtro. Crea una con IA.</Text>}
+        ListEmptyComponent={<Text style={type.caption}>No hay lecciones con ese filtro. Crea una con Mimi.</Text>}
         renderItem={({ item }) => (
           <View style={styles.cell}>
             <LessonCard lesson={item} record={recordOf(records, item.id, 2) ?? recordOf(records, item.id, 1)} onPress={() => router.push({ pathname: '/lesson/[id]', params: { id: item.id } })} />

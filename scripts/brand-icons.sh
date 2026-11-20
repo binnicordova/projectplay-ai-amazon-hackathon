@@ -40,6 +40,7 @@ render "$ICONS/splash-icon.svg" 1024 1024 "$TMP/splash.png"
 render "$ICONS/favicon.svg" 256 256 "$TMP/favicon.png"
 render "$ICONS/tv-banner-5x3.svg" 2000 1200 "$TMP/banner-5x3.png"
 render "$ICONS/tv-banner-8x3.svg" 1920 720 "$TMP/banner-8x3.png"
+render "$ICONS/tv-banner-16x9.svg" 1600 900 "$TMP/banner-16x9.png"
 
 for dir in "$TEACHER" "$TV"; do
   mkdir -p "$dir"
@@ -56,6 +57,10 @@ mkdir -p "$TV/tv_icons"
 for size in 400x240 800x480 1280x768; do
   magick "$TMP/banner-5x3.png" -resize "$size!" -strip "$TV/tv_icons/icon-$size.png"
 done
+# Android TV launcher banner: Google Play wants 320x180 in drawable-xhdpi (config-tv copies this file there) and
+# rejects a banner it reads as transparent, so it is 16:9, full bleed, flattened, on a colour lighter than the launcher.
+magick "$TMP/banner-16x9.png" -alpha off -resize 320x180! -strip "PNG24:$TV/tv_icons/icon-320x180.png"
+magick "$TMP/banner-16x9.png" -alpha off -resize 1280x720! -strip "PNG24:$ROOT/docs/store/tv-banner-1280x720.png"
 magick "$TMP/banner-8x3.png" -strip "$TV/tv_icons/icon-1920x720.png"
 cp "$TV/tv_icons/icon-1920x720.png" "$ROOT/docs/brand/banner.png"
 echo "Icons written to $TEACHER, $TV and docs/brand/"

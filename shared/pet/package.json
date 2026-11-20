@@ -1,0 +1,25 @@
+{
+  "name": "@mimikai/pet",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mimikai, the class pet: moods, choreography, juggled rings and the art (pure TypeScript), plus the React Native rig both apps draw it with (rig.ts).",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "src/index.ts",
+  "files": [
+    "src",
+    "rig.ts"
+  ],
+  "peerDependencies": {
+    "@mimikai/contracts": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": "*"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true },
+    "react-native": { "optional": true },
+    "react-native-svg": { "optional": true }
+  }
+}

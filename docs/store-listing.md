@@ -59,6 +59,7 @@ Made from `docs/brand/` (feature graphic, TV banner, 512 px icon). The phone and
 - **Countries / regions (Production, both apps):** every country Play offers in the Americas and Europe (81). Countries outside those continents are not targeted.
 - **AI asset label:** the icon, feature graphic and (TV) banner are labelled "created or edited using AI"; the screenshots are real app captures and are not labelled.
 - **First bundles:** Mimikai version code 2, Mimikai TV version code 6 (TV targets API 36; Play rejected 34).
+- **TV launcher banner:** Play rejected Mimikai TV version code 6 on 2026-11-05 ("No full-size app banner and/or icon: your app banner is transparent"), although its PNG had no alpha: it was 5:3 in a 16:9 slot, on near-black Night. The banner in the bundle is now 320×180 in `drawable-xhdpi`, full bleed, flattened, on indigo `#2D2170` (`docs/brand/icons/tv-banner-16x9.svg`). This is a bundle resource, so fixing it takes a new build; the listing's TV banner alone doesn't. Version code 7 (1.0.0, built from `cb4c1b9` plus the banner) replaced 6 and went back to review on 2026-11-05.
 
 ## App content answers (Play Console → Policy → App content)
 
