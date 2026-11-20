@@ -14,6 +14,7 @@ const config = {
   watchFolders: [
     path.resolve(__dirname, '../../packages/tv-shared'),
     path.resolve(__dirname, '../../../shared/contracts'),
+    path.resolve(__dirname, '../../../shared/pet'),
   ],
   resolver: {
     unstable_enableSymlinks: true,

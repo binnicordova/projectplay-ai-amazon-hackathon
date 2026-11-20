@@ -12,8 +12,10 @@ import { fileLessonStore } from '../features/library/infrastructure/fileLessonSt
 import { STARTER_LESSON_FILES } from '../features/library/infrastructure/starterLessons.generated';
 import { iconArtAtom } from '../features/pictures/application/pictures';
 import { TWEMOJI_ART } from '../features/pictures/infrastructure/twemojiArt.generated';
-import { createLinkService, tvConnectedAtom, tvSnapshotAtom, type LinkService } from '../features/link/application/linkService';
+import { createLinkService, roundResultsAtom, tvConnectedAtom, tvSnapshotAtom, type LinkService } from '../features/link/application/linkService';
 import { TcpWebSocketServer } from '../features/link/infrastructure/tcpWebSocketServer';
+import { makeMimi, type Mimi } from '../features/mimi/application/mimi';
+import { fileProgressStore } from '../features/mimi/infrastructure/fileProgressStore';
 import { AutoCalibrator, autoCalibrationAtom, type LumaFrame } from '../features/perception/application/autoCalibration';
 import { calibrationAtom, homographyAtom, resetCalibrationAtom } from '../features/perception/application/calibration';
 import { PerceptionPipeline, type PoseFrame } from '../features/perception/application/perceptionPipeline';
@@ -44,8 +46,17 @@ export interface AppServices {
   readonly feedLumaFrame: (frame: LumaFrame) => void;
   /** Starter lessons and the teacher's own, records included. */
   readonly library: Library;
-  /** Creating lessons by chatting with the AI (needs internet). */
+  /** Creating lessons by chatting with Mimi (the AI; needs internet). */
   readonly chat: LessonChat;
+  /** The teacher's journey with Mimi: rings, streak, achievements and celebrations. */
+  readonly mimi: Mimi;
+}
+
+/** Today on the phone's own calendar, `YYYY-MM-DD`: a streak follows the teacher's days. */
+function localDay(): string {
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 }
 
 const newLessonId = () => `ai-${Date.now().toString(36)}-${Math.floor(Math.random() * 36 ** 4).toString(36)}`;
@@ -63,12 +74,22 @@ export function createAppServices(appVersion: string): AppServices {
     store,
     makeAskForLesson({ model: chatModelFor(aiSettingsFromEnv()), now: () => new Date().toISOString(), newId: newLessonId, random: Math.random }),
   );
-  // The TV stores nothing: the best score of each lesson is kept here when a class ends.
+  const mimi = makeMimi({ store, files: fileProgressStore, today: localDay });
+  void mimi.load();
+  // The TV stores nothing: when a class ends, the phone keeps the lesson's best score and Mimi
+  // counts the class. The summary is sent again after a reconnect: count each class once.
+  let lastClass = '';
   store.sub(tvSnapshotAtom, () => {
     const snapshot = store.get(tvSnapshotAtom);
     if (snapshot?.phase !== 'summary' || !snapshot.lessonId) return;
     const teams = snapshot.teams ?? 2;
     void library.recordScore(snapshot.lessonId, teams, teams === 1 ? snapshot.scores.A : Math.max(snapshot.scores.A, snapshot.scores.B));
+    const signature = `${snapshot.lessonId}:${snapshot.round}:${snapshot.scores.A}:${snapshot.scores.B}`;
+    if (signature === lastClass) return;
+    lastClass = signature;
+    const correct = store.get(roundResultsAtom).filter((r) => r.correct && r.team !== null).length;
+    mimi.classFinished({ rounds: snapshot.round, teams, correct, level: snapshot.level ?? 1 });
+    console.log(`[mimi] class finished: ${correct} right in ${snapshot.round} cards`);
   });
 
   const applyCalibration = () => pipeline.setCalibration(store.get(homographyAtom), store.get(calibrationAtom));
@@ -160,5 +181,6 @@ export function createAppServices(appVersion: string): AppServices {
     feedLumaFrame: (frame) => calibrator.onLumaFrame(frame),
     library,
     chat,
+    mimi,
   };
 }

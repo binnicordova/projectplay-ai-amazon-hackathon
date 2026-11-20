@@ -125,9 +125,9 @@ You need a Fire TV (or any Android TV) with [ADB debugging on](https://developer
 2. `adb connect <fire-tv-ip>:5555 && adb install projectplay-tv.apk`, and `adb install projectplay-teacher.apk` on the phone.
 3. Turn on the phone's hotspot, connect the Fire TV to it and open both apps: the TV finds the phone by itself.
 4. On the phone: **Biblioteca** → pick a lesson → **Usar en clase**, point the phone at the screen from 2–4 m away and tap **Jugar en la TV**. The TV flashes four squares, the phone calibrates, and you answer by pointing at a tile with your arm raised. (On a simulator, the TV remote's D-pad moves a cursor and OK selects.)
-5. With internet on the phone, try **Crear con IA**: "créame 6 ejercicios de la tabla del 7 para niños de 8 años".
+5. With internet on the phone, try **Crea con Mimi**: "créame 6 ejercicios de la tabla del 7 para niños de 8 años".
 
-To build the APKs yourself: `npm run setup && npm run release:apks` (they land in `dist/release/`). The release step re-runs `expo prebuild` for both apps, so icons and `app.json` changes always reach the APKs, and the teacher APK gets *Crear con IA* only if `teacher/.env` holds a key.
+To build the APKs yourself: `npm run setup && npm run release:apks` (they land in `dist/release/`). The release step re-runs `expo prebuild` for both apps, so icons and `app.json` changes always reach the APKs, and the teacher APK gets *Crea con Mimi* only if `teacher/.env` holds a key.
 
 ## How children play
 
@@ -174,7 +174,9 @@ Only a body shaped like a child standing in front of the wall is tracked: a tors
 
 **The exercise engine** ([`shared/exercise-engine`](shared/exercise-engine)) builds all of these on the phone: a rule-based Spanish syllable splitter (so *manzana* is never "MA-…"), a word list with pictures, and generators whose wrong options are real mistakes. Same request and seed, same cards. `npm --prefix shared run build:content` regenerates the starter files, and a test fails if they drift.
 
-**Create with AI** (teacher app → *Crear con IA*): the teacher chats in their own words and can ask for changes ("más fácil", "agrega 3", "para 5 años"). The AI answers with JSON: for anything the engine knows, it only fills an exercise request and the engine computes every answer; for other topics (science, history, art…) it writes the cards, which are checked like any lesson file and shown for review, right answers in green, before saving. An answer that breaks the format is sent back once with the reason. The provider is a strategy: [`authoring/infrastructure/providers.ts`](teacher/src/features/authoring/infrastructure/providers.ts) maps a name to a `ChatModel` function; DeepSeek is the first (`deepseek-flash`, JSON mode). Creating needs internet (about 10–20 KB per lesson); playing never does.
+**Mimikai, the class pet**: the octopus of the logo, at the heart of both apps. On the wall it greets the class full screen before the first card, reacts to every answer from the answer panel (never sad, never a red cross), throws a full-screen party when the class levels up or a team gets 3, 5, 7 or 10 right in a row, and juggles one ring per level so children *see* the questions getting harder. In the lobby, children play with it: its eyes follow their hands, and holding a hand on it makes it giggle, the same gesture that answers a question. Rayitas, Mimikai's tiger cub, joins the big moments: it jumps through the new ring when the class levels up, bounds through every ring at a team's first five in a row, and chases a ring in the lobby (friends, not a circus act: no whip, no fire, never during a question). Every class ends with the energy ball: each right answer flies up as a spark into a ball above Mimikai, and how it ends depends on how the class did, from a little ball that pops into hearts to a super ball that shoots off the wall and rains stars, with the record rolling up when the class beats it. On the phone, Mimi greets the teacher, creates lessons with them, and grows with every class: more rings to juggle, a streak of school days, achievements and full-screen celebrations, all kept on the phone. Both apps draw it with one shared rig ([`shared/pet`](shared/pet)), animated on the native driver.
+
+**Create with AI** (teacher app → *Crea con Mimi*): the teacher chats in their own words and can ask for changes ("más fácil", "agrega 3", "para 5 años"). The AI answers with JSON: for anything the engine knows, it only fills an exercise request and the engine computes every answer; for other topics (science, history, art…) it writes the cards, which are checked like any lesson file and shown for review, right answers in green, before saving. An answer that breaks the format is sent back once with the reason. The provider is a strategy: [`authoring/infrastructure/providers.ts`](teacher/src/features/authoring/infrastructure/providers.ts) maps a name to a `ChatModel` function; DeepSeek is the first (`deepseek-flash`, JSON mode). Creating needs internet (about 10–20 KB per lesson); playing never does.
 
 ## Repository layout
 
@@ -214,7 +216,7 @@ Layering inside every feature: `domain` (pure TypeScript) → `application` (use
 npm run setup          # installs shared/, teacher/ (npm) and tv/ (Yarn 4 via Corepack; on Node 25+, which dropped it, `scripts/yarn.sh` fetches it with npx)
 npm run fetch-model    # downloads MoveNet SinglePose Lightning INT8 (~3 MB) into teacher/assets/models
 npm run check          # typecheck + lint + all unit tests
-cp teacher/.env.example teacher/.env   # then paste your DeepSeek key (only needed for "Crear con IA")
+cp teacher/.env.example teacher/.env   # then paste your DeepSeek key (only needed for "Crea con Mimi")
 ```
 
 The key is read at build time (`EXPO_PUBLIC_DEEPSEEK_API_KEY`), so it ends up inside the teacher APK: anyone with the APK can use it. Keep a spending alert on the account. Git ignores `teacher/.env`, and CI fails if a key ever lands in the repository.
@@ -237,7 +239,7 @@ cd teacher && npm run android             # development build; Expo Go cannot ru
 **3 · In the classroom**
 1. Turn on the phone's hotspot. Connect the Fire TV to it, then open Mimikai on the TV. It searches for the phone by itself.
 2. Put the phone on a tripod behind the children, facing the projected image. Calibration is automatic: when the class starts, the TV flashes four white squares for about 2 seconds and the phone finds the projection. (Tapping the 4 corners by hand on **Check camera view** still works as a fallback.)
-3. Pick a lesson in **Biblioteca** (or create one in **Crear con IA**), tap **Empezar clase**, choose who plays and how many cards, and press **Jugar en la TV**.
+3. Pick a lesson in **Biblioteca** (or create one in **Crea con Mimi**), tap **Empezar clase**, choose who plays and how many cards, and press **Jugar en la TV**.
 
 The TV needs the phone: lessons come from it. On the Fire TV / Vega simulators, the remote's D-pad moves a cursor during a class and OK selects.
 
@@ -255,7 +257,7 @@ The TV needs the phone: lessons come from it. On the Fire TV / Vega simulators, 
 |---|---|
 | Unit tests: contracts + lesson format, exercise engine (52 Spanish syllable splits, every generator × age group × 25 seeds, answer keys recomputed), starter files in sync (210); teacher incl. library, AI chat, DeepSeek adapter with a fake network (142); TV lesson player, levels, scoring, layout (44) | ✅ 396 passing (`npm test`) |
 | Starter collection | ✅ 11 lessons, 121 cards, regenerated byte-identical by `build:content` and checked by tests |
-| Live call to DeepSeek | 🟡 not from the development sandbox (no network to the API): the adapter is tested with recorded responses; run *Crear con IA* on the phone to confirm |
+| Live call to DeepSeek | 🟡 not from the development sandbox (no network to the API): the adapter is tested with recorded responses; run *Crea con Mimi* on the phone to confirm |
 | Strict typecheck against the real installed type definitions (VisionCamera 5.2, fast-tflite 3, worklets 0.8, tcp-socket 6.4, Expo Router 6/56) | ✅ teacher and Fire OS TV app |
 | Layer-boundary lint (teacher) | ✅ including a self-test that a violation fails |
 | JS bundles: teacher (Hermes, Android, 3.8 MB), Fire OS TV (`EXPO_TV=1`, 3.0 MB), Vega OS (Metro 0.76, `--platform kepler`) | ✅ all three build; Vega picks the `.kepler.ts(x)` files (emoji pictures, no SVG renderer) |

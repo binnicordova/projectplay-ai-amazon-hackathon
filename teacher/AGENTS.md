@@ -24,7 +24,7 @@ npm run fetch-model      # bundling and lint need assets/models/movenet-singlepo
 
 ## AI key
 
-`Crear con IA` reads `EXPO_PUBLIC_AI_PROVIDER`, `EXPO_PUBLIC_DEEPSEEK_API_KEY` and `EXPO_PUBLIC_DEEPSEEK_MODEL` from `teacher/.env` (copy `.env.example`). Expo inlines `EXPO_PUBLIC_*` at bundle time, so restart Metro after changing it, and remember the key ships inside the APK. `.env` is gitignored; never commit a key or print it in logs.
+`Crea con Mimi` reads `EXPO_PUBLIC_AI_PROVIDER`, `EXPO_PUBLIC_DEEPSEEK_API_KEY` and `EXPO_PUBLIC_DEEPSEEK_MODEL` from `teacher/.env` (copy `.env.example`). Expo inlines `EXPO_PUBLIC_*` at bundle time, so restart Metro after changing it, and remember the key ships inside the APK. `.env` is gitignored; never commit a key or print it in logs.
 
 ## Where things are
 
@@ -44,7 +44,9 @@ npm run fetch-model      # bundling and lint need assets/models/movenet-singlepo
 - `src/features/authoring/`: chat with the AI to create a lesson. `domain/draft.ts` decodes the AI's JSON and turns it into a lesson (engine for known kinds, checked cards otherwise); `domain/prompt.ts` is the system prompt; `application/lessonChat.ts` asks, validates and retries once with the reason; `infrastructure/deepseek.ts` + `providers.ts` are the strategy (`ChatModel` per `ProviderId`). Tests use a fake `fetch`; there is no live call in CI.
 - `src/features/pictures/`: Twemoji SVG art (`iconArtAtom`, generated `twemojiArt.generated.ts`) and the `Picture` component (emoji fallback).
 - `src/features/console/`: start a lesson on the TV (`startCommand` sends the lesson, its art and the record), and live class controls.
-- **Functional core:** in `library`, `authoring`, `pictures` and `console`, ESLint forbids classes and `throw` in `domain/` and `application/`. Return `Result` values (`@mimikai/contracts`), build use cases as `makeX(deps)`, and keep ports as function types.
+- `src/features/mimi/`: Mimi, the pet, on the phone (the rig is shared: `@mimikai/pet/rig`). `domain/progress.ts` is the teacher's journey: classes, right answers, a school-day streak (weekends never break it), rings earned (one more at 3, 8, 15 and 25 classes) and achievements, plus the full-screen moments each event earns; `domain/voice.ts` decides what Mimi does and says on home, in *Crea con Mimi* and in each moment. `application/mimi.ts` (`makeMimi`) records a class when the TV reaches its summary (once per class) and each lesson saved from the chat; `infrastructure/fileProgressStore.ts` keeps it in `document/mimi.json`. Nothing leaves the phone.
+- Mimi's full-screen moments (`MimiMoments`) sit above every screen in `app/_layout.tsx`. They subscribe to their own atom, so the camera screen never re-renders for them.
+- **Functional core:** in `library`, `authoring`, `pictures`, `console` and `mimi`, ESLint forbids classes and `throw` in `domain/` and `application/`. Return `Result` values (`@mimikai/contracts`), build use cases as `makeX(deps)`, and keep ports as function types.
 - `domain/testing/`: synthetic poses and synthetic camera images of the calibration pattern. Use them in tests instead of mocks.
 
 ## Camera thread rules (VisionCamera v5 + worklets)

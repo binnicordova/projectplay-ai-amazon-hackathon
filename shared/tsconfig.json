@@ -11,5 +11,7 @@
     "skipLibCheck": true,
     "types": []
   },
-  "include": ["contracts/src", "exercise-engine/src"]
+  "include": ["contracts/src", "exercise-engine/src", "pet/src", "pet/rig.ts"],
+  // The rig is React Native: each app typechecks it with its own React Native version.
+  "exclude": ["pet/src/rig", "pet/rig.ts"]
 }

@@ -1,6 +1,7 @@
 /**
- * Chat with the AI to create a lesson: the conversation on the left, the latest draft on the
- * right with every card visible, and Save / Play once the teacher is happy with it.
+ * Crea con Mimi: the teacher asks Mimi (the AI) for a lesson. The conversation on the left, with
+ * Mimi thinking while it drafts and cheering each draft; the latest draft on the right with every
+ * card visible, and Save / Play once the teacher is happy with it.
  */
 import type { Lesson } from '@mimikai/contracts';
 import { useAtomValue } from 'jotai';
@@ -10,11 +11,13 @@ import { Button } from '../../../ui-kit/components';
 import { colors, radius, space, type } from '../../../ui-kit/theme';
 import { SUBJECT_INFO, audienceLabel } from '../../library/domain/catalog';
 import { LessonPreview } from '../../library/ui/LessonPreview';
-import { Picture } from '../../pictures/ui/Picture';
+import { mimiRingsAtom } from '../../mimi/application/mimi';
+import { chatCueOf } from '../../mimi/domain/voice';
+import { Bubble, MimiPet } from '../../mimi/ui/MimiPet';
 import { chatStatusAtom, chatTurnsAtom, draftLessonAtom } from '../application/lessonChat';
 import { EXAMPLE_REQUESTS, type ChatTurn } from '../domain/prompt';
 
-const AI_ICON = '2728';
+const MIMI_SIZE = 96;
 
 export interface LessonChatActions {
   readonly send: (text: string) => void;
@@ -27,9 +30,13 @@ export function LessonChatView({ actions }: { readonly actions: LessonChatAction
   const turns = useAtomValue(chatTurnsAtom);
   const status = useAtomValue(chatStatusAtom);
   const draft = useAtomValue(draftLessonAtom);
+  const rings = useAtomValue(mimiRingsAtom);
   const [text, setText] = useState('');
   const list = useRef<FlatList<ChatTurn>>(null);
   const thinking = status.state === 'thinking';
+  // Each answer from Mimi is a new draft: it cheers every one.
+  const drafts = turns.filter((t) => t.role !== 'teacher').length;
+  const cue = chatCueOf({ state: status.state === 'thinking' || status.state === 'error' ? status.state : 'idle', drafts });
 
   const submit = (value: string) => {
     if (!value.trim() || thinking) return;
@@ -41,9 +48,11 @@ export function LessonChatView({ actions }: { readonly actions: LessonChatAction
     <View style={styles.screen}>
       <KeyboardAvoidingView style={styles.chat} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={styles.titleRow}>
-          <Picture icon={AI_ICON} size={28} />
-          <Text style={type.title}>Crear con IA</Text>
-          <View style={styles.spacer} />
+          <MimiPet cue={cue} rings={rings} size={MIMI_SIZE} />
+          <View style={styles.mimiSays}>
+            <Text style={type.title}>Crea con Mimi</Text>
+            <Bubble text={cue.line} />
+          </View>
           {turns.length > 0 ? <Button label="Nueva" variant="ghost" onPress={actions.reset} /> : null}
         </View>
         <FlatList
@@ -63,7 +72,7 @@ export function LessonChatView({ actions }: { readonly actions: LessonChatAction
               {thinking ? (
                 <View style={[styles.bubble, styles.assistant, styles.row]}>
                   <ActivityIndicator color={colors.primary} />
-                  <Text style={type.caption}>Preparando los ejercicios…</Text>
+                  <Text style={type.caption}>Mimi está preparando los ejercicios…</Text>
                 </View>
               ) : null}
               {status.state === 'error' ? (
@@ -111,9 +120,9 @@ export function LessonChatView({ actions }: { readonly actions: LessonChatAction
           />
         ) : (
           <View style={styles.empty}>
-            <Text style={type.heading}>Aquí verás tu lección</Text>
+            <Text style={type.heading}>Aquí verás la lección de Mimi</Text>
             <Text style={type.caption}>
-              Escribe lo que necesitas: el tema, cuántos ejercicios y la edad. Puedes pedir cambios después («más fácil», «agrega 3», «para 5 años»).
+              Dile a Mimi lo que necesitas: el tema, cuántos ejercicios y la edad. Puedes pedir cambios después («más fácil», «agrega 3», «para 5 años»).
               Necesita internet; jugar en clase no.
             </Text>
           </View>
@@ -140,7 +149,7 @@ const styles = StyleSheet.create({
   screen: { flex: 1, flexDirection: 'row', gap: space.lg, padding: space.lg, backgroundColor: colors.background },
   chat: { flex: 1, gap: space.md },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
-  spacer: { flex: 1 },
+  mimiSays: { flex: 1, gap: space.xs },
   messages: { gap: space.sm, paddingBottom: space.md },
   bubble: { maxWidth: '88%', borderRadius: radius.lg, padding: space.md },
   teacher: { alignSelf: 'flex-end', backgroundColor: colors.primary },

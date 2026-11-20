@@ -2918,6 +2918,7 @@ __metadata:
     "@babel/core": "npm:^7.29.6"
     "@expo/metro-runtime": "npm:~6.1.2"
     "@mimikai/contracts": "portal:../../../shared/contracts"
+    "@mimikai/pet": "portal:../../../shared/pet"
     "@mimikai/tv-shared": "workspace:*"
     "@react-native-tvos/config-tv": "npm:^0.1.7"
     "@types/react": "npm:~19.1.0"
@@ -2946,11 +2947,48 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mimikai/pet@portal:../../../shared/pet::locator=%40mimikai%2Fexpo-tv%40workspace%3Aapps%2Fexpo-tv":
+  version: 0.0.0-use.local
+  resolution: "@mimikai/pet@portal:../../../shared/pet::locator=%40mimikai%2Fexpo-tv%40workspace%3Aapps%2Fexpo-tv"
+  peerDependencies:
+    "@mimikai/contracts": "*"
+    react: "*"
+    react-native: "*"
+    react-native-svg: "*"
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-native:
+      optional: true
+    react-native-svg:
+      optional: true
+  languageName: node
+  linkType: soft
+
+"@mimikai/pet@portal:../../../shared/pet::locator=%40mimikai%2Fvega%40workspace%3Aapps%2Fvega":
+  version: 0.0.0-use.local
+  resolution: "@mimikai/pet@portal:../../../shared/pet::locator=%40mimikai%2Fvega%40workspace%3Aapps%2Fvega"
+  peerDependencies:
+    "@mimikai/contracts": "*"
+    react: "*"
+    react-native: "*"
+    react-native-svg: "*"
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-native:
+      optional: true
+    react-native-svg:
+      optional: true
+  languageName: node
+  linkType: soft
+
 "@mimikai/tv-shared@workspace:*, @mimikai/tv-shared@workspace:packages/tv-shared":
   version: 0.0.0-use.local
   resolution: "@mimikai/tv-shared@workspace:packages/tv-shared"
   peerDependencies:
     "@mimikai/contracts": "*"
+    "@mimikai/pet": "*"
     jotai: "*"
     mitt: "*"
     react: "*"
@@ -2985,6 +3023,7 @@ __metadata:
     "@babel/plugin-transform-template-literals": "npm:^7.27.1"
     "@babel/traverse": "npm:^7.20.0"
     "@mimikai/contracts": "portal:../../../shared/contracts"
+    "@mimikai/pet": "portal:../../../shared/pet"
     "@mimikai/tv-shared": "workspace:*"
     "@react-native-community/cli": "npm:17.0.1"
     "@react-native-community/cli-tools": "npm:^11.0.0"

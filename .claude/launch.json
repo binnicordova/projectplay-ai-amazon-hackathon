@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "store-screenshots",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd store-screenshots && bun run dev --port 3210"],
+      "port": 3210
+    }
+  ]
+}

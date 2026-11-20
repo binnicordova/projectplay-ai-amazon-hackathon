@@ -16,6 +16,7 @@
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
     "@mimikai/contracts": "portal:../../../shared/contracts",
+    "@mimikai/pet": "portal:../../../shared/pet",
     "@mimikai/tv-shared": "workspace:*",
     "expo": "~54.0.0",
     "expo-build-properties": "~1.0.10",

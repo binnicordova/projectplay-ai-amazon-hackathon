@@ -59,6 +59,8 @@ Made from `docs/brand/` (feature graphic, TV banner, 512 px icon). The phone and
 - **Countries / regions (Production, both apps):** every country Play offers in the Americas and Europe (81). Countries outside those continents are not targeted.
 - **AI asset label:** the icon, feature graphic and (TV) banner are labelled "created or edited using AI"; the screenshots are real app captures and are not labelled.
 - **First bundles:** Mimikai version code 2, Mimikai TV version code 6 (TV targets API 36; Play rejected 34).
+- **TV launcher banner:** Play rejected Mimikai TV version code 6 on 2026-11-05 ("No full-size app banner and/or icon: your app banner is transparent"), although its PNG had no alpha: it was 5:3 in a 16:9 slot, on near-black Night. The banner in the bundle is now 320×180 in `drawable-xhdpi`, full bleed, flattened, on indigo `#2D2170` (`docs/brand/icons/tv-banner-16x9.svg`). This is a bundle resource, so fixing it takes a new build; the listing's TV banner alone doesn't. Version code 7 (1.0.0, built from `cb4c1b9` plus the banner) replaced 6 and went back to review on 2026-11-05.
+- **2026-11-20 releases (1.0.0, built from `d6488f7`, Mimikai the pet):** Mimikai version code 3 and Mimikai TV version code 8 sent to production review on 2026-11-20, replacing 2 and 7. Play's quick checks flag a required hardware feature on each, ignored on purpose because the release before had it too: `android.hardware.screen.landscape` on the phone (it films the class in landscape on a tripod) and `android.hardware.wifi` on the TV (it only works on the teacher's hotspot). Before submitting, an `eas update` on the preview channel reached preview builds of both apps on a real phone and TV (downloaded on the first launch, running on the second). Both bundles were uploaded by hand: there is no Play service account on EAS yet (`docs/friction-log.md` F30).
 
 ## App content answers (Play Console → Policy → App content)
 
@@ -66,15 +68,15 @@ What the code does, so the declarations stay true. Same answers for both apps un
 
 | Declaration | Answer |
 |---|---|
-| Privacy policy | https://github.com/binnicordova/projectplay-ai-amazon-hackathon/blob/main/docs/privacy.md (live once `rebrand-mimikai` is merged) |
+| Privacy policy | https://github.com/binnicordova/projectplay-ai-amazon-hackathon/blob/main/docs/privacy.md#readme (the `#readme` anchor only made Play re-check the URL after it had cached a 404 from before the merge) |
 | Ads | No ads |
 | Sign in details | Yes, restricted: "actions on another device". Note: no account, login or payment; a class needs the other app (Mimikai ⇄ Mimikai TV) on the same Wi-Fi; without it the phone app still opens the library, any lesson and *Crear con IA*. Tick "full access". |
 | Advertising ID | No |
 | Government apps | No |
 | Financial features | My app doesn't provide any financial features |
 | Health apps | My app does not have any health features |
-| Content rating (IARC) | Category: Education. Every content question (violence, fear, sex, language, drugs, gambling): No. Users interact or share content with each other: No. Shares location: No. Digital purchases: No. |
-| Target audience | Phone: 18 and over (teachers operate it; children never touch it). TV: see below. |
+| Content rating (IARC) | Category: All Other App Types. Ratings-relevant content in the package: No. Users interact or share content: No. Online content not in the download: **Yes** (AI-made and phone-sent lessons), then violence, sexuality, language, drugs: No. Age-restricted products: No. Shares location, digital purchases, cash rewards, browser: No. Primarily educational: Yes. Result: ESRB Everyone, PEGI 3, ClassInd All ages. |
+| Target audience | 18 and over for both apps (teachers operate them; see the TV note below). The optional "restrict minors" box is left off. |
 | Data safety, phone | Collects data: Yes. **App activity → Other user-generated content** (the text typed in *Crear con IA*, sent to DeepSeek to draft a lesson): app functionality, optional, processed ephemerally, not shared. **Device or other IDs** (random install ID sent by `expo-updates`): app functionality, required, not shared. Encrypted in transit: Yes. Account creation: none. Camera images are processed on the phone only, so they are **not** collected. |
 | Data safety, TV | Collects data: Yes. **Device or other IDs** (`expo-updates` install ID): app functionality, required, not shared. Encrypted in transit: Yes. Phone ⇄ TV traffic stays on the local network and is not collected. |
 

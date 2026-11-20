@@ -1,3 +1,4 @@
+import type { Lesson } from '@mimikai/contracts';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
@@ -6,7 +7,13 @@ import { LessonChatView } from '../features/authoring/ui/LessonChatView';
 import { colors } from '../ui-kit/theme';
 
 export default function CreateScreen() {
-  const { chat, library } = useServices();
+  const { chat, library, mimi } = useServices();
+  // Each lesson saved from the chat is one more lesson created with Mimi.
+  const keep = (lesson: Lesson) =>
+    library.save(lesson).then((saved) => {
+      if (saved.ok) mimi.lessonCreated();
+      return saved;
+    });
   return (
     <SafeAreaView style={styles.screen} edges={['left', 'right', 'bottom']}>
       <LessonChatView
@@ -14,10 +21,10 @@ export default function CreateScreen() {
           send: (text) => void chat.send(text),
           reset: chat.reset,
           save: (lesson) => {
-            void library.save(lesson).then((saved) => saved.ok && router.push({ pathname: '/lesson/[id]', params: { id: lesson.id } }));
+            void keep(lesson).then((saved) => saved.ok && router.push({ pathname: '/lesson/[id]', params: { id: lesson.id } }));
           },
           saveAndPlay: (lesson) => {
-            void library.save(lesson).then((saved) => {
+            void keep(lesson).then((saved) => {
               if (!saved.ok) return;
               library.choose(lesson.id);
               router.push('/class');

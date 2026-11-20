@@ -1,6 +1,6 @@
 /**
  * Composition root for the TV: wires the phone link, the pointer hub, the remote
- * control and the session reducer around one Jotai store.
+ * control, the session reducer and the pet around one Jotai store.
  */
 import { DEFAULT_TEAM_COUNT, TEAMS, type AgeBand, type CalibrationPattern, type PlayerId, type TeamId } from '@mimikai/contracts';
 import { createStore } from 'jotai';
@@ -9,6 +9,9 @@ import type { GameServices } from '../features/game/application/gameServices';
 import { PointerHub } from '../features/interaction/application/pointerHub';
 import { DEFAULT_DWELL } from '../features/interaction/domain/dwell';
 import { LinkClient, linkStatusAtom, type NetworkInfo, type Transport } from '../features/link/application/linkClient';
+import { petMemoryAtom } from '../features/pet/application/petStore';
+import type { PetEvent } from '../features/pet/domain/memory';
+import { PET_TARGET } from '../features/pet/domain/stage';
 import { activeTeamsAtom, clockAtom, sessionAtom } from '../features/session/application/sessionStore';
 import { roundResults, snapshotOf, teamCountOf, type SessionEvent } from '../features/session/domain/session';
 import RemoteControlManager from '../platform/remote-control/RemoteControlManager';
@@ -52,8 +55,11 @@ export function createTvServices({ transport, network, platform, preferredHosts 
   let patternTimer: ReturnType<typeof setTimeout> | null = null;
 
   const dispatch = (event: SessionEvent) => store.set(sessionAtom, event);
+  const dispatchPet = (event: PetEvent) => store.set(petMemoryAtom, event);
   const seen = (player: PlayerId) => lastSeen.set(pointers.teamOf(player), Date.now());
   const answering = () => store.get(sessionAtom).phase === 'question';
+  /** The lobby with the phone linked: children can play with Mimikai while the teacher gets ready. */
+  const inLobby = () => store.get(sessionAtom).phase === 'lobby' && store.get(linkStatusAtom).state === 'connected';
 
   const showPattern = (pattern: CalibrationPattern | null) => {
     // Hiding is requested on every link-status change: only act when something is shown.
@@ -85,7 +91,7 @@ export function createTvServices({ transport, network, platform, preferredHosts 
             dispatch({ type: 'start', config: message.config, now: Date.now() });
           }
           else if (message.a === 'next') dispatch({ type: 'next', now: Date.now() });
-          else dispatch({ type: 'end' });
+          else dispatch({ type: 'end', now: Date.now() });
           return;
         default:
           return;
@@ -93,13 +99,21 @@ export function createTvServices({ transport, network, platform, preferredHosts 
     }),
   );
 
-  // A hand held on a tile chooses it for its team (a later choice replaces it until time is up).
-  disposers.push(pointers.onSelect((team, target) => dispatch({ type: 'answer', team, value: target.value, now: Date.now() })));
+  // A hand held on a tile chooses it for its team (a later choice replaces it until time is up);
+  // a hand held on Mimikai in the lobby tickles it.
+  disposers.push(
+    pointers.onSelect((team, target) => {
+      if (target.kind === 'pet') dispatchPet({ type: 'tickled', team, now: Date.now() });
+      else dispatch({ type: 'answer', team, value: target.value, now: Date.now() });
+    }),
+  );
 
   // TV remote: a virtual pointer during a class (handy on the Fire TV / Vega simulators).
   let remotePoint = { x: 0.25, y: 0.62 };
   let remoteUsedAt = -Infinity;
   const onKey = (key: SupportedKeys) => {
+    // In the lobby OK tickles Mimikai, so the pet can be tried with the remote alone.
+    if (key === SupportedKeys.Enter && inLobby()) dispatchPet({ type: 'tickled', team: 'A', now: Date.now() });
     if (!answering()) return;
     const moves: Partial<Record<SupportedKeys, [number, number]>> = {
       [SupportedKeys.Left]: [-REMOTE_STEP, 0],
@@ -135,20 +149,33 @@ export function createTvServices({ transport, network, platform, preferredHosts 
     }
     if (state.phase === 'feedback' && lastPhase === 'question') roundResults(state).forEach((r) => link.send(r));
     if (state.phase !== lastPhase && state.phase === 'question') pointers.setTargets([]);
+    // The lobby's only target is Mimikai. Set here, not by the lobby screen: route changes fade,
+    // so the lobby can unmount after the class's first tiles are already up.
+    if (state.phase !== lastPhase && state.phase === 'lobby') pointers.setTargets([PET_TARGET]);
     lastPhase = state.phase;
   };
   disposers.push(store.sub(sessionAtom, () => publish()));
-  disposers.push(
-    store.sub(linkStatusAtom, () => {
-      if (store.get(linkStatusAtom).state === 'connected') publish(true);
-      else showPattern(null);
-    }),
-  );
+  const linkChanged = () => {
+    if (store.get(linkStatusAtom).state === 'connected') {
+      dispatchPet({ type: 'linked' });
+      publish(true);
+    } else {
+      dispatchPet({ type: 'unlinked', now: Date.now() });
+      showPattern(null);
+    }
+  };
+  disposers.push(store.sub(linkStatusAtom, linkChanged));
 
   const tick = () => {
     const now = Date.now();
     const active = TEAMS.filter((t) => now - (lastSeen.get(t) ?? -Infinity) < PRESENCE_MS);
-    if (active.join() !== store.get(activeTeamsAtom).join()) store.set(activeTeamsAtom, active);
+    const before = store.get(activeTeamsAtom);
+    if (active.join() !== before.join()) {
+      store.set(activeTeamsAtom, active);
+      // A child just stepped in front of the camera: Mimikai waves at that half of the wall.
+      const arrived = active.find((t) => !before.includes(t));
+      if (arrived && inLobby()) dispatchPet({ type: 'arrived', team: arrived, now });
+    }
     store.set(clockAtom, now);
     if (now - remoteUsedAt < REMOTE_HOLD_MS) pointers.keepAlive(REMOTE_PLAYER, REMOTE_HAND);
     pointers.sweep();
@@ -160,6 +187,8 @@ export function createTvServices({ transport, network, platform, preferredHosts 
     link,
     pointers,
     start() {
+      pointers.setTargets([PET_TARGET]);
+      linkChanged();
       link.start();
       const listener = RemoteControlManager.addKeydownListener(onKey);
       disposers.push(() => RemoteControlManager.removeKeydownListener(listener));
@@ -176,8 +205,8 @@ export function createTvServices({ transport, network, platform, preferredHosts 
     },
     backToLobby() {
       const phase = store.get(sessionAtom).phase;
-      if (phase !== 'lobby') dispatch({ type: 'end' });
-      if (store.get(sessionAtom).phase !== 'lobby') dispatch({ type: 'end' });
+      if (phase !== 'lobby') dispatch({ type: 'end', now: Date.now() });
+      if (store.get(sessionAtom).phase !== 'lobby') dispatch({ type: 'end', now: Date.now() });
     },
   };
 }

@@ -38,6 +38,28 @@ const QUESTION_TIME: Readonly<Record<AgeBand, Readonly<Record<GameMode, number>>
 
 export const FEEDBACK_MS = 4_000;
 
+/**
+ * The class starts with Mimikai greeting it, full screen: the first card opens after this, so
+ * the greeting never eats into the children's time (and the TV has a moment to draw the board).
+ */
+export const INTRO_MS = 3_000;
+
+/**
+ * A round that earns a milestone keeps the answer screen up longer for a full-screen party. The
+ * party's show must fit: Rayitas jumps through the new ring at a level up, and bounds through
+ * every ring at a team's first five in a row (see shared/pet scenes).
+ */
+export const CELEBRATION_MS = 3_000;
+export const LEVEL_UP_PARTY_MS = 4_500;
+export const BIG_STREAK_PARTY_MS = 6_000;
+
+/** Right answers in a row worth a celebration. Five is the big one, once per team per class. */
+export const STREAK_MILESTONES: readonly number[] = [3, 5, 7, 10];
+export const BIG_STREAK = 5;
+
+/** The last seconds of a question: the countdown turns to its warning colour and the pet hurries. */
+export const HURRY_MS = 5_000;
+
 export const questionTimeMs = (config: SessionConfig, card: Card): number => QUESTION_TIME[config.lesson.audience.band][card.kind];
 
 /** A team's current choice (an option index, or true/false). It can change until the time is up. */
@@ -55,11 +77,28 @@ export interface Round {
   readonly answers: Readonly<Record<TeamId, Answer | null>>;
 }
 
+/** Something a round earned the whole class a celebration for (a level up wins over a streak). */
+export type Milestone =
+  | { readonly kind: 'levelUp'; readonly level: Level }
+  | { readonly kind: 'streak'; readonly teams: readonly TeamId[]; readonly streak: number };
+
 /** What the last round changed, for the feedback screen. */
 export interface Outcome {
   readonly points: Readonly<Record<TeamId, number>>;
   readonly level: LevelChange;
+  readonly milestone: Milestone | null;
 }
+
+export function partyMsOf(milestone: Milestone): number {
+  if (milestone.kind === 'levelUp') return LEVEL_UP_PARTY_MS;
+  return milestone.streak === BIG_STREAK ? BIG_STREAK_PARTY_MS : CELEBRATION_MS;
+}
+
+/** How long the answer screen stays: longer when the round earned a celebration. */
+export const feedbackMsOf = (outcome: Outcome): number => FEEDBACK_MS + (outcome.milestone ? partyMsOf(outcome.milestone) : 0);
+
+/** The card is open for choosing (round 1 opens after the class's greeting). */
+export const isOpen = (round: Round, now: number): boolean => now >= round.startedAt;
 
 interface Running {
   readonly config: SessionConfig;
@@ -73,6 +112,8 @@ interface Running {
 }
 
 export interface Finished {
+  /** When the class ended: Mimikai's energy ball is timed from it. */
+  readonly endedAt: number;
   readonly config: SessionConfig;
   readonly teams: Readonly<Record<TeamId, TeamStats>>;
   readonly rounds: number;
@@ -92,7 +133,7 @@ export type SessionEvent =
   | { readonly type: 'answer'; readonly team: TeamId; readonly value: number | boolean; readonly now: number }
   | { readonly type: 'tick'; readonly now: number }
   | { readonly type: 'next'; readonly now: number }
-  | { readonly type: 'end' };
+  | { readonly type: 'end'; readonly now: number };
 
 export const INITIAL_SESSION: SessionState = { phase: 'lobby' };
 
@@ -116,7 +157,7 @@ export function isCorrect(card: Card, value: number | boolean): boolean {
 }
 
 function start(config: SessionConfig, now: number): SessionState {
-  const round = makeRound(config, START_PROGRESS, [], 1, now);
+  const round = makeRound(config, START_PROGRESS, [], 1, now + INTRO_MS);
   return { phase: 'question', config, progress: START_PROGRESS, teams: NO_TEAM_STATS, played: [round.card.id], round, topLevel: START_PROGRESS.level };
 }
 
@@ -136,20 +177,38 @@ function toFeedback(state: Running, now: number): SessionState {
   };
   const correctTeams = playing.filter((t) => round.answers[t]?.correct).length;
   const { progress, change } = afterRound(state.progress, correctTeams, playing.length);
+  const teams = { A: statsOf('A'), B: statsOf('B') };
   return {
     ...state,
     phase: 'feedback',
     feedbackAt: now,
-    teams: { A: statsOf('A'), B: statsOf('B') },
+    teams,
     progress,
-    outcome: { points, level: change },
+    outcome: { points, level: change, milestone: milestoneOf(change, progress.level, playing, state.teams, teams, round) },
     topLevel: Math.max(state.topLevel, progress.level) as Level,
   };
 }
 
+function milestoneOf(
+  change: LevelChange,
+  level: Level,
+  playing: readonly TeamId[],
+  before: Readonly<Record<TeamId, TeamStats>>,
+  teams: Readonly<Record<TeamId, TeamStats>>,
+  round: Round,
+): Milestone | null {
+  if (change === 'up') return { kind: 'levelUp', level };
+  // Five in a row is celebrated the first time only: the big show stays special.
+  const counts = (t: TeamId) => teams[t].streak !== BIG_STREAK || before[t].bestStreak < BIG_STREAK;
+  const hot = playing.filter((t) => round.answers[t]?.correct && STREAK_MILESTONES.includes(teams[t].streak) && counts(t));
+  if (hot.length === 0) return null;
+  const streak = Math.max(...hot.map((t) => teams[t].streak));
+  return { kind: 'streak', teams: hot.filter((t) => teams[t].streak === streak), streak };
+}
+
 function advance(state: Extract<SessionState, { phase: 'feedback' }>, now: number): SessionState {
   const { config, progress, played, round, teams, topLevel } = state;
-  if (round.number >= roundsOf(config)) return { phase: 'summary', config, teams, rounds: round.number, topLevel };
+  if (round.number >= roundsOf(config)) return { phase: 'summary', config, teams, rounds: round.number, topLevel, endedAt: now };
   const next = makeRound(config, progress, played, round.number + 1, now);
   return { phase: 'question', config, progress, teams, played: [...played, next.card.id], round: next, topLevel };
 }
@@ -161,7 +220,14 @@ export function reduceSession(state: SessionState, event: SessionEvent): Session
 
     case 'end':
       if (state.phase === 'summary' || state.phase === 'lobby') return INITIAL_SESSION;
-      return { phase: 'summary', config: state.config, teams: state.teams, rounds: state.round.number - (state.phase === 'question' ? 1 : 0), topLevel: state.topLevel };
+      return {
+        phase: 'summary',
+        config: state.config,
+        teams: state.teams,
+        rounds: state.round.number - (state.phase === 'question' ? 1 : 0),
+        topLevel: state.topLevel,
+        endedAt: event.now,
+      };
 
     case 'answer': {
       if (state.phase !== 'question') return state;
@@ -170,6 +236,8 @@ export function reduceSession(state: SessionState, event: SessionEvent): Session
       const { card } = state.round;
       if (card.kind === 'choice' && (typeof event.value !== 'number' || event.value < 0 || event.value >= card.options.length)) return state;
       if (card.kind === 'trueFalse' && typeof event.value !== 'boolean') return state;
+      // Tiles open after the class's greeting; a hand that strays there earlier chooses nothing.
+      if (!isOpen(state.round, event.now)) return state;
       // Holding on the tile already chosen changes nothing (and keeps the time of the choice).
       if (state.round.answers[event.team]?.value === event.value) return state;
       const answer: Answer = { value: event.value, correct: isCorrect(card, event.value), atMs: event.now - state.round.startedAt };
@@ -177,7 +245,7 @@ export function reduceSession(state: SessionState, event: SessionEvent): Session
     }
 
     case 'tick':
-      if (state.phase === 'feedback') return event.now - state.feedbackAt >= FEEDBACK_MS ? advance(state, event.now) : state;
+      if (state.phase === 'feedback') return event.now - state.feedbackAt >= feedbackMsOf(state.outcome) ? advance(state, event.now) : state;
       if (state.phase !== 'question') return state;
       // Most ticks change nothing: keep the same object so React and subscribers stay idle.
       return event.now - state.round.startedAt >= questionTimeMs(state.config, state.round.card) ? toFeedback(state, event.now) : state;
@@ -266,8 +334,11 @@ export function roundResults(state: SessionState): Extract<TvMessage, { t: 'resu
   return [{ t: 'result', round: state.round.number, correct: false, team: null, ms: questionTimeMs(state.config, state.round.card) }];
 }
 
-export const timeLeftMs = (state: SessionState, now: number): number =>
-  state.phase === 'question' ? Math.max(0, questionTimeMs(state.config, state.round.card) - (now - state.round.startedAt)) : 0;
+export const timeLeftMs = (state: SessionState, now: number): number => {
+  if (state.phase !== 'question') return 0;
+  const total = questionTimeMs(state.config, state.round.card);
+  return Math.max(0, Math.min(total, total - (now - state.round.startedAt)));
+};
 
 /** The right answer in words, for the feedback line. */
 export const solutionOf = (card: Card): string => answerText(card);

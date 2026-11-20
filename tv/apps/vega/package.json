@@ -23,6 +23,7 @@
     "@amazon-devices/react-native-safe-area-context": "*",
     "@amazon-devices/react-native-screens": "*",
     "@mimikai/contracts": "portal:../../../shared/contracts",
+    "@mimikai/pet": "portal:../../../shared/pet",
     "@mimikai/tv-shared": "workspace:*",
     "jotai": "2.20.3",
     "mitt": "^3.0.1",

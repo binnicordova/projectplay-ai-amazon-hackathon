@@ -17,7 +17,7 @@ Run each from the app's folder. The TV profiles set `EXPO_TV=1` themselves.
 
 ```bash
 npx eas-cli build -p android -e production          # signed .aab, version code bumped by EAS
-npx eas-cli submit -p android -e production --latest # upload as a draft to the internal track
+npx eas-cli submit -p android -e production --latest # send to the production track; Play reviews it, then rolls it out
 ```
 
 The phone app needs the AI key on EAS before the first production build, because `.env` is not uploaded (do this yourself; never paste the key in chat or docs):

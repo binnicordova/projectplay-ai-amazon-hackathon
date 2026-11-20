@@ -4,6 +4,8 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
+    // The pet's rig (../shared/pet, linked with file:) imports react-native: resolve it from here.
+    "preserveSymlinks": true,
     "paths": {
       "@/*": ["./src/*"]
     }

@@ -1,7 +1,7 @@
 import type { IconArt, TeamId } from '@mimikai/contracts';
 import { atom } from 'jotai';
-import { atomWithReducer } from 'jotai/utils';
-import { INITIAL_SESSION, reduceSession, snapshotOf } from '../domain/session';
+import { atomWithReducer, selectAtom } from 'jotai/utils';
+import { INITIAL_SESSION, isOpen, reduceSession, snapshotOf } from '../domain/session';
 
 /** The one source of truth for the game on the TV. Dispatch with `store.set(sessionAtom, event)`. */
 export const sessionAtom = atomWithReducer(INITIAL_SESSION, reduceSession);
@@ -21,3 +21,12 @@ export const activeTeamsAtom = atom<readonly TeamId[]>([]);
 
 /** Wall-clock "now", refreshed by the session ticker, for timers in the UI. */
 export const clockAtom = atom<number>(0);
+
+/** A card is on the wall and open for choosing (round 1 opens after the class's greeting). */
+export const questionOpenAtom = selectAtom(
+  atom((get) => {
+    const session = get(sessionAtom);
+    return session.phase === 'question' && isOpen(session.round, get(clockAtom));
+  }),
+  (open) => open,
+);

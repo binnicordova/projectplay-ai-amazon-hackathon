@@ -5,16 +5,17 @@ const { getDefaultConfig } = require('expo/metro-config');
 const projectRoot = __dirname;
 const workspaceRoot = path.resolve(projectRoot, '../..');
 const contractsRoot = path.resolve(workspaceRoot, '../shared/contracts');
+const petRoot = path.resolve(workspaceRoot, '../shared/pet');
 
 const config = getDefaultConfig(projectRoot);
 
-// Shared TV packages (packages/*) and the wire protocol (../shared/contracts) are TS source.
-config.watchFolders = [workspaceRoot, contractsRoot];
+// Shared TV packages (packages/*), the wire protocol and the pet (../shared) are TS source.
+config.watchFolders = [workspaceRoot, contractsRoot, petRoot];
 config.resolver.nodeModulesPaths = [path.resolve(projectRoot, 'node_modules'), path.resolve(workspaceRoot, 'node_modules')];
 
 // Packages that must exist exactly once in the bundle. Shared packages declare them as
 // peers, so we always resolve them from this app, never from a parent node_modules.
-const SINGLETONS = new Set(['react', 'react-native', 'jotai', 'react-tv-space-navigation', 'expo', 'expo-router']);
+const SINGLETONS = new Set(['react', 'react-native', 'react-native-svg', 'jotai', 'react-tv-space-navigation', 'expo', 'expo-router']);
 const packageName = (request) => (request.startsWith('@') ? request.split('/').slice(0, 2).join('/') : request.split('/')[0]);
 const appOrigin = path.join(projectRoot, 'package.json');
 config.resolver.resolveRequest = (context, moduleName, platform) => {

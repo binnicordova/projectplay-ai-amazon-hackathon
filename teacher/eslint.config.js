@@ -34,8 +34,8 @@ module.exports = defineConfig([
     rules: restrict(['**/infrastructure/*', '**/composition/*']),
   },
   {
-    // Lessons, AI chat and pictures are written functionally: data in, data out, errors as values.
-    files: ['src/features/{authoring,library,pictures,console}/{domain,application}/**/*.ts'],
+    // Lessons, AI chat, pictures and Mimi's progress are written functionally: data in, data out, errors as values.
+    files: ['src/features/{authoring,library,pictures,console,mimi}/{domain,application}/**/*.ts'],
     ignores: ['**/*.test.ts'],
     rules: {
       'no-restricted-syntax': [
