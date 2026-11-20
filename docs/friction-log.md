@@ -268,6 +268,24 @@ The first entries were observed while scaffolding the project on 2026-10-20 (no 
 - **Workaround:** A 320×180, 16:9, full-bleed PNG, flattened, on a colour clearly lighter than the launcher (`docs/brand/icons/tv-banner-16x9.svg`).
 - **Suggestion:** Play Console could validate the banner's size and alpha when the bundle is uploaded. `config-tv` could document 320×180 and warn on other sizes.
 
+### F29 · `eas update` ignores the build profile's `env`, so a TV update must set `EXPO_TV=1` by hand
+- **Task:** Check that an over-the-air update reaches Mimikai TV before the store release (preview build on the TV, then `eas update --channel preview`).
+- **Steps:** The TV build profiles set `"env": { "EXPO_TV": "1" }` in `eas.json`. Run `eas update --channel preview --environment preview` from `tv/apps/expo-tv`.
+- **Expected:** The update is exported with the same environment as the build that will run it.
+- **Actual:** `eas update` exports locally and reads only EAS environment variables, not a build profile's `env`; nothing warns that the bundle is built without `EXPO_TV`.
+- **Severity:** Medium. A TV update exported as a phone app is a silent mismatch against the installed build.
+- **Workaround:** `EXPO_TV=1 eas update --channel preview --environment preview --platform android`. The TV took it on the first launch and ran it on the second (`dev.expo.updates` in logcat: `CheckCompleteAvailable`, then `NoUpdatesAvailable`).
+- **Suggestion:** Let `eas update` take a build profile (or warn when the channel's builds used `env` values the update lacks).
+
+### F30 · `eas submit` can't set up a Play service account non-interactively, and a 32 MB `.aab` is too big to hand to a browser agent
+- **Task:** Publish Mimikai 1.0.0 (phone version code 3, TV version code 8) to Play's production track from the command line.
+- **Steps:** `eas submit -p android -e production --id <build> --non-interactive`.
+- **Expected:** A pointer to the missing credential and how to add it without a prompt.
+- **Actual:** "Google Service Account Keys cannot be set up in --non-interactive mode. Error: submit command failed." Uploading the bundle through Play Console from an automated browser also failed: file inputs there take ~10 MB, and Play Console's page policy blocks fetching the EAS artifact URL.
+- **Severity:** Medium. Every release needs a person to drag the `.aab` into Play Console.
+- **Workaround:** Download the `.aab` (`dist/release/`), drag it into Play Console → Production → Create new release, then send the change for review from Publishing overview.
+- **Suggestion:** `eas submit` could print the `eas credentials` steps (or accept a key path flag) in non-interactive mode.
+
 ### Template for device-time entries
 
 ```
